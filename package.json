@@ -1,0 +1,8 @@
+{
+  "name": "game-plataform",
+  "description": "this is a game js XD",
+  "version": "1.0.0",
+  "main": "index.html",
+  "license": "MIT",
+  "type":"module"
+}
