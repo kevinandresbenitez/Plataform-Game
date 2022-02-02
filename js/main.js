@@ -16,8 +16,11 @@ const BlockHeight= 20;
     /*Container Blocks items based in matriz */
 let AllBlocks=[];
 
-    /*make blocks based in matriz and push in Allblocks*/
+    /*make blocks based in matriz and push in Allblocks */
 function makeBlocks(LevelMap){
+    /*Restore level load*/
+    AllBlocks=[];
+
     let aumentoY=0;
     LevelMap.forEach((obj,key)=>{
     let aumentoX =0;
@@ -39,11 +42,11 @@ function makeBlocks(LevelMap){
         aumentoY+=BlockHeight;
     });
 }
-    /*Remove old Blocks and add new blocks*/
+    /*Remove old Blocks and add new blocks in the dom*/
 function drawBlocks(NewBlocksItems){
         /*Remove old blocks */
-    let BlocksToDelete = document.querySelectorAll('block');
-    BlocksToDelete.forEach((obj,key)=>{
+    let BlocksToDelete = document.querySelectorAll('.block');
+    BlocksToDelete.forEach((obj,key)=>{        
         container.removeChild(obj);
     })
 
@@ -64,7 +67,12 @@ function drawBlocks(NewBlocksItems){
 
 }
 
-/*Make Blocks based in matriz and push in array all Blocks */
-makeBlocks(MapLevel1);
-/*Draw blocks int the dom */
-drawBlocks(AllBlocks);
+
+/*Function to load a level */
+function LoadLevel(MapLevel){
+    makeBlocks(MapLevel);
+    drawBlocks(AllBlocks);
+}
+
+/*load first level*/
+LoadLevel(MapLevel1);
