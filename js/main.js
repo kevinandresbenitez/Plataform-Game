@@ -17,9 +17,9 @@ const BlockHeight= 20;
 let AllBlocks=[];
 
     /*make blocks based in matriz and push in Allblocks*/
-function makeBlocks(){
+function makeBlocks(LevelMap){
     let aumentoY=0;
-    BlocksMatriz.forEach((obj,key)=>{
+    LevelMap.forEach((obj,key)=>{
     let aumentoX =0;
         obj.forEach((obj,key)=>{    
             let item;
@@ -65,6 +65,6 @@ function drawBlocks(NewBlocksItems){
 }
 
 /*Make Blocks based in matriz and push in array all Blocks */
-makeBlocks();
+makeBlocks(MapLevel1);
 /*Draw blocks int the dom */
 drawBlocks(AllBlocks);
