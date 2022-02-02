@@ -14,6 +14,6 @@ class BlockClass{
 class Block2 extends BlockClass{
     constructor(x,y){
         super(x,y);
-        this.color = '#759eff';
+        this.color = 'url(../assets/img/Blocks.png)';
     }
 }
