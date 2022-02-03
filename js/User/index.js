@@ -28,25 +28,31 @@ function drawUser(){
     user.style.left= userPositionActualy[0] + 'px';
     user.style.top= userPositionActualy[1] + 'px';
 }
+
+let DirectionJump=false;
+
 /*Verify if the user can move and call metod draw user */
 function moveUser(e){
+    
     switch(e.key){
         case 'ArrowLeft':
+            DirectionJump='RightTop';
             /*Verifi dont colapse with the wall */
             if(userPositionActualy[0] == 0){                
                 break
             }
             if(!verifyUserTouchBlockLeft()){
-                userPositionActualy[0] -= 10 ;
+                userPositionActualy[0] -= 10 ;                                
             }            
             break
-        case 'ArrowRight':            
+        case 'ArrowRight':
+            DirectionJump='LeftTop';
             /*Verifi dont colapse with the wall */
             if((userPositionActualy[0]+userWidth) >= WindowWidth){
                 break
             }            
             if(!verifyUserTouchBlockRight()){
-                userPositionActualy[0] += 10 ;
+                userPositionActualy[0] += 10 ;                
             }            
             break
         case 'ArrowDown':            
@@ -54,14 +60,15 @@ function moveUser(e){
                 userPositionActualy[1] += 10 ;                
             }
             break
-        case 'ArrowUp':            
-            userJump();
+        case 'ArrowUp':                
+            userJump(DirectionJump);
             break
     }
+    setTimeout(()=>{DirectionJump=false},200)
     drawUser();
 }
-/*Function to jump 2 time */
-function userJump(){
+/*Function to jump time */
+function userJump(direction = false){
     
      /*If the user touch the floor , can jump ,else not */                    
      if(!verifyUserTouchBlockTop() && !UserFirstJump){
@@ -81,10 +88,30 @@ function userJump(){
     /*function to jump, it moves every so often */
     let Jump =setInterval(()=>{
         /*If user dont colapse with a block */
-        if(!verifyUserTouchBlockBottom()){
-            userPositionActualy[1] -= 10 ;
+        if(!direction){
+            if(!verifyUserTouchBlockBottom()){
+                userPositionActualy[1] -= 10 ;
+            }
+            }else if(direction == 'LeftTop'){
+            if(!verifyUserTouchBlockBottom()){
+                userPositionActualy[1] -= 10 ;
+                if(!verifyUserTouchBlockRight() ){
+                    userPositionActualy[0] += 10 ;
+                }
+            }
+            }else if(direction == 'RightTop'){
+            if( !verifyUserTouchBlockBottom()){
+                userPositionActualy[1] -= 10 ;
+                if(!verifyUserTouchBlockLeft()){
+                    userPositionActualy[0] -= 10 ;
+                }
+            }
+            }
+
+
+
             drawUser();
-        }
+        
 
         /*Clear interval and start gravity if end jump and*/
         if(userJumpHeight == interaval){                    

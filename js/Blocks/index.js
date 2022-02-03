@@ -11,9 +11,30 @@ class BlockClass{
 }    
 
 
-class Block2 extends BlockClass{
+class Block extends BlockClass{
     constructor(x,y){
         super(x,y);
-        this.color = 'url(../assets/img/Blocks.png)';
+        this.color = 'url(../assets/img/Block.png)';
+    }
+}
+
+class BlockGrandiet extends BlockClass{
+    constructor(x,y){
+        super(x,y);
+        this.color = 'url(../assets/img/BlockGrandiet.png)';
+    }
+}
+
+class BlockMoreGrandiet extends BlockClass{
+    constructor(x,y){
+        super(x,y);
+        this.color = 'url(../assets/img/BlockMoreGrandiet.png)';
+    }
+}
+
+class BlockNull extends BlockClass{
+    constructor(x,y){
+        super(x,y);
+        this.color = 'url(../assets/img/BlockNull.png)';
     }
 }

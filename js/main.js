@@ -29,7 +29,19 @@ function makeBlocks(LevelMap){
                 
     
             if(obj == 1){
-                item =new Block2(aumentoX,aumentoY)
+                item =new Block(aumentoX,aumentoY)
+            }
+
+            if(obj == 2){
+                item =new BlockGrandiet(aumentoX,aumentoY)
+            }
+
+            if(obj == 3){
+                item =new BlockMoreGrandiet(aumentoX,aumentoY)
+            }
+
+            if(obj == 4){
+                item =new BlockNull(aumentoX,aumentoY)
             }
 
             if(item){
@@ -66,7 +78,6 @@ function drawBlocks(NewBlocksItems){
     })
 
 }
-
 
 /*Function to load a level */
 function LoadLevel(MapLevel){
