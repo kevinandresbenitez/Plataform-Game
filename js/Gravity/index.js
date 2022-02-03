@@ -18,6 +18,12 @@ let Gravity =setInterval(()=>{
         if(!verifyUserTouchBlockTop()){
             userPositionActualy[1] += 10 ;                
             drawUser();
-        }                   
+        }
+
+        /*If user touch a top block he can jump again */
+        if(verifyUserTouchBlockTop()){
+            UserFirstJump=true;            
+        }        
+        
     }
 },GravitySpeed);

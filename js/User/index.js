@@ -5,9 +5,9 @@ let userWidth =20;
 let userHeight=40;
 
 /*Jump params  */
-let userJumpSpeed =40;
+let userJumpSpeed =50;
 let userJumpHeight = 4;
-let userReadyToJump=true;/*variable to check that the user only jumps once for every time he hits the ground*/
+let UserFirstJump=true;/*Boolean to avilite thhe first jump */
 
 
 /*Add user in the dom */
@@ -55,44 +55,45 @@ function moveUser(e){
             }
             break
         case 'ArrowUp':            
-            /*If the user touch the floor , can jump ,else not */                    
-            if(!verifyUserTouchBlockTop()){                            
-                return false
-            }
-
-            /*End gravity for jump */
-            endGravity();
-
-            /*user can jump once until it hits the ground */
-            if(!userReadyToJump){                
-                return false
-            }
-            userReadyToJump=false;
-
-            let interaval =0;
-            /*function to jump, it moves every so often */
-            let Jump =setInterval(()=>{
-                /*If user dont colapse with a block */
-                if(!verifyUserTouchBlockBottom()){
-                    userPositionActualy[1] -= 10 ;
-                    drawUser();
-                }                
-                
-                /*Clear interval and start gravity if end jump and , user jump*/
-                if(userJumpHeight == interaval){                    
-                    clearInterval(Jump);
-                    startGravity();
-                    userReadyToJump=true;
-                }
-                interaval ++;
-            },userJumpSpeed)
-            
-            
+            userJump();
             break
     }
     drawUser();
 }
+/*Function to jump 2 time */
+function userJump(){
+    
+     /*If the user touch the floor , can jump ,else not */                    
+     if(!verifyUserTouchBlockTop() && !UserFirstJump){
+        return false
+    }
+    /*End gravity for jump */
+    endGravity();
 
+    /*return false if the user canon jump*/    
+    if(!UserFirstJump){
+       return false
+    }
+    UserFirstJump=false;
+
+
+    let interaval =0;
+    /*function to jump, it moves every so often */
+    let Jump =setInterval(()=>{
+        /*If user dont colapse with a block */
+        if(!verifyUserTouchBlockBottom()){
+            userPositionActualy[1] -= 10 ;
+            drawUser();
+        }
+
+        /*Clear interval and start gravity if end jump and*/
+        if(userJumpHeight == interaval){                    
+            clearInterval(Jump);
+            startGravity();            
+        }
+        interaval ++;
+    },userJumpSpeed)
+}
 
 
 /*Verify if the user touch a block*/
