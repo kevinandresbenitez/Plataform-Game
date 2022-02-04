@@ -78,7 +78,6 @@ function drawBlocks(NewBlocksItems){
     })
 
 }
-
 /*Function to load a level */
 function LoadLevel(MapLevel){
     makeBlocks(MapLevel);

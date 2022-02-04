@@ -11,7 +11,6 @@ function endGravity(){
 }
 
 startGravity();
-
 let Gravity =setInterval(()=>{
     if(GravityStatus){
         /*Gravity to user */        

@@ -4,12 +4,6 @@ let userPositionActualy=userPositionDefault;
 let userWidth =20;
 let userHeight=40;
 
-/*Jump params  */
-let userJumpSpeed =50;
-let userJumpHeight = 4;
-let UserFirstJump=true;/*Boolean to avilite thhe first jump */
-
-
 /*Add user in the dom */
 function createUser(){
     let  user = document.createElement('div');
@@ -28,100 +22,6 @@ function drawUser(){
     user.style.left= userPositionActualy[0] + 'px';
     user.style.top= userPositionActualy[1] + 'px';
 }
-
-let DirectionJump=false;
-
-/*Verify if the user can move and call metod draw user */
-function moveUser(e){
-    
-    switch(e.key){
-        case 'ArrowLeft':
-            DirectionJump='RightTop';
-            /*Verifi dont colapse with the wall */
-            if(userPositionActualy[0] == 0){                
-                break
-            }
-            if(!verifyUserTouchBlockLeft()){
-                userPositionActualy[0] -= 10 ;                                
-            }            
-            break
-        case 'ArrowRight':
-            DirectionJump='LeftTop';
-            /*Verifi dont colapse with the wall */
-            if((userPositionActualy[0]+userWidth) >= WindowWidth){
-                break
-            }            
-            if(!verifyUserTouchBlockRight()){
-                userPositionActualy[0] += 10 ;                
-            }            
-            break
-        case 'ArrowDown':            
-            if(!verifyUserTouchBlockTop()){
-                userPositionActualy[1] += 10 ;                
-            }
-            break
-        case 'ArrowUp':                
-            userJump(DirectionJump);
-            break
-    }
-    setTimeout(()=>{DirectionJump=false},200)
-    drawUser();
-}
-/*Function to jump time */
-function userJump(direction = false){
-    
-     /*If the user touch the floor , can jump ,else not */                    
-     if(!verifyUserTouchBlockTop() && !UserFirstJump){
-        return false
-    }
-    /*End gravity for jump */
-    endGravity();
-
-    /*return false if the user canon jump*/    
-    if(!UserFirstJump){
-       return false
-    }
-    UserFirstJump=false;
-
-
-    let interaval =0;
-    /*function to jump, it moves every so often */
-    let Jump =setInterval(()=>{
-        /*If user dont colapse with a block */
-        if(!direction){
-            if(!verifyUserTouchBlockBottom()){
-                userPositionActualy[1] -= 10 ;
-            }
-            }else if(direction == 'LeftTop'){
-            if(!verifyUserTouchBlockBottom()){
-                userPositionActualy[1] -= 10 ;
-                if(!verifyUserTouchBlockRight() ){
-                    userPositionActualy[0] += 10 ;
-                }
-            }
-            }else if(direction == 'RightTop'){
-            if( !verifyUserTouchBlockBottom()){
-                userPositionActualy[1] -= 10 ;
-                if(!verifyUserTouchBlockLeft()){
-                    userPositionActualy[0] -= 10 ;
-                }
-            }
-            }
-
-
-
-            drawUser();
-        
-
-        /*Clear interval and start gravity if end jump and*/
-        if(userJumpHeight == interaval){                    
-            clearInterval(Jump);
-            startGravity();            
-        }
-        interaval ++;
-    },userJumpSpeed)
-}
-
 
 /*Verify if the user touch a block*/
 function verifyUserTouchBlockTop(){  
@@ -156,9 +56,6 @@ function verifyUserTouchBlockRight(){
         }        
     }
 }
-
-/*Move user :) */
-document.addEventListener('keydown',moveUser);
 
 /*Add user*/
 createUser();
