@@ -9,7 +9,8 @@ class User{
     moveJump=false;
     jumpHeight=4;
     jumpSpeed=50;
-    jumpStatus=false;/*Boolean for jump 1  */
+    jumpStatus=false;/*Boolean for jump inteval */
+    firstJump=true;/*User can jump if not used first jump ,else need run in floor */
         /*Gravity user */
     gravityStatus=true;/*Boolean for enable and disable grbvity  */
     
@@ -219,10 +220,10 @@ class User{
     }
     /*Function what the user can use */
     actions={
-        jump:()=>{
-            
-            if(this.verify.collisionBlockTop() && !this.verify.collisionBlockBottom() && !this.jumpStatus){
+        jump:()=>{            
+            if((this.verify.collisionBlockTop() || this.firstJump )&& !this.verify.collisionBlockBottom() && !this.jumpStatus){
                 this.jumpStatus=true;
+                this.firstJump=false;
                 this.gravity.end();
                 
                 let sec=0;
@@ -236,6 +237,7 @@ class User{
                         clearInterval(interval);
                         this.gravity.start();
                         this.jumpStatus=false;
+                        this.firstJump=false;
                     }
 
                     sec++;
@@ -252,6 +254,11 @@ class User{
                         this.move.bottom();
                     }
 
+                    /*Avalible first jump if the user run in the floor*/
+                    if(this.verify.collisionBlockTop()){
+                        this.firstJump=true;
+                    }
+                    
                     /*If the variable stop gravity */
                     if(this.destroyGravity){
                         clearInterval(interval);
