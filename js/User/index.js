@@ -1,5 +1,6 @@
 class User{    
     inMoviment= false;    
+    velosityRun;/*move spped */
 
     /*In set Timeout  move user*/
     moveRight=false;
@@ -23,6 +24,7 @@ class User{
         this.img=params.img;
         this.position=[params.position[0],params.position[1]];
         this.gravitySpeed = params.gravitySpeed;
+        this.velosityRun= params.velosityRun || 16 ;
 
         /*Add event */
         document.addEventListener('keydown',this.keyDown);
@@ -199,22 +201,22 @@ class User{
     /*Function to move user in x-y */
     move ={
         left:()=>{
-            this.position[0] -= 10 ;
+            this.position[0] -= this.velosityRun;
             this.draw();
         },
 
         right:()=>{
-            this.position[0] += 10 ;
+            this.position[0] += this.velosityRun;
             this.draw();
         },
 
         bottom:()=>{
-            this.position[1] += 10 ;
+            this.position[1] += this.velosityRun;
             this.draw();
         },
         
         top:()=>{
-            this.position[1] -= 10 ;
+            this.position[1] -= this.velosityRun ;
             this.draw();
         }  
     }
@@ -283,14 +285,12 @@ class User{
     }
 }
 
-
-
 let params={
     id:'user',
-    width : 20,
-    height: 40,
+    width : 64,
+    height: 64,
     speedMoviment:50,    
-    position:[50,150],
+    position:[64,64],
     gravitySpeed:50
 };
 

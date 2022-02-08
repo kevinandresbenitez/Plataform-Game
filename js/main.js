@@ -9,8 +9,8 @@ container.style.height=WindowHeight + 'px';
 
 
 /*Block params */
-const BlockWidth= 20;
-const BlockHeight= 20;
+const BlockWidth= 32;
+const BlockHeight= 32;
 
 
     /*Container Blocks items based in matriz */
