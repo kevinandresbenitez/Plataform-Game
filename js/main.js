@@ -9,13 +9,12 @@ container.style.height=WindowHeight + 'px';
 
 
 /*Block params */
-const BlockWidth= 32;
-const BlockHeight= 32;
+const BlockWidth= 40;
+const BlockHeight= 40;
 
 
     /*Container Blocks items based in matriz */
 let AllBlocks=[];
-
     /*make blocks based in matriz and push in Allblocks */
 function makeBlocks(LevelMap){
     /*Restore level load*/
@@ -57,28 +56,28 @@ function makeBlocks(LevelMap){
     /*Remove old Blocks and add new blocks in the dom*/
 function drawBlocks(NewBlocksItems){
         /*Remove old blocks */
-    let BlocksToDelete = document.querySelectorAll('.block');
+    let BlocksToDelete = document.querySelectorAll('.block .blockNull');
     BlocksToDelete.forEach((obj,key)=>{        
         container.removeChild(obj);
     })
 
         /*Make new blocks */
-    NewBlocksItems.forEach((obj,key)=>{
+    NewBlocksItems.forEach((obj,key)=>{        
         /*Create block item dom */
         let element = document.createElement('div');
-        element.classList.add('block');
+        element.classList.add(obj.class);
         element.style.top =obj.topLeft[1] + 'px';
         element.style.left =obj.topLeft[0] + 'px';
         element.style.width = BlockWidth +'px';
         element.style.height = BlockHeight +'px';
         element.style.background=obj.color;
-
+        element.style.position='absolute';
         /*Ad item in the dom */
-        container.appendChild(element);
+        container.appendChild(element);            
     })
 
 }
-/*Function to load a level */
+    /*Function to load a level */
 function LoadLevel(MapLevel){
     makeBlocks(MapLevel);
     drawBlocks(AllBlocks);

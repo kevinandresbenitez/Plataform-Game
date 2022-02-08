@@ -12,10 +12,6 @@ body{
     background: #da5555;
 }
 
-.container .block{    
-    position: absolute;
-}
-
 #user{
     position: absolute;
     background: burlywood;

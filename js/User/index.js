@@ -24,7 +24,7 @@ class User{
         this.img=params.img;
         this.position=[params.position[0],params.position[1]];
         this.gravitySpeed = params.gravitySpeed;
-        this.velosityRun= params.velosityRun || 16 ;
+        this.velosityRun= params.velosityRun || 20 ;
 
         /*Add event */
         document.addEventListener('keydown',this.keyDown);
@@ -287,10 +287,10 @@ class User{
 
 let params={
     id:'user',
-    width : 64,
-    height: 64,
+    width : 80,
+    height: 100,
     speedMoviment:50,    
-    position:[64,64],
+    position:[120,0],    
     gravitySpeed:50
 };
 
