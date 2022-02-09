@@ -14,17 +14,19 @@ class User{
     firstJump=true;/*User can jump if not used first jump ,else need run in floor */
         /*Gravity user */
     gravityStatus=true;/*Boolean for enable and disable grbvity  */
-    
 
     constructor(params){
+        this.parentContainer=document.querySelectorAll('.container')[0];
         this.id=params.id;
         this.width=params.width;
         this.height=params.height;
         this.speedMoviment =params.speedMoviment;
-        this.img=params.img;
         this.position=[params.position[0],params.position[1]];
         this.gravitySpeed = params.gravitySpeed;
-        this.velosityRun= params.velosityRun || 20 ;
+        this.velosityRun= params.velosityRun || 20 ;        
+
+            /*User Img */        
+        this.img='url(./assets/img/user/UserWaitRight.gif)';
 
         /*Add event */
         document.addEventListener('keydown',this.keyDown);
@@ -54,21 +56,21 @@ class User{
         this.position[0]=x;
         this.position[1]=y;
 
-        container.appendChild(user);
+        this.parentContainer.appendChild(user);
         this.user=document.getElementById(this.id);
     }
     /*Remove user for dom */
     remove(){
-        container.removeChild(this.user);
+        this.parentContainer.removeChild(this.user);
         this.user=undefined;
     }
     /*Change parameters in the dom */
-    draw(){
+    draw(){        
         this.user.width=this.width;
         this.user.height=this.height;
         this.user.style.left= this.position[0] + 'px';
         this.user.style.top= this.position[1] + 'px';
-        this.user.img=this.img;
+        this.user.style.background=this.img;
     }
 
     /*Movent User */
@@ -88,11 +90,13 @@ class User{
         let interval=setInterval(()=>{                        
             /*Move user to Right */        
             if(this.moveRight && !this.verify.collisionBlockRight() && !this.verify.collisionWindowRight()){
-                this.move.right();                                    
+                this.setImg.RunRight();
+                this.move.right();
             }
             
             /*Move user to Left */
             if(this.moveLeft && !this.verify.collisionBlockLeft() && !this.verify.collisionWindowLeft()){
+                this.setImg.RunLeft();
                 this.move.left();                
             }
             /*Move user to Down*/
@@ -115,6 +119,25 @@ class User{
 
     }
 
+    /*Img User */
+    setImg={
+        WaitLeft:()=>{
+            this.img ='url(./assets/img/user/UserWaitLeft.gif)';
+        },
+
+        WaitRight:()=>{
+            this.img = 'url(./assets/img/user/UserWaitRight.gif)';
+        },
+
+        RunLeft:()=>{
+            this.img = 'url(./assets/img/user/UserRunLeft.gif)';
+        },
+
+        RunRight:()=>{
+            this.img = 'url(./assets/img/user/UserRunRight.gif)';
+        }
+    }
+
     /*Events for keboard*/
     keyDown=(e)=>{
         switch(e.key){
@@ -135,10 +158,14 @@ class User{
     keyUp=(e)=>{
         switch(e.key){
             case 'ArrowRight':
-                this.moveRight=false;                
+                this.moveRight=false;
+                this.setImg.WaitRight();
+                this.draw();                
             break
             case 'ArrowLeft':
                 this.moveLeft=false;
+                this.setImg.WaitLeft();
+                this.draw();
             break
             case 'ArrowDown':
                 this.moveDown=false;
@@ -153,8 +180,8 @@ class User{
     /*Verifications - conditions for user */
     verify = {
         collisionBlockTop:()=>{
-            for(let i =0 ;AllBlocks.length > i;i++){
-                let top = (this.position[1] + this.height == AllBlocks[i].topLeft[1] ) && (this.position[0]+this.width > AllBlocks[i].topLeft[0] && this.position[0] < AllBlocks[i].topRight[0]  );
+            for(let i =0 ;main.AllBlocks.length > i;i++){
+                let top = (this.position[1] + this.height == main.AllBlocks[i].topLeft[1] ) && (this.position[0]+this.width > main.AllBlocks[i].topLeft[0] && this.position[0] < main.AllBlocks[i].topRight[0]  );
                 if(top){
                     return true;
                 }                
@@ -162,8 +189,8 @@ class User{
         },
 
         collisionBlockBottom:()=>{
-            for(let i =0 ;AllBlocks.length > i;i++){
-                let bottom =(this.position[1] == AllBlocks[i].buttomLeft[1] ) && (this.position[0]+this.width > AllBlocks[i].buttomLeft[0] && this.position[0] < AllBlocks[i].buttomRight[0]  );
+            for(let i =0 ;main.AllBlocks.length > i;i++){
+                let bottom =(this.position[1] == main.AllBlocks[i].buttomLeft[1] ) && (this.position[0]+this.width > main.AllBlocks[i].buttomLeft[0] && this.position[0] < main.AllBlocks[i].buttomRight[0]  );
                 if(bottom){
                     return true;
                 }                
@@ -171,8 +198,8 @@ class User{
         },
 
         collisionBlockRight:()=>{
-            for(let i =0 ;AllBlocks.length > i;i++){
-                let right =((this.position[0] + this.width == AllBlocks[i].buttomLeft[0]) && (this.position[1]  < AllBlocks[i].buttomLeft[1] ) && (this.position[1] > AllBlocks[i].topLeft[1] || this.position[1] + this.height > AllBlocks[i].topLeft[1]))                
+            for(let i =0 ;main.AllBlocks.length > i;i++){
+                let right =((this.position[0] + this.width == main.AllBlocks[i].buttomLeft[0]) && (this.position[1]  < main.AllBlocks[i].buttomLeft[1] ) && (this.position[1] > main.AllBlocks[i].topLeft[1] || this.position[1] + this.height > main.AllBlocks[i].topLeft[1]))                
                 if(right){
                     return true;
                 }
@@ -180,8 +207,8 @@ class User{
         },
 
         collisionBlockLeft:()=>{
-            for(let i =0 ;AllBlocks.length > i;i++){
-                let left =((this.position[0] == AllBlocks[i].buttomRight[0]) && (this.position[1]  < AllBlocks[i].buttomRight[1] ) && (this.position[1] > AllBlocks[i].topRight[1] || this.position[1] + this.height > AllBlocks[i].topRight[1]));
+            for(let i =0 ;main.AllBlocks.length > i;i++){
+                let left =((this.position[0] == main.AllBlocks[i].buttomRight[0]) && (this.position[1]  < main.AllBlocks[i].buttomRight[1] ) && (this.position[1] > main.AllBlocks[i].topRight[1] || this.position[1] + this.height > main.AllBlocks[i].topRight[1]));
                 if(left){
                     return true;
                 }
@@ -189,7 +216,7 @@ class User{
         },
 
         collisionWindowRight:()=>{
-            let windowRight=(this.position[0]+this.width) >= WindowWidth;
+            let windowRight=(this.position[0]+this.width) >= main.WindowWidth;
             return windowRight;
         },
 
@@ -284,17 +311,3 @@ class User{
         },
     }
 }
-
-let params={
-    id:'user',
-    width : 80,
-    height: 100,
-    speedMoviment:50,    
-    position:[120,0],    
-    gravitySpeed:50
-};
-
-/*Initialize user*/
-let user =new User(params);
-user.create();
-user.startMoviment();
