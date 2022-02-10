@@ -1,7 +1,7 @@
 class LevelLoader{
     /*Matriz  container , all blocks container array */
     AllBlocks=[];
-
+    
     constructor(props){
         /*Window params */
         this.WindowHeight=window.innerHeight;
@@ -57,8 +57,8 @@ class LevelLoader{
     /*Remove old Blocks and add new blocks in the dom*/
     drawBlocks(NewBlocksItems){
         /*Remove old blocks */
-    let BlocksToDelete = document.querySelectorAll('.block .blockNull');
-    BlocksToDelete.forEach((obj,key)=>{        
+    let BlocksToDelete = document.querySelectorAll('.block , .blockNull');
+    BlocksToDelete.forEach((obj,key)=>{                
         this.container.removeChild(obj);
     })
 
@@ -79,9 +79,31 @@ class LevelLoader{
 
     }
 
-    /*Function to load a level */
-    LoadLevel(MapLevel){
-        this.makeBlocks(MapLevel);
+    /*Function to load a level change level , but not change position user*/
+    loadLevel(level){
+        this.nameLevel=level.nameLevel;
+        this.userPositionDefault=level.userPositionDefault;
+        this.prevLevel=level.prevLevel;
+        this.nextLevel=level.nextLevel;
+
+        this.makeBlocks(level.level);
         this.drawBlocks(this.AllBlocks);
+    }    
+    loadNextLevel(){
+        if(this.nextLevel){            
+            /*The name of the next level , convert to level var */
+            this.loadLevel(eval(this.nextLevel));
+            return true
+        }
+        return false
+    }
+    loadPrevLevel(){        
+        if(this.prevLevel){
+            /*The name of the next level , convert to level var */
+            this.loadLevel(eval(this.prevLevel));
+            return true
+        }
+
+        return false
     }
 }

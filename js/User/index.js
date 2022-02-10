@@ -21,9 +21,10 @@ class User{
         this.width=params.width;
         this.height=params.height;
         this.speedMoviment =params.speedMoviment;
-        this.position=[params.position[0],params.position[1]];
+        this.position= params.position ? [params.position[0],params.position[1]] : main.userPositionDefault;
         this.gravitySpeed = params.gravitySpeed;
         this.velosityRun= params.velosityRun || 20 ;        
+        this.jumpHeight = params.jumpHeight|| 6;
 
             /*User Img */        
         this.img='url(./assets/img/user/UserWaitRight.gif)';
@@ -34,6 +35,17 @@ class User{
 
         /*Init gravity */
         this.gravity.main();
+    }
+
+    /*Call method for level , and change position */
+    loadNextLevel(){
+        main.loadNextLevel();
+        user.position = main.userPositionDefault;
+    }
+
+    loadPrevLevel(){
+        main.loadPrevLevel();
+        user.position = main.userPositionDefault;
     }
 
     /*Create user and set int the dom */

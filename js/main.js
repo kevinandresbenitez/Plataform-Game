@@ -1,6 +1,6 @@
 /*load first level*/
 let main = new LevelLoader();
-main.LoadLevel(MapLevel1);
+main.loadLevel(Level1);
 
 /*Config default user */
 let paramsUser={
@@ -8,9 +8,9 @@ let paramsUser={
     width :60,
     height: 80, 
     direction:'right',
-    speedMoviment:50,    
-    position:[120,0],    
-    gravitySpeed:50
+    jumpHeight:5,
+    speedMoviment:40,        
+    gravitySpeed:40
 };
 
 /*Initialize user*/
