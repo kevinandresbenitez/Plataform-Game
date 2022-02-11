@@ -16,3 +16,12 @@ body{
     position: absolute;
     transition: all 0.1s;
 }
+
+#container-transition{                
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    z-index: 20;
+}        

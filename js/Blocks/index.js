@@ -2,6 +2,8 @@
 
 class BlockClass{
     constructor(x,y,width,height){
+        this.width=width;
+        this.height=height;
         this.topLeft =[x,y];
         this.topRight =[x + width ,y];
         this.buttomLeft=[x,y +height];
@@ -31,8 +33,8 @@ class BlockNull extends BlockClass{
 
 class BlockInitLevel extends BlockClass{
     constructor(x,y,width,height){
-        super(x,y,width,height);
-        this.class='blockNull';
+        super(x,y,width,height);   
+        this.class='BlockInitLevel';
         this.zIndex='5';
         this.color = 'url(../assets/img/blocks/BlockInitLevel.png)';
     }
@@ -40,8 +42,8 @@ class BlockInitLevel extends BlockClass{
 
 class BlockEndLevel extends BlockClass{
     constructor(x,y,width,height){
-        super(x,y,width,height);
-        this.class='blockNull';
+        super(x+width,y,width,height);
+        this.class='BlockEndLevel';
         this.zIndex='5';
         this.color = 'url(../assets/img/blocks/BlockEndLevel.png)';
     }

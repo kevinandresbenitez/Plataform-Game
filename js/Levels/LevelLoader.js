@@ -15,9 +15,9 @@ class LevelLoader{
         this.container.style.width=this.WindowWidth + 'px';
         this.container.style.height=this.WindowHeight + 'px';
 
-        /*Blocks params */
-        this.BlockWidth =40;
-        this.BlockHeight =40;
+        /*Grid dimentions for matriz*/
+        this.MatrizBlockWidth =40;
+        this.MatrizBlockHeight =40;
     }
 
     /*make blocks based in matriz and push in arrays for category */
@@ -36,20 +36,19 @@ class LevelLoader{
                 if(obj == 1){
                     this.Blocks.push(new Block(aumentoX,aumentoY,40,40));
                 }else if(obj == 2){
-                    this.BlocksInitLevel.push(new BlockInitLevel(aumentoX,aumentoY,40,40));
+                    this.BlocksInitLevel.push(new BlockInitLevel(aumentoX,aumentoY,20,40));
                 }else if(obj == 3){
-                    this.BlocksEndLevel.push(new BlockEndLevel(aumentoX,aumentoY,40,40));
+                    this.BlocksEndLevel.push(new BlockEndLevel(aumentoX,aumentoY,20,40));
                 }
                 else if(obj == 4){
                     this.BlocksNulls.push(new BlockNull(aumentoX,aumentoY,40,40));
                 }    
-                aumentoX +=this.BlockWidth;
+                aumentoX +=this.MatrizBlockWidth;
             });
            
-            aumentoY+=this.BlockHeight;
+            aumentoY+=this.MatrizBlockHeight;
         });
     }
-
     /*Remove old Blocks and add new blocks in the dom*/
     drawBlocks(NewBlocksItems){        
         /*Make new blocks */
@@ -59,8 +58,8 @@ class LevelLoader{
         element.classList.add(obj.class);
         element.style.top =obj.topLeft[1] + 'px';
         element.style.left =obj.topLeft[0] + 'px';
-        element.style.width = this.BlockWidth +'px';
-        element.style.height = this.BlockHeight +'px';
+        element.style.width = obj.width +'px';        
+        element.style.height = obj.height +'px';
         element.style.background=obj.color;
         element.style.position='absolute';
         element.style.zIndex=obj.zIndex;
@@ -69,10 +68,9 @@ class LevelLoader{
     })
 
     }
-
     removeBlocks(){
         /*Remove old blocks */
-        let BlocksToDelete = document.querySelectorAll('.block , .blockNull');
+        let BlocksToDelete = document.querySelectorAll('.block , .blockNull , .BlockInitLevel , .BlockEndLevel');
         BlocksToDelete.forEach((obj,key)=>{                
             this.container.removeChild(obj);
         })
