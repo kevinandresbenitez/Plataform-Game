@@ -1,7 +1,8 @@
 class LevelLoader{
     /*Matriz  container , all blocks container array */
-    AllBlocks=[];
-    
+    Blocks=[];
+    BlocksNulls=[];
+
     constructor(props){
         /*Window params */
         this.WindowHeight=window.innerHeight;
@@ -17,36 +18,23 @@ class LevelLoader{
         this.BlockHeight =40;
     }
 
-    /*make blocks based in matriz and push in Allblocks */
-    makeBlocks(LevelMap){
+    /*make blocks based in matriz and push in arrays for category */
+    makeBlocks(LevelMap){        
         /*Restore level load*/
-        this.AllBlocks=[];
+        this.Blocks=[];
+        this.BlocksNulls=[]
     
+        /*Remplace All blocks for blocks objects */
         let aumentoY=0;
         LevelMap.forEach((obj,key)=>{
         let aumentoX =0;
-            obj.forEach((obj,key)=>{    
-                let item;                
+            obj.forEach((obj,key)=>{                   
                 if(obj == 1){
-                    item =new Block(aumentoX,aumentoY)
+                    this.Blocks.push(new Block(aumentoX,aumentoY,40,40));
                 }
-    
-                if(obj == 2){
-                    item =new BlockGrandiet(aumentoX,aumentoY)
-                }
-    
-                if(obj == 3){
-                    item =new BlockMoreGrandiet(aumentoX,aumentoY)
-                }
-    
-                if(obj == 4){
-                    item =new BlockNull(aumentoX,aumentoY)
-                }
-    
-                if(item){
-                    this.AllBlocks.push(item);
-                }
-        
+                else if(obj == 4){
+                    this.BlocksNulls.push(new BlockNull(aumentoX,aumentoY,40,40));
+                }    
                 aumentoX +=this.BlockWidth;
             });
            
@@ -55,15 +43,9 @@ class LevelLoader{
     }
 
     /*Remove old Blocks and add new blocks in the dom*/
-    drawBlocks(NewBlocksItems){
-        /*Remove old blocks */
-    let BlocksToDelete = document.querySelectorAll('.block , .blockNull');
-    BlocksToDelete.forEach((obj,key)=>{                
-        this.container.removeChild(obj);
-    })
-
+    drawBlocks(NewBlocksItems){        
         /*Make new blocks */
-    NewBlocksItems.forEach((obj,key)=>{        
+        NewBlocksItems.forEach((obj,key)=>{        
         /*Create block item dom */
         let element = document.createElement('div');
         element.classList.add(obj.class);
@@ -79,6 +61,14 @@ class LevelLoader{
 
     }
 
+    removeBlocks(){
+        /*Remove old blocks */
+        let BlocksToDelete = document.querySelectorAll('.block , .blockNull');
+        BlocksToDelete.forEach((obj,key)=>{                
+            this.container.removeChild(obj);
+        })
+    }
+
     /*Function to load a level change level , but not change position user*/
     loadLevel(level){
         this.nameLevel=level.nameLevel;
@@ -86,8 +76,11 @@ class LevelLoader{
         this.prevLevel=level.prevLevel;
         this.nextLevel=level.nextLevel;
 
+            /*Remove hold blocks and make news */
+        this.removeBlocks();
         this.makeBlocks(level.level);
-        this.drawBlocks(this.AllBlocks);
+        this.drawBlocks(this.Blocks);
+        this.drawBlocks(this.BlocksNulls);
     }    
     loadNextLevel(){
         if(this.nextLevel){            
