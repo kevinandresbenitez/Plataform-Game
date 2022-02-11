@@ -2,6 +2,8 @@ class LevelLoader{
     /*Matriz  container , all blocks container array */
     Blocks=[];
     BlocksNulls=[];
+    BlocksInitLevel=[];
+    BlocksEndLevel=[];
 
     constructor(props){
         /*Window params */
@@ -19,11 +21,13 @@ class LevelLoader{
     }
 
     /*make blocks based in matriz and push in arrays for category */
-    makeBlocks(LevelMap){        
+    makeBlocks(LevelMap){
         /*Restore level load*/
         this.Blocks=[];
         this.BlocksNulls=[]
-    
+        this.BlocksInitLevel=[];
+        this.BlocksEndLevel=[];
+
         /*Remplace All blocks for blocks objects */
         let aumentoY=0;
         LevelMap.forEach((obj,key)=>{
@@ -31,6 +35,10 @@ class LevelLoader{
             obj.forEach((obj,key)=>{                   
                 if(obj == 1){
                     this.Blocks.push(new Block(aumentoX,aumentoY,40,40));
+                }else if(obj == 2){
+                    this.BlocksInitLevel.push(new BlockInitLevel(aumentoX,aumentoY,40,40));
+                }else if(obj == 3){
+                    this.BlocksEndLevel.push(new BlockEndLevel(aumentoX,aumentoY,40,40));
                 }
                 else if(obj == 4){
                     this.BlocksNulls.push(new BlockNull(aumentoX,aumentoY,40,40));
@@ -55,6 +63,7 @@ class LevelLoader{
         element.style.height = this.BlockHeight +'px';
         element.style.background=obj.color;
         element.style.position='absolute';
+        element.style.zIndex=obj.zIndex;
         /*Ad item in the dom */
         this.container.appendChild(element);            
     })
@@ -80,20 +89,26 @@ class LevelLoader{
         this.removeBlocks();
         this.makeBlocks(level.level);
         this.drawBlocks(this.Blocks);
+        this.drawBlocks(this.BlocksInitLevel);
+        this.drawBlocks(this.BlocksEndLevel);
         this.drawBlocks(this.BlocksNulls);
     }    
-    loadNextLevel(){
-        if(this.nextLevel){            
-            /*The name of the next level , convert to level var */
+    loadNextLevel(){        
+        if(this.nextLevel){                  
+            /*The name of the next level , convert to level var and change position user and load next level*/
             this.loadLevel(eval(this.nextLevel));
+            user.position = this.userPositionDefault;
+            user.draw();
             return true
         }
         return false
     }
-    loadPrevLevel(){        
+    loadPrevLevel(){
         if(this.prevLevel){
-            /*The name of the next level , convert to level var */
+            /*The name of the next level , convert to level var and change position user and load prev level*/
             this.loadLevel(eval(this.prevLevel));
+            user.position = this.userPositionDefault;
+            user.draw();
             return true
         }
 
