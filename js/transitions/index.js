@@ -1,10 +1,10 @@
+/*
 function showLoaderLevel(){                
-    /*Create div transition*/
     let img = document.getElementById('img-transition')                
     let frames=15;
     let imgFrame=0;
 
-    return new Promise((resolve,reject)=>{W
+    return new Promise((resolve,reject)=>{
         let interval=setInterval(()=>{
             img.src= "./assets/img/transitions/loadLevel/show/sprite_"+imgFrame+".png";                
             if(frames == imgFrame){
@@ -34,3 +34,4 @@ function hideLoaderLevel(){
         },30)
     })
 }
+*/
