@@ -213,6 +213,8 @@ class MainMenu{
             item.classList.add('items');
             item.innerText = obj.nameLevel;
             levelsItems.appendChild(item);
+            /*Set position to level selected now */
+            levelsItems.style.right = this.levelSelectedRightPosition + "px";
         })
         
 
