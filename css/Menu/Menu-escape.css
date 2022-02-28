@@ -1,0 +1,38 @@
+.escape-menu{
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 20;    
+    display: none;
+}
+
+.escape-menu .blur{
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 21;
+    background-color: rgb(55, 117, 114);
+}
+
+.escape-menu .blur{
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 21;
+    background-color: rgba(55, 117, 114, 0.267);
+}
+.escape-menu .modal-config{
+    position: absolute;
+    top: 15%;
+    left: 25%;
+    width: 800px;
+    z-index: 22;
+    height: 600px;
+    background-color: antiquewhite;
+}

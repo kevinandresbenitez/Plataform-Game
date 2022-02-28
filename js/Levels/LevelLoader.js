@@ -6,14 +6,8 @@ class LevelLoader{
     BlocksEndLevel=[];
 
     constructor(props){
-        /*Window params */
-        this.WindowHeight=window.innerHeight;
-        this.WindowWidth=window.innerWidth;
-
         /*Define container */
         this.container =document.querySelectorAll('.container')[0];
-        this.container.style.width=this.WindowWidth + 'px';
-        this.container.style.height=this.WindowHeight + 'px';
 
         /*Grid dimentions for matriz*/
         this.MatrizBlockWidth =40;
@@ -64,7 +58,7 @@ class LevelLoader{
         element.style.position='absolute';
         element.style.zIndex=obj.zIndex;
         /*Ad item in the dom */
-        this.container.appendChild(element);            
+        this.container.appendChild(element);        
     })
 
     }
@@ -77,8 +71,9 @@ class LevelLoader{
     }
 
     /*Function to load a level change level , but not change position user*/
-    loadLevel(level){
+    loadLevel(level){       
         this.nameLevel=level.nameLevel;
+        this.levelNum =level.levelNum;
         this.userPositionDefault=level.userPositionDefault;
         this.prevLevel=level.prevLevel;
         this.nextLevel=level.nextLevel;
@@ -94,9 +89,9 @@ class LevelLoader{
     loadNextLevel(){        
         if(this.nextLevel){                  
             /*The name of the next level , convert to level var and change position user and load next level*/
-            this.loadLevel(eval(this.nextLevel));
-            user.position = this.userPositionDefault;
-            user.draw();
+            this.loadLevel(Levels[this.levelNum]);
+            main.user.position = this.userPositionDefault;
+            main.user.draw();
             return true
         }
         return false
@@ -104,9 +99,9 @@ class LevelLoader{
     loadPrevLevel(){
         if(this.prevLevel){
             /*The name of the next level , convert to level var and change position user and load prev level*/
-            this.loadLevel(eval(this.prevLevel));
-            user.position = this.userPositionDefault;
-            user.draw();
+            this.loadLevel(Levels[this.levelNum -2]);
+            main.user.position = this.userPositionDefault;
+            main.user.draw();
             return true
         }
 

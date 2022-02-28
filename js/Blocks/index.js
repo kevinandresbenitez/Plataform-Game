@@ -12,7 +12,6 @@ class BlockClass{
 
 }    
 
-
 class Block extends BlockClass{
     constructor(x,y,width,height){
         super(x,y,width,height);

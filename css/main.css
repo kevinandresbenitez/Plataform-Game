@@ -4,24 +4,22 @@
 }
 
 body{
-    overflow: hidden;
+    overflow: hidden;    
 }
 
+    /* container with the app  */
 .container{
-    position: relative;
-    background: #da5555;
-}
+    position: absolute;
+    top: 0;
 
+    width: 100vw;
+    height: 100vh;
+    
+    background: #da5555;
+    transition: all 0.2s;
+}
+    /*User style default*/
 #user{
     position: absolute;
     transition: all 0.1s;
 }
-
-#container-transition{                
-    width: 100vw;
-    height: 100vh;
-    position: absolute;
-    top: 0%;
-    left: 0%;
-    z-index: 20;
-}        
