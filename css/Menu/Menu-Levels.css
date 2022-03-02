@@ -36,12 +36,8 @@
     top: 15%;
     left: 10%;
     width:800px;
-    height: 400px;
-
-    background-color: cadetblue;    
+    height: 400px;    
     overflow: hidden;
-
-
 }
 .load-Levels-menu .levels-bar .levels-items{
     width: auto;
@@ -112,6 +108,17 @@
 }
 .load-Levels-menu .levels-info .button-start:hover{
     transform: scale(1.1);
+}
+
+.load-Levels-menu .levels-info .title-game{
+    width: 50%;
+    font-size: 32px;
+    text-align: center;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: rgba(127, 86, 165, 0.616);
+    font-weight: 800;
+    padding: 20px;    
+    margin: auto;
 }
 
 @keyframes showloadLevels{

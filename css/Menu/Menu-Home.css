@@ -20,11 +20,7 @@
     .Main-menu .left-Bar .button-start, .Main-menu .left-Bar .button-config{
         height: 80px;
         width: 280px;
-        border: none;        
-        font-size: 32px;
-        font-weight: 500;
-        font-family:cursive;
-        
+        border: none;                                
         transition: all 0.3s;
     }
     .Main-menu .left-Bar .button-start:hover , .Main-menu .left-Bar .button-config:hover{

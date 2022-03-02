@@ -2,12 +2,14 @@ class MainMenu{
     /*Params levels */
     static levelLoader;
     static user;
+    static container = document.querySelectorAll('.container')[0];
 
     /*Levelsparams */
     static levelSelected = 0;
     static levelSelectedRightPosition= ((Levels.length * 800)-800)*-1;
     static levels=Levels.length;
     static levelsLeftLimit = Levels.length * 800;
+    
   
     /*Create menu home */
     static createMenu(){
@@ -56,7 +58,7 @@ class MainMenu{
         topBarLoadLevel.classList.add('top-Bar-loadLevel');
         levelsBar.classList.add('levels-bar');
         levelsInfo.classList.add('levels-info');
-        
+
         let prevPage = document.createElement('button');
         prevPage.classList.add('button-prev');
         prevPage.style.background="url('../../assets/img/Menu/Atras.png')";
@@ -81,7 +83,12 @@ class MainMenu{
         let buttonStartGame = document.createElement('button');
         buttonStartGame.classList.add('button-start');
         buttonStartGame.onclick=()=>{main.initGame(this.levelSelected)}
+        let TitleGame=document.createElement('p');
+        TitleGame.innerText=Levels[this.levelSelected].nameLevel;
+        TitleGame.classList.add('title-game');
+
         levelsInfo.appendChild(buttonStartGame);
+        levelsInfo.appendChild(TitleGame)
 
         loadLevelsMenu.appendChild(topBarLoadLevel);
         loadLevelsMenu.appendChild(levelsBar);
@@ -104,41 +111,41 @@ class MainMenu{
 
 
         /*Add in the dom */
-        document.querySelectorAll('.container')[0].appendChild(MainMenu);
-        document.querySelectorAll('.container')[0].appendChild(config)
-        document.querySelectorAll('.container')[0].appendChild(loadLevelsMenu);
+        this.container.appendChild(MainMenu);
+        this.container.appendChild(config)
+        this.container.appendChild(loadLevelsMenu);
 
     }
     /*delete menu home */
-    static deleteMenu(){
-        let container = document.querySelectorAll('.container')[0];  
-        container.innerHTML='';        
+    static deleteMenu(){        
+        this.container.innerHTML='';        
     }
 
 
     /*In home , menu level change level selected */
     static selectPrevLevel(){
-        if((this.levelSelectedRightPosition * -1) != this.levelsLeftLimit - 800){
-            let containerLevelItems = document.querySelectorAll('.levels-items')[0];
+        if((this.levelSelectedRightPosition * -1) != this.levelsLeftLimit - 800){            
             this.levelSelectedRightPosition -= 800;
-            containerLevelItems.style.right = this.levelSelectedRightPosition + "px";
-
             this.levelSelected -=1;
+            let containerLevelItems=document.querySelectorAll('.levels-items')[0];
+            containerLevelItems.style.right = this.levelSelectedRightPosition + "px";
         }
     }
     static selectNextLevel(){                
-        if(this.levelSelectedRightPosition != 0){
-            let containerLevelItems = document.querySelectorAll('.levels-items')[0];
+        if(this.levelSelectedRightPosition != 0){     
             this.levelSelectedRightPosition += 800;        
-            containerLevelItems.style.right = this.levelSelectedRightPosition + "px";            
             this.levelSelected+=1;
+            let containerLevelItems=document.querySelectorAll('.levels-items')[0];       
+            containerLevelItems.style.right = this.levelSelectedRightPosition + "px";            
         }
     }
     /*In home , menu level change info level selected */
     static drawInfoLevel(){        
         let InfoLevelContainer = document.querySelectorAll('.levels-info')[0];
         let button =InfoLevelContainer.querySelectorAll('.button-start')[0];
-        button.onclick = ()=>{main.initGame(this.levelSelected)}        
+        let TitleGame=document.querySelectorAll('.title-game')[0];        
+        button.onclick = ()=>{main.initGame(this.levelSelected)}
+        TitleGame.innerText=Levels[this.levelSelected].nameLevel;
     }
 
 
@@ -206,16 +213,23 @@ class MainMenu{
         this.hideMainMenu();
         let loadLevelsMenu =document.querySelectorAll('.load-Levels-menu')[0];
         let topBar = document.querySelectorAll('.top-Bar-loadLevel')[0];   
-        let levelsItems=document.querySelectorAll('.levels-items')[0];
-        
-        Levels.forEach((obj)=>{    
-            let item=document.createElement('div');
-            item.classList.add('items');
-            item.innerText = obj.nameLevel;
-            levelsItems.appendChild(item);
-            /*Set position to level selected now */
-            levelsItems.style.right = this.levelSelectedRightPosition + "px";
-        })
+        let levelsItems=document.querySelectorAll('.levels-items')[0];          
+
+            // if not have items
+        if(levelsItems.querySelectorAll('.items').length == 0){
+            /*Create items levels */
+            Levels.forEach((obj)=>{            
+                let item=document.createElement('img');
+                item.src= obj.imgPreview;            
+                item.classList.add('items');
+                item.innerText = obj.nameLevel;
+                levelsItems.appendChild(item);
+                /*Set position to level selected now */
+                levelsItems.style.right = this.levelSelectedRightPosition + "px";
+            })
+        }
+
+
         
 
 
@@ -231,33 +245,34 @@ class MainMenu{
     static createEscapeMenu(){
         /*      Modal menu          */
         let config = document.createElement('div');
-        config.classList.add('escape-menu');
-        let blur = document.createElement('div');
+        config.classList.add('escape-menu');        
         let modalConfig = document.createElement('div');
-        let buttonClose = document.createElement('button');
-        blur.classList.add('blur');
-        modalConfig.classList.add('modal-config');
-        buttonClose.innerText = 'Salir';
+        let buttonClose = document.createElement('button');      
+        modalConfig.classList.add('modal-config');        
         buttonClose.classList.add('close')        
         buttonClose.onclick=()=>{main.endGame()};
-        modalConfig.appendChild(buttonClose);
-        config.appendChild(blur);
+        modalConfig.appendChild(buttonClose);        
         config.appendChild(modalConfig);
 
         /*Add menu in the dom */
-        document.querySelectorAll('.container')[0].appendChild(config)
-    }
-    static showEscapeMenu(){
-        document.querySelectorAll('.escape-menu')[0].style.display = 'block';
-    }
-    static hiddeEscapeMenu(){
-        document.querySelectorAll('.escape-menu')[0].style.display = 'none';
+        this.container.appendChild(config)
     }
     static deleteEscapeMenu(){        
-        document.querySelectorAll('.container')[0].removeChild(
+        this.container.removeChild(
         document.querySelectorAll('.escape-menu')[0]);
 
     }
+    static showEscapeMenu(){
+        document.querySelectorAll('.modal-config')[0].style.animation ='showModal 0.5s';
+        document.querySelectorAll('.escape-menu')[0].style.display = 'block';
+    }
+    static hiddeEscapeMenu(){
+        document.querySelectorAll('.modal-config')[0].style.animation ='hideModal 0.5s';
+        setTimeout(()=>{
+            document.querySelectorAll('.escape-menu')[0].style.display = 'none';
+        },500)
+    }
+
 
 
 }

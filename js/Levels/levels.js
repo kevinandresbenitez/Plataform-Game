@@ -6,6 +6,7 @@ let Levels=[
     prevLevel:false,
     userPositionDefault:[120,0],
     background:'#da5555',
+    imgPreview:'../../assets/img/Menu/LevelsPreview/Level1.png',
     level :[
     [4,4,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
     [4,4,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
@@ -39,6 +40,7 @@ let Levels=[
     prevLevel:true,
     userPositionDefault:[120,300],
     prevLevel:'Level1',
+    imgPreview:'../../assets/img/Menu/LevelsPreview/Level2.png',
     level :[
     [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
     [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
