@@ -1,3 +1,5 @@
+let main = require('../main.js');
+
 /*Events for keboard*/
 function keyDown(e){   
     if(main.gameStart){

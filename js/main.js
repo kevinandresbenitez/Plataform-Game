@@ -1,3 +1,10 @@
+let MainMenu =require('./MainMenu/index');
+let LevelLoader = require('./Levels/LevelLoader.js');
+let User = require('./User/index.js');
+
+    // Import Styles
+require('../less/main.less');
+
 class main{
     static levelLoader;
     static user;
@@ -5,7 +12,7 @@ class main{
     static scapeMenu;
 
     
-    static showMenu(){
+    static showMenu(){       
         MainMenu.createMenu();
     }
     
@@ -47,3 +54,5 @@ class main{
 }
 
 main.showMenu();
+module.exports =main;
+

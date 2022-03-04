@@ -1,4 +1,15 @@
-class MainMenu{
+let Levels =require('../Levels/levels.js');
+let main = require('../main.js');
+
+console.log(main);
+
+// Import imgs
+let comenzarImg=require('../../assets/img/Menu/Comenzar.png');
+let configuracionImg=require('../../assets/img/Menu/Configuracion.png');
+let prevImg=require('../../assets/img/Menu/Atras.png');
+
+
+module.exports = class MainMenu{
     /*Params levels */
     static levelLoader;
     static user;
@@ -25,8 +36,8 @@ class MainMenu{
         let buttonConfig =document.createElement('button');
         buttonStart.classList.add('button-start');
         buttonConfig.classList.add('button-config');
-        buttonStart.style.background ="url('../../assets/img/Menu/Comenzar.png')";
-        buttonConfig.style.background ="url('../../assets/img/Menu/Configuracion.png')";
+        buttonStart.style.background =`url(${comenzarImg})`;
+        buttonConfig.style.background =`url(${configuracionImg})`;
         buttonStart.onclick=()=>{this.showLevels()};
         buttonConfig.onclick=()=>{this.showConfigModal()};                
         leftBar.appendChild(buttonStart);
@@ -61,7 +72,7 @@ class MainMenu{
 
         let prevPage = document.createElement('button');
         prevPage.classList.add('button-prev');
-        prevPage.style.background="url('../../assets/img/Menu/Atras.png')";
+        prevPage.style.background=`url(${prevImg})`;
         prevPage.onclick =()=>{this.showMenu()};
         topBarLoadLevel.appendChild(prevPage);
 
@@ -276,4 +287,3 @@ class MainMenu{
 
 
 }
-

@@ -1,4 +1,6 @@
-class LevelLoader{
+let main = require('../main.js');
+
+module.exports = class LevelLoader{
     /*Matriz  container , all blocks container array */
     Blocks=[];
     BlocksNulls=[];

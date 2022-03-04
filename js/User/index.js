@@ -1,4 +1,6 @@
-class User{    
+let main = require('../main.js');
+
+module.exports = class User{    
     inMoviment= false;    
     velosityRun;/*move spped */
 
