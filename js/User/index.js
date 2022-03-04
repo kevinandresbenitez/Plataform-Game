@@ -1,4 +1,4 @@
-let levelLoader = require('../Levels/LevelLoader');
+let main = require('../main.js');
 
 module.exports = class User{    
     inMoviment= false;    
@@ -24,7 +24,7 @@ module.exports = class User{
         this.height=params.height || 80;
         this.zIndex=8;
         this.speedMoviment =params.speedMoviment || 40;
-        this.position= params.position ? params.position : [50,50];
+        this.position= params.position ? params.position : main.levelLoader.userPositionDefault;
         this.gravitySpeed = params.gravitySpeed || 40;
         this.velosityRun= params.velosityRun || 20 ;        
         this.jumpHeight = params.jumpHeight || 6;
@@ -134,12 +134,12 @@ module.exports = class User{
 
             /*user level start,load prev level */
             if(this.moveLeft && this.verify.collisionBlockInitLevel() ){
-                levelLoader.loadPrevLevel();
+                main.levelLoader.loadPrevLevel();
             }
 
             /*user level end,load next level */
             if(this.moveRight && this.verify.collisionBlockNextLevel() ){
-                levelLoader.loadNextLevel();
+                main.levelLoader.loadNextLevel();
             }
 
             /*Clear funtion to clear interval*/
@@ -158,8 +158,8 @@ module.exports = class User{
         
 
         collisionBlockTop:()=>{
-            for(let i =0 ;levelLoader.Blocks.length > i;i++){                
-                let top = (this.position[1] + this.height == levelLoader.Blocks[i].topLeft[1] ) && (this.position[0] + this.width > levelLoader.Blocks[i].topLeft[0] && this.position[0] < levelLoader.Blocks[i].topRight[0]  );
+            for(let i =0 ;main.levelLoader.Blocks.length > i;i++){                
+                let top = (this.position[1] + this.height == main.levelLoader.Blocks[i].topLeft[1] ) && (this.position[0] + this.width > main.levelLoader.Blocks[i].topLeft[0] && this.position[0] < main.levelLoader.Blocks[i].topRight[0]  );
                 if(top){
                     return true;
                 }                
@@ -167,8 +167,8 @@ module.exports = class User{
         },
 
         collisionBlockBottom:()=>{
-            for(let i =0 ;levelLoader.Blocks.length > i;i++){
-                let bottom =(this.position[1] == levelLoader.Blocks[i].buttomLeft[1] ) && (this.position[0]+this.width > levelLoader.Blocks[i].buttomLeft[0] && this.position[0] < levelLoader.Blocks[i].buttomRight[0]  );
+            for(let i =0 ;main.levelLoader.Blocks.length > i;i++){
+                let bottom =(this.position[1] == main.levelLoader.Blocks[i].buttomLeft[1] ) && (this.position[0]+this.width > main.levelLoader.Blocks[i].buttomLeft[0] && this.position[0] < main.levelLoader.Blocks[i].buttomRight[0]  );
                 if(bottom){
                     return true;
                 }                
@@ -176,8 +176,8 @@ module.exports = class User{
         },
 
         collisionBlockRight:()=>{
-            for(let i =0 ;levelLoader.Blocks.length > i;i++){
-                let right =((this.position[0] + this.width == levelLoader.Blocks[i].buttomLeft[0]) && (this.position[1]  < levelLoader.Blocks[i].buttomLeft[1] ) && (this.position[1] > levelLoader.Blocks[i].topLeft[1] || this.position[1] + this.height > levelLoader.Blocks[i].topLeft[1]))
+            for(let i =0 ;main.levelLoader.Blocks.length > i;i++){
+                let right =((this.position[0] + this.width == main.levelLoader.Blocks[i].buttomLeft[0]) && (this.position[1]  < main.levelLoader.Blocks[i].buttomLeft[1] ) && (this.position[1] > main.levelLoader.Blocks[i].topLeft[1] || this.position[1] + this.height > main.levelLoader.Blocks[i].topLeft[1]))
                 if(right){
                     return true;
                 }
@@ -185,8 +185,8 @@ module.exports = class User{
         },
 
         collisionBlockLeft:()=>{
-            for(let i =0 ;levelLoader.Blocks.length > i;i++){
-                let left =((this.position[0] == levelLoader.Blocks[i].buttomRight[0]) && (this.position[1]  < levelLoader.Blocks[i].buttomRight[1] ) && (this.position[1] > levelLoader.Blocks[i].topRight[1] || this.position[1] + this.height > levelLoader.Blocks[i].topRight[1]));
+            for(let i =0 ;main.levelLoader.Blocks.length > i;i++){
+                let left =((this.position[0] == main.levelLoader.Blocks[i].buttomRight[0]) && (this.position[1]  < main.levelLoader.Blocks[i].buttomRight[1] ) && (this.position[1] > main.levelLoader.Blocks[i].topRight[1] || this.position[1] + this.height > main.levelLoader.Blocks[i].topRight[1]));
                 if(left){
                     return true;
                 }
@@ -205,8 +205,8 @@ module.exports = class User{
 
         collisionBlockInitLevel:()=>{
             /*This block in the left screen */
-            for(let i =0 ;levelLoader.BlocksInitLevel.length > i;i++){
-                let left=(this.position[0] == levelLoader.BlocksInitLevel[i].topLeft[0]) && (this.position[1]  < levelLoader.BlocksInitLevel[i].buttomRight[1] ) && (this.position[1] > levelLoader.BlocksInitLevel[i].topRight[1] || this.position[1] + this.height > levelLoader.BlocksInitLevel[i].topRight[1]);                
+            for(let i =0 ;main.levelLoader.BlocksInitLevel.length > i;i++){
+                let left=(this.position[0] == main.levelLoader.BlocksInitLevel[i].topLeft[0]) && (this.position[1]  < main.levelLoader.BlocksInitLevel[i].buttomRight[1] ) && (this.position[1] > main.levelLoader.BlocksInitLevel[i].topRight[1] || this.position[1] + this.height > main.levelLoader.BlocksInitLevel[i].topRight[1]);                
                 if(left){
                     return true;
                 }
@@ -215,8 +215,8 @@ module.exports = class User{
 
         collisionBlockNextLevel:()=>{
             /*This block in the left screen */
-            for(let i =0 ;levelLoader.BlocksEndLevel.length > i;i++){                
-                let right=(this.position[0] + this.width == levelLoader.BlocksEndLevel[i].topRight[0]) && (this.position[1]  < levelLoader.BlocksEndLevel[i].buttomLeft[1] ) && (this.position[1] > levelLoader.BlocksEndLevel[i].topLeft[1] || this.position[1] + this.height > levelLoader.BlocksEndLevel[i].topLeft[1]) ;                
+            for(let i =0 ;main.levelLoader.BlocksEndLevel.length > i;i++){                
+                let right=(this.position[0] + this.width == main.levelLoader.BlocksEndLevel[i].topRight[0]) && (this.position[1]  < main.levelLoader.BlocksEndLevel[i].buttomLeft[1] ) && (this.position[1] > main.levelLoader.BlocksEndLevel[i].topLeft[1] || this.position[1] + this.height > main.levelLoader.BlocksEndLevel[i].topLeft[1]) ;                
                 if(right){
                     return true;
                 }

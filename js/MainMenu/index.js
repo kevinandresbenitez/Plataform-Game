@@ -1,6 +1,7 @@
 let Levels =require('../Levels/levels.js');
-let LevelLoader = require('../Levels/LevelLoader.js')
-let User = require('../User/index.js');
+let main = require('../main.js');
+
+console.log(main);
 
 // Import imgs
 let comenzarImg=require('../../assets/img/Menu/Comenzar.png');
@@ -92,7 +93,7 @@ module.exports = class MainMenu{
 
         let buttonStartGame = document.createElement('button');
         buttonStartGame.classList.add('button-start');
-        buttonStartGame.onclick=()=>{this.initGame(this.levelSelected)}
+        buttonStartGame.onclick=()=>{main.initGame(this.levelSelected)}
         let TitleGame=document.createElement('p');
         TitleGame.innerText=Levels[this.levelSelected].nameLevel;
         TitleGame.classList.add('title-game');
@@ -154,7 +155,7 @@ module.exports = class MainMenu{
         let InfoLevelContainer = document.querySelectorAll('.levels-info')[0];
         let button =InfoLevelContainer.querySelectorAll('.button-start')[0];
         let TitleGame=document.querySelectorAll('.title-game')[0];        
-        button.onclick = ()=>{this.initGame(this.levelSelected)}
+        button.onclick = ()=>{main.initGame(this.levelSelected)}
         TitleGame.innerText=Levels[this.levelSelected].nameLevel;
     }
 
@@ -260,7 +261,7 @@ module.exports = class MainMenu{
         let buttonClose = document.createElement('button');      
         modalConfig.classList.add('modal-config');        
         buttonClose.classList.add('close')        
-        buttonClose.onclick=()=>{this.endGame()};
+        buttonClose.onclick=()=>{main.endGame()};
         modalConfig.appendChild(buttonClose);        
         config.appendChild(modalConfig);
 
@@ -283,42 +284,6 @@ module.exports = class MainMenu{
         },500)
     }
 
-
-
-    // game
-    static initGame(levelNumber){
-        /*Delete Menu */
-        MainMenu.deleteMenu();
-
-        /*Load Level */
-        this.levelLoader = new LevelLoader();
-        this.levelLoader.loadLevel(Levels[levelNumber]);
-
-        /*Load user */            
-        this.user = new User();
-        this.user.create();
-        this.user.gravity.main();
-        this.user.startMoviment();
-
-        /*Make escape menu */
-        MainMenu.createEscapeMenu();
-
-        /*avilite keyboards */
-        this.gameStart=true;
-
-    }
-    static endGame(){
-        /*Remove Blocks , remove user , and show menu */
-        this.levelLoader.removeBlocks();
-        this.user.remove();
-        this.showMenu();
-
-        /*Delete escape menu */
-        MainMenu.deleteEscapeMenu();
-
-        /*desabilite keyboards */
-        this.gameStart=false;
-    }
 
 
 }

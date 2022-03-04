@@ -1,9 +1,5 @@
-let BlockImg = require('../../assets/img/blocks/Block.png');
-let BlockNullImg = require('../../assets/img/blocks/BlockNull.png');
-let BlockInitLevelImg = require('../../assets/img/blocks/BlockInitLevel.png');
-let BlockEndLevelImg = require('../../assets/img/blocks/BlockEndLevel.png');
-
 /*Classes */
+
 class BlockClass{
     constructor(x,y,width,height){
         this.width=width;
@@ -21,7 +17,7 @@ class Block extends BlockClass{
         super(x,y,width,height);
         this.class='block';
         this.zIndex='10';
-        this.color = `url(${BlockImg})`;
+        this.color = 'url(../assets/img/blocks/Block.png)';
     }
 }
 
@@ -30,7 +26,7 @@ class BlockNull extends BlockClass{
         super(x,y,width,height);
         this.class='blockNull';
         this.zIndex='5';
-        this.color = `url(${BlockNullImg})`;
+        this.color = 'url(../assets/img/blocks/BlockNull.png)';
     }
 }
 
@@ -39,7 +35,7 @@ class BlockInitLevel extends BlockClass{
         super(x,y,width,height);   
         this.class='BlockInitLevel';
         this.zIndex='5';
-        this.color = `url(${BlockInitLevelImg})`;
+        this.color = 'url(../assets/img/blocks/BlockInitLevel.png)';
     }
 }
 
@@ -48,8 +44,6 @@ class BlockEndLevel extends BlockClass{
         super(x+width,y,width,height);
         this.class='BlockEndLevel';
         this.zIndex='5';
-        this.color = `url(${BlockEndLevelImg})`;
+        this.color = 'url(../assets/img/blocks/BlockEndLevel.png)';
     }
 }
-
-module.exports ={Block,BlockNull,BlockInitLevel,BlockEndLevel};
