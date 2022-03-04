@@ -1,4 +1,4 @@
-let main = require('../main.js');
+let Blocks=require('../Blocks/index.js');
 
 module.exports = class LevelLoader{
     /*Matriz  container , all blocks container array */
@@ -7,7 +7,9 @@ module.exports = class LevelLoader{
     BlocksInitLevel=[];
     BlocksEndLevel=[];
 
-    constructor(props){
+    constructor(MainThis,props){
+        this.MainThis=MainThis;
+        
         /*Define container */
         this.container =document.querySelectorAll('.container')[0];
 
@@ -30,14 +32,14 @@ module.exports = class LevelLoader{
         let aumentoX =0;
             obj.forEach((obj,key)=>{                   
                 if(obj == 1){
-                    this.Blocks.push(new Block(aumentoX,aumentoY,40,40));
+                    this.Blocks.push(new Blocks.Block(aumentoX,aumentoY,40,40));
                 }else if(obj == 2){
-                    this.BlocksInitLevel.push(new BlockInitLevel(aumentoX,aumentoY,20,40));
+                    this.BlocksInitLevel.push(new Blocks.BlockInitLevel(aumentoX,aumentoY,20,40));
                 }else if(obj == 3){
-                    this.BlocksEndLevel.push(new BlockEndLevel(aumentoX,aumentoY,20,40));
+                    this.BlocksEndLevel.push(new Blocks.BlockEndLevel(aumentoX,aumentoY,20,40));
                 }
                 else if(obj == 4){
-                    this.BlocksNulls.push(new BlockNull(aumentoX,aumentoY,40,40));
+                    this.BlocksNulls.push(new Blocks.BlockNull(aumentoX,aumentoY,40,40));
                 }    
                 aumentoX +=this.MatrizBlockWidth;
             });
@@ -92,8 +94,8 @@ module.exports = class LevelLoader{
         if(this.nextLevel){                  
             /*The name of the next level , convert to level var and change position user and load next level*/
             this.loadLevel(Levels[this.levelNum]);
-            main.user.position = this.userPositionDefault;
-            main.user.draw();
+            this.MainThis.user.position = this.userPositionDefault;
+            this.MainThis.user.draw();
             return true
         }
         return false
@@ -102,8 +104,8 @@ module.exports = class LevelLoader{
         if(this.prevLevel){
             /*The name of the next level , convert to level var and change position user and load prev level*/
             this.loadLevel(Levels[this.levelNum -2]);
-            main.user.position = this.userPositionDefault;
-            main.user.draw();
+            this.MainThis.user.position = this.userPositionDefault;
+            this.MainThis.user.draw();
             return true
         }
 

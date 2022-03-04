@@ -6,32 +6,32 @@ let User = require('./User/index.js');
 require('../less/main.less');
 
 class main{
-    static levelLoader;
-    static user;
-    static gameStart;
-    static scapeMenu;
-
+    levelLoader;
+    user;
+    gameStart;
+    scapeMenu;    
     
     static showMenu(){       
-        MainMenu.createMenu();
+        this.MainMenu =new MainMenu(this);
+        this.MainMenu.createMenu(this);
     }
     
     static initGame(levelNumber){
         /*Delete Menu */
-        MainMenu.deleteMenu();
+        this.MainMenu.deleteMenu();
 
         /*Load Level */
-        this.levelLoader = new LevelLoader();
+        this.levelLoader = new LevelLoader(this);
         this.levelLoader.loadLevel(Levels[levelNumber]);
 
         /*Load user */            
-        this.user = new User();
+        this.user = new User(this);
         this.user.create();
         this.user.gravity.main();
         this.user.startMoviment();
 
         /*Make escape menu */
-        MainMenu.createEscapeMenu();
+        this.MainMenu.createEscapeMenu();
 
         /*avilite keyboards */
         this.gameStart=true;
@@ -45,14 +45,72 @@ class main{
         this.showMenu();
 
         /*Delete escape menu */
-        MainMenu.deleteEscapeMenu();
+        this.MainMenu.deleteEscapeMenu();
 
         /*desabilite keyboards */
         this.gameStart=false;
     }
 
+    static keyBoard = {
+        keyDown:(e)=>{   
+            if(this.gameStart){
+                switch(e.key){
+                    case 'ArrowRight':
+                        this.user.moveRight=true;            
+                    break
+                    case 'ArrowLeft':
+                        this.user.moveLeft=true;            
+                    break
+                    case 'ArrowDown':
+                        this.user.moveDown=true;           
+                    break
+                    case 'ArrowUp':            
+                        this.user.moveJump=true;            
+                    break
+                    case 'Escape':
+                        if(this.scapeMenu){
+                            this.MainMenu.hiddeEscapeMenu();
+                            this.scapeMenu =false
+                        }else{
+                            this.MainMenu.showEscapeMenu();
+                            this.scapeMenu =true
+                        }
+                    break
+                }
+            }
+        },
+        
+        keyUp:(e)=>{
+            if(this.gameStart){
+                switch(e.key){
+                    case 'ArrowRight':
+                        this.user.moveRight=false;
+                        this.user.setImg.WaitRight();
+                        this.user.draw();           
+        
+                    break
+                    case 'ArrowLeft':
+                        this.user.moveLeft=false;
+                        this.user.setImg.WaitLeft();
+                        this.user.draw();          
+                    break
+                    case 'ArrowDown':
+                        this.user.moveDown=false;           
+                    break
+                    case 'ArrowUp':
+                        this.user.moveJump=false;            
+                    break
+                }
+            }
+        }
+
+    }
+
 }
 
-main.showMenu();
-module.exports =main;
 
+main.showMenu();
+
+/*Add event */
+document.addEventListener('keydown',main.keyBoard.keyDown);
+document.addEventListener('keyup',main.keyBoard.keyUp);

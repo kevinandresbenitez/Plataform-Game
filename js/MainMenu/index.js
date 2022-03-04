@@ -1,7 +1,5 @@
 let Levels =require('../Levels/levels.js');
-let main = require('../main.js');
 
-console.log(main);
 
 // Import imgs
 let comenzarImg=require('../../assets/img/Menu/Comenzar.png');
@@ -11,19 +9,22 @@ let prevImg=require('../../assets/img/Menu/Atras.png');
 
 module.exports = class MainMenu{
     /*Params levels */
-    static levelLoader;
-    static user;
-    static container = document.querySelectorAll('.container')[0];
+     levelLoader;
+     user;
+     container = document.querySelectorAll('.container')[0];
 
     /*Levelsparams */
-    static levelSelected = 0;
-    static levelSelectedRightPosition= ((Levels.length * 800)-800)*-1;
-    static levels=Levels.length;
-    static levelsLeftLimit = Levels.length * 800;
+     levelSelected = 0;
+     levelSelectedRightPosition= ((Levels.length * 800)-800)*-1;
+     levels=Levels.length;
+     levelsLeftLimit = Levels.length * 800;
     
+    constructor(MainThis){
+        this.MainThis=MainThis;     
+    }
   
     /*Create menu home */
-    static createMenu(){
+     createMenu(){
             /*      home Menu         */
         let MainMenu = document.createElement('div');
         MainMenu.classList.add('Main-menu');
@@ -93,7 +94,7 @@ module.exports = class MainMenu{
 
         let buttonStartGame = document.createElement('button');
         buttonStartGame.classList.add('button-start');
-        buttonStartGame.onclick=()=>{main.initGame(this.levelSelected)}
+        buttonStartGame.onclick=()=>{this.MainThis.initGame(this.levelSelected)}
         let TitleGame=document.createElement('p');
         TitleGame.innerText=Levels[this.levelSelected].nameLevel;
         TitleGame.classList.add('title-game');
@@ -128,13 +129,13 @@ module.exports = class MainMenu{
 
     }
     /*delete menu home */
-    static deleteMenu(){        
+     deleteMenu(){        
         this.container.innerHTML='';        
     }
 
 
     /*In home , menu level change level selected */
-    static selectPrevLevel(){
+     selectPrevLevel(){
         if((this.levelSelectedRightPosition * -1) != this.levelsLeftLimit - 800){            
             this.levelSelectedRightPosition -= 800;
             this.levelSelected -=1;
@@ -142,7 +143,7 @@ module.exports = class MainMenu{
             containerLevelItems.style.right = this.levelSelectedRightPosition + "px";
         }
     }
-    static selectNextLevel(){                
+     selectNextLevel(){                
         if(this.levelSelectedRightPosition != 0){     
             this.levelSelectedRightPosition += 800;        
             this.levelSelected+=1;
@@ -151,21 +152,21 @@ module.exports = class MainMenu{
         }
     }
     /*In home , menu level change info level selected */
-    static drawInfoLevel(){        
+     drawInfoLevel(){        
         let InfoLevelContainer = document.querySelectorAll('.levels-info')[0];
         let button =InfoLevelContainer.querySelectorAll('.button-start')[0];
         let TitleGame=document.querySelectorAll('.title-game')[0];        
-        button.onclick = ()=>{main.initGame(this.levelSelected)}
+        button.onclick = ()=>{this.MainThis.initGame(this.levelSelected)}
         TitleGame.innerText=Levels[this.levelSelected].nameLevel;
     }
 
 
         /*Modal configs in home */
-    static showConfigModal(){        
+     showConfigModal(){        
         document.querySelectorAll('.config')[0].style.display='block';
         document.querySelectorAll('.modal-config')[0].style.animation ='showModal 0.5s';
     }
-    static hideConfigModal(){
+     hideConfigModal(){
         let modal = document.querySelectorAll('.modal-config')[0];
         modal.style.animation ='hideModal 0.5s';        
         modal.addEventListener('animationend', (e) => {
@@ -176,7 +177,7 @@ module.exports = class MainMenu{
         })
     }
         /*Page home */
-    static hideMainMenu(){
+     hideMainMenu(){
         let leftBar =document.querySelectorAll('.left-Bar')[0];
         let topBar =document.querySelectorAll('.top-Bar')[0];
         let bottomBar =document.querySelectorAll('.bottom-Bar')[0];
@@ -193,7 +194,7 @@ module.exports = class MainMenu{
 
 
     }
-    static showMenu(){
+     showMenu(){
         this.hideLevels();
         
         let leftBar =document.querySelectorAll('.left-Bar')[0];
@@ -209,7 +210,7 @@ module.exports = class MainMenu{
         bottomBar.style.animation='showbottomBar 1s';
     }
         /*Page home-load levels*/
-    static hideLevels(){
+     hideLevels(){
         let loadLevelsMenu =document.querySelectorAll('.load-Levels-menu')[0];
         let topBar = document.querySelectorAll('.top-Bar-loadLevel')[0];                            
         topBar.style.animation='hideloadLevels 1s';
@@ -220,7 +221,7 @@ module.exports = class MainMenu{
         },1000)
         
     }
-    static showLevels(){
+     showLevels(){
         this.hideMainMenu();
         let loadLevelsMenu =document.querySelectorAll('.load-Levels-menu')[0];
         let topBar = document.querySelectorAll('.top-Bar-loadLevel')[0];   
@@ -253,7 +254,7 @@ module.exports = class MainMenu{
 
 
     /* Escape modal in game  */
-    static createEscapeMenu(){
+     createEscapeMenu(){
         /*      Modal menu          */
         let config = document.createElement('div');
         config.classList.add('escape-menu');        
@@ -261,23 +262,23 @@ module.exports = class MainMenu{
         let buttonClose = document.createElement('button');      
         modalConfig.classList.add('modal-config');        
         buttonClose.classList.add('close')        
-        buttonClose.onclick=()=>{main.endGame()};
+        buttonClose.onclick=()=>{this.MainThis.endGame()};
         modalConfig.appendChild(buttonClose);        
         config.appendChild(modalConfig);
 
         /*Add menu in the dom */
         this.container.appendChild(config)
     }
-    static deleteEscapeMenu(){        
+     deleteEscapeMenu(){        
         this.container.removeChild(
         document.querySelectorAll('.escape-menu')[0]);
 
     }
-    static showEscapeMenu(){
+     showEscapeMenu(){
         document.querySelectorAll('.modal-config')[0].style.animation ='showModal 0.5s';
         document.querySelectorAll('.escape-menu')[0].style.display = 'block';
     }
-    static hiddeEscapeMenu(){
+     hiddeEscapeMenu(){
         document.querySelectorAll('.modal-config')[0].style.animation ='hideModal 0.5s';
         setTimeout(()=>{
             document.querySelectorAll('.escape-menu')[0].style.display = 'none';
