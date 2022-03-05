@@ -14,7 +14,7 @@ module.exports = class User{
         /*Action jump user params */
     moveJump;
     jumpHeight;
-    jumpSpeed;
+    frequencyJump;
     jumpStatus;/*Boolean for jump inteval */
     firstJump;/*User can jump if not used first jump ,else need run in floor */
         /*Gravity user */
@@ -25,15 +25,15 @@ module.exports = class User{
 
         this.parentContainer=document.querySelectorAll('.container')[0];
         this.id=params.id ? params.id : 'user';
-        this.width=params.width || 60;
-        this.height=params.height || 80;
+        this.width=params.width ? params.width:60;
+        this.height=params.height ? params.height : 80;
         this.zIndex=8;
-        this.speedMoviment =params.speedMoviment || 40;
+        this.frequencyMoviment =params.frequencyMoviment ? params.frequencyMoviment : 40;
         this.position= params.position ? params.position : this.MainThis.levelLoader.userPositionDefault;
-        this.gravitySpeed = params.gravitySpeed || 40;
-        this.velosityRun= params.velosityRun || 20 ;        
+        this.frequencyGravity = params.frequencyGravity ? params.frequencyGravity : 40;
+        this.velosityRun= params.velosityRun ? params.velosityRun : 20 ;        
         this.jumpHeight = params.jumpHeight || 6;
-        this.jumpSpeed=params.jumpSpeed || 50;
+        this.frequencyJump=params.frequencyJump ? params.frequencyJump : 50;
 
             /*User Img */        
         this.img=`url(${UserWaitRight})`;
@@ -51,7 +51,8 @@ module.exports = class User{
         user.style.height =this.height+'px';
         user.style.zIndex=this.zIndex;
         
-        user.style.background =this.img,
+        user.style.backgroundImage =this.img,
+        user.style.backgroundSize = '100% 100%';
         user.style.left =x+ 'px';
         user.style.top =y+'px';
 
@@ -77,7 +78,7 @@ module.exports = class User{
         this.user.style.height= this.height + "px";
         this.user.style.left= this.position[0] + 'px';
         this.user.style.top= this.position[1] + 'px';
-        this.user.style.background=this.img;
+        this.user.style.backgroundImage=this.img;        
     }
     /*Img User */
     setImg={
@@ -152,7 +153,7 @@ module.exports = class User{
                 clearInterval(interval);
             }
 
-        },this.speedMoviment)
+        },this.frequencyMoviment)
 
 
     }
@@ -275,7 +276,7 @@ module.exports = class User{
                     }
 
                     sec++;
-                },this.jumpSpeed)                                                                
+                },this.frequencyJump)                                                                
             }            
         }
     }
@@ -299,7 +300,7 @@ module.exports = class User{
                         this.destroyGravity=false;
                     }
 
-                },this.gravitySpeed);
+                },this.frequencyGravity);
             }
         },
 

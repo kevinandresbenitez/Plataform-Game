@@ -14,8 +14,8 @@ module.exports = class LevelLoader{
         this.container =document.querySelectorAll('.container')[0];
 
         /*Grid dimentions for matriz*/
-        this.MatrizBlockWidth =40;
-        this.MatrizBlockHeight =40;
+        this.MatrizBlockWidth=props.width ? props.width : 40;
+        this.MatrizBlockHeight =props.height ? props.height : 40;
     }
 
     /*make blocks based in matriz and push in arrays for category */
@@ -32,14 +32,14 @@ module.exports = class LevelLoader{
         let aumentoX =0;
             obj.forEach((obj,key)=>{                   
                 if(obj == 1){
-                    this.Blocks.push(new Blocks.Block(aumentoX,aumentoY,40,40));
+                    this.Blocks.push(new Blocks.Block(aumentoX,aumentoY,this.MatrizBlockWidth,this.MatrizBlockHeight));
                 }else if(obj == 2){
-                    this.BlocksInitLevel.push(new Blocks.BlockInitLevel(aumentoX,aumentoY,20,40));
+                    this.BlocksInitLevel.push(new Blocks.BlockInitLevel(aumentoX,aumentoY,this.MatrizBlockWidth / 2,this.MatrizBlockHeight));
                 }else if(obj == 3){
-                    this.BlocksEndLevel.push(new Blocks.BlockEndLevel(aumentoX,aumentoY,20,40));
+                    this.BlocksEndLevel.push(new Blocks.BlockEndLevel(aumentoX,aumentoY,this.MatrizBlockWidth / 2,this.MatrizBlockHeight));
                 }
                 else if(obj == 4){
-                    this.BlocksNulls.push(new Blocks.BlockNull(aumentoX,aumentoY,40,40));
+                    this.BlocksNulls.push(new Blocks.BlockNull(aumentoX,aumentoY,this.MatrizBlockWidth,this.MatrizBlockHeight));
                 }    
                 aumentoX +=this.MatrizBlockWidth;
             });
@@ -60,6 +60,7 @@ module.exports = class LevelLoader{
         element.style.height = obj.height +'px';
         element.style.background=obj.color;
         element.style.position='absolute';
+        element.style.backgroundSize = '100% 100%';
         element.style.zIndex=obj.zIndex;
         /*Ad item in the dom */
         this.container.appendChild(element);        

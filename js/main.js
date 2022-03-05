@@ -9,7 +9,8 @@ class main{
     levelLoader;
     user;
     gameStart;
-    scapeMenu;    
+    scapeMenu;
+    static MasterScale =30; /* Scale Blocks User,moviment,speed,gravity ...*/
     
     static showMenu(){       
         this.MainMenu =new MainMenu(this);
@@ -19,13 +20,13 @@ class main{
     static initGame(levelNumber){
         /*Delete Menu */
         this.MainMenu.deleteMenu();
-
+                
         /*Load Level */
-        this.levelLoader = new LevelLoader(this);
+        this.levelLoader = new LevelLoader(this,{width:this.MasterScale,height:this.MasterScale});
         this.levelLoader.loadLevel(Levels[levelNumber]);
 
         /*Load user */            
-        this.user = new User(this);
+        this.user = new User(this,{width:this.MasterScale+(this.MasterScale /2),height:this.MasterScale*2,velosityRun:this.MasterScale / 2});
         this.user.create();
         this.user.gravity.main();
         this.user.startMoviment();
