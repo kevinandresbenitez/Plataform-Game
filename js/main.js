@@ -10,7 +10,7 @@ class main{
     user;
     gameStart;
     scapeMenu;
-    static MasterScale =30; /* Scale Blocks User,moviment,speed,gravity ...*/
+    static MasterScale = window.innerHeight > 800 ? 40:30; /* Scale Blocks User,moviment,speed,gravity ...*/
     
     static showMenu(){       
         this.MainMenu =new MainMenu(this);

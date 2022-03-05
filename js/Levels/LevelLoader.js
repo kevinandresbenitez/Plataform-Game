@@ -6,10 +6,12 @@ module.exports = class LevelLoader{
     BlocksNulls=[];
     BlocksInitLevel=[];
     BlocksEndLevel=[];
+    ScreenHeight;
 
     constructor(MainThis,props){
         this.MainThis=MainThis;
-        
+        this.ScreenHeight = window.innerHeight;
+
         /*Define container */
         this.container =document.querySelectorAll('.container')[0];
 
@@ -27,8 +29,8 @@ module.exports = class LevelLoader{
         this.BlocksEndLevel=[];
 
         /*Remplace All blocks for blocks objects */
-        let aumentoY=0;
-        LevelMap.forEach((obj,key)=>{
+        let aumentoY= this.ScreenHeight - this.MatrizBlockHeight;
+        LevelMap.reverse().forEach((obj,key)=>{
         let aumentoX =0;
             obj.forEach((obj,key)=>{                   
                 if(obj == 1){
@@ -44,8 +46,11 @@ module.exports = class LevelLoader{
                 aumentoX +=this.MatrizBlockWidth;
             });
            
-            aumentoY+=this.MatrizBlockHeight;
+            aumentoY-=this.MatrizBlockHeight;
         });
+
+        // restore order
+        LevelMap.reverse();
     }
     /*Remove old Blocks and add new blocks in the dom*/
     drawBlocks(NewBlocksItems){        
