@@ -6,28 +6,29 @@
     width: 100vw;
     height: 100vh;    
     background-color: rgba(61, 21, 21, 0.26);    
-}
-.config .modal-config{        
-    position: absolute;
-    top: 5%;
-    left: 25%;
-    width: 800px;
-    height: 800px;
-    background: url('../../assets/img/Menu/modalBackground.png');
-}
 
-.config .modal-config .close{
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    width: 60px;
-    height: 60px;
-    background: url('../../assets/img/Menu/CloseModal.png');    
-    border: none;
-    transition: all 0.3s;
-}
-.config .modal-config .close:hover{
-    transform:scale(1.1);
+    .modal-config{        
+        position: absolute;
+        top: 5%;
+        left: 25%;
+        width: 800px;
+        height: 800px;
+        background: url('../../assets/img/Menu/modalBackground.png');
+
+        .close{
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 60px;
+            height: 60px;
+            background: url('../../assets/img/Menu/CloseModal.png');    
+            border: none;
+            transition: all 0.3s;
+            &:hover{
+                transform:scale(1.1);
+            }
+        }
+    }
 }
 
 /* Modals */

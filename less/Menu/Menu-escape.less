@@ -7,31 +7,30 @@
     z-index: 20;    
     display: none;
     background-color: rgba(61, 21, 21, 0.26);    
-}
 
 
-.escape-menu .modal-config{
-    position: absolute;
-    top: 5%;
-    left: 25%;
-    width: 800px;
-    height: 800px;
-    background: url('../../assets/img/Menu/modalBackground.png');   
+    .modal-config{
+        position: absolute;
+        top: 5%;
+        left: 25%;
+        width: 800px;
+        height: 800px;
+        background: url('../../assets/img/Menu/modalBackground.png');   
+    
+        display: flex; 
+        flex-flow: column;
+        justify-content: center;
+        align-items: center;
 
-    display: flex; 
-    flex-flow: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.escape-menu .modal-config .close{
-    height: 80px;
-    width: 280px;
-    border: none;                                
-    transition: all 0.3s;
-    background: url(../../assets/img/Menu/QuitButton.png);
-}
-
-.escape-menu .modal-config .close:hover{
-    transform:scale(1.1);
+        .close{
+            height: 80px;
+            width: 280px;
+            border: none;                                
+            transition: all 0.3s;
+            background: url(../../assets/img/Menu/QuitButton.png);
+            &:hover{
+                transform:scale(1.1);
+            }
+        }
+    }
 }

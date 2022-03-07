@@ -1,4 +1,3 @@
-    /*Level navbar*/
 .load-Levels-menu{
     position: absolute;
     width: 100vw;
@@ -6,119 +5,126 @@
     top: 0;
     left: 0;    
     display: none;
-}
-.load-Levels-menu .top-Bar-loadLevel{
-    top: 0%;
-    left: 0%;    
-    width: 200px;
-    height: 200px;
-    position: absolute;    
-    display: none;
 
-}
-.load-Levels-menu .top-Bar-loadLevel .button-prev{        
-    left: 100%;
-    position: absolute;
-    margin-top: 50px;
-    height: 80px;
-    width: 280px;
-    border: none;
-    transition: all 0.3s;
-}
-.load-Levels-menu .top-Bar-loadLevel .button-prev:hover{
-    transform:scale(1.1);
-}
+    /*Level navbar*/
+    .top-Bar-loadLevel{
+        top: 0%;
+        left: 0%;    
+        width: 200px;
+        height: 200px;
+        position: absolute;    
+        display: none;
+        .button-prev{
+            left: 100%;
+            position: absolute;
+            margin-top: 50px;
+            height: 80px;
+            width: 280px;
+            border: none;
+            transition: all 0.3s;
+            &:hover{
+                transform:scale(1.1);
+            }
+        }
 
+    }
 
     /* levels items */
-.load-Levels-menu .levels-bar{
-    position: absolute;
-    top: 15%;
-    left: 10%;
-    width:800px;
-    height: 400px;    
-    overflow: hidden;
-}
-.load-Levels-menu .levels-bar .levels-items{
-    width: auto;
-    height: 400px;
-    position: absolute;    
-    display: flex;
-    flex-flow: row nowrap;    
-    overflow: hidden;
+    .levels-bar{
+        position: absolute;
+        top: 15%;
+        left: 10%;
+        width:800px;
+        height: 400px;    
+        overflow: hidden;
 
-    transition: right 0.3s;
-}
-.load-Levels-menu .levels-bar .levels-items .items{
-    width: 800px;
-    height:100%; 
-    position: relative;
-    background: white;        
+        .levels-items{
+        width: auto;
+        height: 400px;
+        position: absolute;    
+        display: flex;
+        flex-flow: row nowrap;    
+        overflow: hidden;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.load-Levels-menu .levels-bar .button-prev{
-    position: absolute;    
-    width: 60px;
-    height: 60px;    
-    border: none;
-    background: url('../../assets/img/Menu/PrevLevel.png');
-    top: 45%;
-    left: 5px;
-    transition: transform 0.3s;
-}
-.load-Levels-menu .levels-bar .button-next{
-    position: absolute;    
-    border-radius: 3px;
-    width: 60px;
-    height: 60px;    
-    background: url('../../assets/img/Menu/NextLevel.png');
-    border: none;
-    top: 45%;
-    right:5px;
-    transition: transform 0.3s;
-}
+        transition: right 0.3s;
+            .items{
+                width: 800px;
+                height:100%; 
+                position: relative;
+                background: white;        
+            
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
 
-.load-Levels-menu .levels-bar .button-prev:hover{
-    transform: scale(1.1);
-}
-.load-Levels-menu .levels-bar .button-next:hover{
-    transform: scale(1.1);
-}
+        }
+
+        .button-prev{
+            position: absolute;    
+            width: 60px;
+            height: 60px;    
+            border: none;
+            background: url('../../assets/img/Menu/PrevLevel.png');
+            top: 45%;
+            left: 5px;
+            transition: transform 0.3s;
+
+            &:hover{
+                transform: scale(1.1);
+            }
+        }
+        .button-next{
+            position: absolute;    
+            border-radius: 3px;
+            width: 60px;
+            height: 60px;    
+            background: url('../../assets/img/Menu/NextLevel.png');
+            border: none;
+            top: 45%;
+            right:5px;
+            transition: transform 0.3s;
+            &:hover{
+                transform: scale(1.1);
+            }
+        }
+
+    }
 
     /*Levels info*/
-.load-Levels-menu .levels-info{
-    top: 15%;
-    left: 65%;
-    position: absolute;
-    width: 440px;
-    height: 510px;
-    background: url('../../assets/img/Menu/InfoBackground.png');
-}
-.load-Levels-menu .levels-info .button-start{
-    width: 160px;
-    height: 160px;    
-    border: none;
-    margin:20px 30%;
-    border-radius: 10%;
-    background: url('../../assets/img/Menu/StartButton.png');
-    transition:  transform 0.3s
-}
-.load-Levels-menu .levels-info .button-start:hover{
-    transform: scale(1.1);
-}
+    .levels-info{
+        top: 15%;
+        left: 65%;
+        position: absolute;
+        width: 440px;
+        height: 510px;
+        background: url('../../assets/img/Menu/InfoBackground.png');
 
-.load-Levels-menu .levels-info .title-game{
-    width: 50%;
-    font-size: 32px;
-    text-align: center;
-    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    color: rgba(127, 86, 165, 0.616);
-    font-weight: 800;
-    padding: 20px;    
-    margin: auto;
+        .button-start{
+            width: 160px;
+            height: 160px;    
+            border: none;
+            margin:20px 30%;
+            border-radius: 10%;
+            background: url('../../assets/img/Menu/StartButton.png');
+            transition:  transform 0.3s;
+            &:hover{
+                transform: scale(1.1);
+            }
+        }
+
+        .title-game{
+            width: 50%;
+            font-size: 32px;
+            text-align: center;
+            font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            color: rgba(127, 86, 165, 0.616);
+            font-weight: 800;
+            padding: 20px;    
+            margin: auto;
+        }
+    }
+
 }
 
 @keyframes showloadLevels{
