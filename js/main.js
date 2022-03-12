@@ -41,15 +41,14 @@ class main{
 
     static endGame(){
         /*Remove Blocks , remove user , and show menu */
-        this.levelLoader.removeBlocks();
+        this.levelLoader.remove();
         this.user.remove();
-        this.showMenu();
-
-        /*Delete escape menu */
-        this.MainMenu.deleteEscapeMenu();
-
+        this.MainMenu.deleteEscapeMenu();/*Delete escape menu */
+        
         /*desabilite keyboards */
         this.gameStart=false;
+
+        this.showMenu();
     }
 
     static keyBoard = {

@@ -23,7 +23,7 @@ class Block extends BlockClass{
         super(x,y,width,height);
         this.class='block';
         this.zIndex='10';
-        this.color = `url(${BlockImg})`;
+        this.color =BlockImg;
     }
 }
 
@@ -32,7 +32,7 @@ class BlockNull extends BlockClass{
         super(x,y,width,height);
         this.class='blockNull';
         this.zIndex='5';
-        this.color = `url(${BlockNullImg})`;
+        this.color = BlockNullImg;
     }
 }
 
@@ -41,7 +41,7 @@ class BlockInitLevel extends BlockClass{
         super(x,y,width,height);   
         this.class='BlockInitLevel';
         this.zIndex='5';
-        this.color = `url(${BlockInitLevelImg})`;
+        this.color = BlockInitLevelImg;
     }
 }
 
@@ -50,7 +50,7 @@ class BlockEndLevel extends BlockClass{
         super(x+width,y,width,height);
         this.class='BlockEndLevel';
         this.zIndex='5';
-        this.color =`url(${BlockEndLevelImg})`;
+        this.color =BlockEndLevelImg;
     }
 }
 

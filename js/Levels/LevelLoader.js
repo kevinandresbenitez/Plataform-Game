@@ -8,14 +8,28 @@ module.exports = class LevelLoader{
     BlocksEndLevel=[];
     ScreenHeight;
 
+    // Containers
+    blocksContext;
+    blocksCanvas;
+    container;
+
     constructor(MainThis,props){
         this.MainThis=MainThis;
         this.ScreenHeight = window.innerHeight;
 
-        /*Define container */
-        this.container =document.querySelectorAll('.container')[0];
+        // Create canvas element in the dom
+        let canvas =document.createElement('canvas');
+        canvas.id = 'canvas-blocks';
+        canvas.height =window.screen.height;
+        canvas.width =window.screen.width;
+        document.querySelectorAll('.container')[0].appendChild(canvas);
 
-        /*Grid dimentions for matriz*/
+        /*Define containers */
+        this.container =document.querySelectorAll('.container')[0];
+        this.blocksCanvas=document.getElementById('canvas-blocks');
+        this.blocksContext =this.blocksCanvas.getContext('2d');
+                
+        /*Grid dimentions for matriz blocks*/
         this.MatrizBlockWidth=props.width ? props.width : 40;
         this.MatrizBlockHeight =props.height ? props.height : 40;
     }
@@ -52,32 +66,20 @@ module.exports = class LevelLoader{
         // restore order
         LevelMap.reverse();
     }
-    /*Remove old Blocks and add new blocks in the dom*/
+    /*Create new blocks in canvas*/
     drawBlocks(NewBlocksItems){        
         /*Make new blocks */
-        NewBlocksItems.forEach((obj,key)=>{        
-        /*Create block item dom */
-        let element = document.createElement('div');
-        element.classList.add(obj.class);
-        element.style.top =obj.topLeft[1] + 'px';
-        element.style.left =obj.topLeft[0] + 'px';
-        element.style.width = obj.width +'px';        
-        element.style.height = obj.height +'px';
-        element.style.background=obj.color;
-        element.style.position='absolute';
-        element.style.backgroundSize = '100% 100%';
-        element.style.zIndex=obj.zIndex;
-        /*Ad item in the dom */
-        this.container.appendChild(element);        
-    })
-
-    }
+        NewBlocksItems.forEach((obj,key)=>{
+            let img =new Image();            
+            img.src =obj.color;
+            img.onload =()=>{
+                this.blocksContext.drawImage(img,obj.topLeft[0],obj.topLeft[1],obj.width,obj.height);  
+            }
+        }
+    )}
+    /*delete hold blocks in canvas*/
     removeBlocks(){
-        /*Remove old blocks */
-        let BlocksToDelete = document.querySelectorAll('.block , .blockNull , .BlockInitLevel , .BlockEndLevel');
-        BlocksToDelete.forEach((obj,key)=>{                
-            this.container.removeChild(obj);
-        })
+        this.blocksContext.clearRect(0, 0, window.screen.width,window.screen.height);
     }
 
     /*Function to load a level change level , but not change position user*/
@@ -116,5 +118,10 @@ module.exports = class LevelLoader{
         }
 
         return false
+    }
+
+    // remove all for the dom
+    remove(){
+        this.container.removeChild(this.blocksCanvas);
     }
 }
