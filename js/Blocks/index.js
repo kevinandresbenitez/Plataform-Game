@@ -26,7 +26,14 @@ class Block extends BlockClass{
         this.color =BlockImg;
     }
 }
-
+class BlockFalse extends BlockClass{
+    constructor(x,y,width,height){
+        super(x,y,width,height);
+        this.class='blockNull';
+        this.zIndex='5';
+        this.color = BlockImg;
+    }
+}
 class BlockNull extends BlockClass{
     constructor(x,y,width,height){
         super(x,y,width,height);
@@ -36,6 +43,7 @@ class BlockNull extends BlockClass{
     }
 }
 
+
 class BlockInitLevel extends BlockClass{
     constructor(x,y,width,height){
         super(x,y,width,height);   
@@ -44,7 +52,6 @@ class BlockInitLevel extends BlockClass{
         this.color = BlockInitLevelImg;
     }
 }
-
 class BlockEndLevel extends BlockClass{
     constructor(x,y,width,height){
         super(x+width,y,width,height);
@@ -54,4 +61,4 @@ class BlockEndLevel extends BlockClass{
     }
 }
 
-module.exports={Block,BlockEndLevel,BlockInitLevel,BlockNull};
+module.exports={Block,BlockEndLevel,BlockInitLevel,BlockNull,BlockFalse};

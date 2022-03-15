@@ -5,8 +5,7 @@ module.exports = class LevelLoader{
     Blocks=[];
     BlocksNulls=[];
     BlocksInitLevel=[];
-    BlocksEndLevel=[];
-    ScreenHeight;
+    BlocksEndLevel=[];    
 
     // Containers
     blocksContext;
@@ -14,8 +13,7 @@ module.exports = class LevelLoader{
     container;
 
     constructor(MainThis,props){
-        this.MainThis=MainThis;
-        this.ScreenHeight = window.innerHeight;
+        this.MainThis=MainThis;        
 
         // Create canvas element in the dom
         let canvas =document.createElement('canvas');
@@ -43,7 +41,19 @@ module.exports = class LevelLoader{
         this.BlocksEndLevel=[];
 
         /*Remplace All blocks for blocks objects */
-        let aumentoY= this.ScreenHeight - this.MatrizBlockHeight;
+
+        /*Blocks List
+            Block  = 1  //Solid block colissions
+            BlockFalse =5= //copy the block img , never colission block
+            BlockNull = 4 =  // never coliision block 
+            
+            BlockInitLevel = 2 =  // Block init level
+            BlockEndLevel = 3 = // Block end level
+        
+        */
+
+
+        let aumentoY= window.innerHeight - this.MatrizBlockHeight;
         LevelMap.reverse().forEach((obj,key)=>{
         let aumentoX =0;
             obj.forEach((obj,key)=>{                   
@@ -56,7 +66,10 @@ module.exports = class LevelLoader{
                 }
                 else if(obj == 4){
                     this.BlocksNulls.push(new Blocks.BlockNull(aumentoX,aumentoY,this.MatrizBlockWidth,this.MatrizBlockHeight));
-                }    
+                }
+                else if(obj == 5){
+                    this.BlocksNulls.push(new Blocks.BlockFalse(aumentoX,aumentoY,this.MatrizBlockWidth,this.MatrizBlockHeight));
+                }
                 aumentoX +=this.MatrizBlockWidth;
             });
            
@@ -89,6 +102,11 @@ module.exports = class LevelLoader{
         this.userPositionDefault=level.userPositionDefault;
         this.prevLevel=level.prevLevel;
         this.nextLevel=level.nextLevel;
+
+        /*Restore screen for change level*/
+        if(this.MainThis.MovimentScreen){
+            this.MainThis.MovimentScreen.restore()
+        }
 
             /*Remove hold blocks and make news */
         this.removeBlocks();

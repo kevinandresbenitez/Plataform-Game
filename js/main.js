@@ -1,6 +1,7 @@
 let MainMenu =require('./MainMenu/index');
 let LevelLoader = require('./Levels/LevelLoader.js');
 let User = require('./User/index.js');
+let MovimentScreen = require('./MovimentScreen/index.js');
 
     // Import Styles
 require('../less/main.less');
@@ -10,11 +11,12 @@ class main{
     user;
     gameStart;
     scapeMenu;
+    MovimentScreen;
     static MasterScale = window.innerHeight > 800 ? 40:30; /* Scale Blocks User,moviment,speed,gravity ...*/
     
     static showMenu(){       
         this.MainMenu =new MainMenu(this);
-        this.MainMenu.createMenu(this);
+        this.MainMenu.createMenu();
     }
     
     static initGame(levelNumber){
@@ -31,6 +33,10 @@ class main{
         this.user.gravity.main();
         this.user.startMoviment();
 
+        /*Load screen moviment */
+        this.MovimentScreen= new MovimentScreen(this);
+        this.MovimentScreen.initMoviment();
+        
         /*Make escape menu */
         this.MainMenu.createEscapeMenu();
 
@@ -56,7 +62,7 @@ class main{
             if(this.gameStart){
                 switch(e.key){
                     case 'ArrowRight':
-                        this.user.moveRight=true;            
+                        this.user.moveRight=true;                                    
                     break
                     case 'ArrowLeft':
                         this.user.moveLeft=true;            

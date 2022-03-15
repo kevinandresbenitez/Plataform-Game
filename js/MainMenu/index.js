@@ -8,9 +8,7 @@ let prevImg=require('../../assets/img/Menu/Atras.png');
 
 
 module.exports = class MainMenu{
-    /*Params levels */
-     levelLoader;
-     user;
+    /*Params levels */     
      container = document.querySelectorAll('.container')[0];
 
     /*Levelsparams */

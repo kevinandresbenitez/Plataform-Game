@@ -4,6 +4,8 @@ let UserRunLeft = require('../../assets/img/user/UserRunLeft.gif')
 let UserRunRight = require('../../assets/img/user/UserRunRight.gif')
 
 module.exports = class User{    
+    /*Params user */
+    position;
     inMoviment= false;    
     velosityRun;/*move spped */
 
