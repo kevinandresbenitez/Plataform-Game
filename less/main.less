@@ -10,18 +10,24 @@ body{
 .container{
     position: absolute;
     top: 0;
-
     width: 100vw;
     height: 100vh;
-    
     background: #da5555;
-    transition: all 1s;
+    
+    .game-container{
+        position: absolute;
+        top: 0;
+        background: #925353;
+        transition: all 1s;
+        /*User style default*/
+        #user{
+        position: absolute;
+        transition: all 0.1s;
+        }
+    }
 }
-    /*User style default*/
-#user{
-    position: absolute;
-    transition: all 0.1s;
-}
+
+
 
 @import './Menu/Menu-config.less';
 @import './Menu//Menu-escape.less';

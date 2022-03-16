@@ -127,10 +127,17 @@ module.exports = class MainMenu{
 
     }
     /*delete menu home */
-     deleteMenu(){        
+     deleteMenu(){
         this.container.innerHTML='';        
     }
-
+    createGameContainer(){
+        let gameContainer=document.createElement('div');
+        gameContainer.classList.add('game-container');
+        this.container.appendChild(gameContainer);
+    }
+    deleteGameContainer(){
+        this.container.removeChild(document.querySelectorAll('.game-container')[0]);
+    }
 
     /*In home , menu level change level selected */
      selectPrevLevel(){
@@ -270,7 +277,6 @@ module.exports = class MainMenu{
      deleteEscapeMenu(){        
         this.container.removeChild(
         document.querySelectorAll('.escape-menu')[0]);
-
     }
      showEscapeMenu(){
         document.querySelectorAll('.modal-config')[0].style.animation ='showModal 0.5s';

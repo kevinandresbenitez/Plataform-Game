@@ -1,21 +1,24 @@
 module.exports = class MovimentScreen{
     MovimentInitialized = false;
     MovimentClearInterval =false;
-    IntervalMoviment=1000;
+    IntervalMoviment=200;
     breakpointWidth = 200;
     moveScreenWidth =200;
 
-    /*Poisitions to move */
+    /*Poisitions to move screen , when the user is in breackpoints*/
     breakpoints={
         left:0,
         right:0,        
         status:true,
     }    
 
-    constructor(MainThis,props){
+    constructor(MainThis){
         this.MainThis=MainThis;
+        /*Define containers */
+        this.gameContainer=document.querySelectorAll('.game-container')[0];
     }
 
+    /*Move screen in interval */
     initMoviment(){
         /*If is initialized return false */
         if(this.MovimentInitialized){
@@ -49,40 +52,51 @@ module.exports = class MovimentScreen{
 
         },this.IntervalMoviment)
     }
-
+     /*change position to default*/
+    restore(){
+        this.gameContainer.style.left ="0px";
+        this.breakpoints.status=true;
+    }
+     /*move screen position x */
     move={
         left:()=>{
-            let container =document.querySelectorAll('.container')[0];
-            if(container.style.left){                
-                if(container.style.left.split('px')[0] < 0){
-                    let left = (container.style.left).split('px')[0];
-                    container.style.left = (parseInt(left) + this.moveScreenWidth)  + "px";
-                }
+            // if the screen can move
+            if(!this.verifyCanMove.left()){
+                return false
+            }
+
+            if(this.gameContainer.style.left){
+                let left = (this.gameContainer.style.left).split('px')[0];
+                this.gameContainer.style.left = (parseInt(left) + this.moveScreenWidth)  + "px";
             }else{
-                container.style.left ="0px";
-                setTimeout(()=>{
-                    container.style.left =this.moveScreenWidth + "px";
-                },1000)
+                this.gameContainer.style.left ="0px";
             }
         },
-        right:()=>{
-            let container =document.querySelectorAll('.container')[0];
-            if(container.style.left){                
-                let left = (container.style.left).split('px')[0];
-                container.style.left = (parseInt(left) - this.moveScreenWidth)  + "px";
+        right:()=>{            
+                // if the screen can move
+            if(!this.verifyCanMove.right()){
+                return false
+            }
+
+            if(this.gameContainer.style.left){
+                let left = (this.gameContainer.style.left).split('px')[0];
+                this.gameContainer.style.left = (parseInt(left) - this.moveScreenWidth)  + "px";
             }else{
-                container.style.left ="0px";
-                setTimeout(()=>{
-                    container.style.left =-this.moveScreenWidth +"px";
-                },1000)
-            }          
+                this.gameContainer.style.left ="0px";
+            }
         },
     }
+    /*if the screen can move */
+    verifyCanMove={
+        left:()=>{
+            return this.gameContainer.style.left.split('px')[0] < 0;
+        },
 
-    restore(){
-        let container =document.querySelectorAll('.container')[0];
-        container.style.left ="0px";
-        this.breakpoints.status=true;
+        right:()=>{
+            let screenMoviment  =window.screen.width - (((this.gameContainer.style.left).split('px')[0]));
+            let levelWidth=this.MainThis.levelLoader.levelWidth;            
+            return (screenMoviment < levelWidth);            
+        }
     }
 
 }

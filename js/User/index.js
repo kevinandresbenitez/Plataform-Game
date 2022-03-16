@@ -25,7 +25,7 @@ module.exports = class User{
     constructor(MainThis,params = false){
         this.MainThis=MainThis;
 
-        this.parentContainer=document.querySelectorAll('.container')[0];
+        this.parentContainer=document.querySelectorAll('.game-container')[0];
         this.id=params.id ? params.id : 'user';
         this.width=params.width ? params.width:60;
         this.height=params.height ? params.height : 80;
@@ -142,12 +142,12 @@ module.exports = class User{
 
             /*user level start,load prev level */
             if(this.moveLeft && this.verify.collisionBlockInitLevel() ){
-                this.MainThis.levelLoader.loadPrevLevel();
+                this.MainThis.levelLoader.load.prevLevel();
             }
 
             /*user level end,load next level */
             if(this.moveRight && this.verify.collisionBlockNextLevel() ){
-                this.MainThis.levelLoader.loadNextLevel();
+                this.MainThis.levelLoader.load.nextLevel();
             }
 
             /*Clear funtion to clear interval*/

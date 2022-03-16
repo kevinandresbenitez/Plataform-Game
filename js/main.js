@@ -12,7 +12,7 @@ class main{
     gameStart;
     scapeMenu;
     MovimentScreen;
-    static MasterScale = window.innerHeight > 800 ? 40:30; /* Scale Blocks User,moviment,speed,gravity ...*/
+    MasterScale =  40; /*window.innerHeight > 800 ? 40:30; Scale Blocks User,moviment,speed,gravity ...*/
     
     static showMenu(){       
         this.MainMenu =new MainMenu(this);
@@ -20,12 +20,13 @@ class main{
     }
     
     static initGame(levelNumber){
-        /*Delete Menu */
+        /*Delete Menu and create gameContainer*/
         this.MainMenu.deleteMenu();
-                
+        this.MainMenu.createGameContainer();
+        
         /*Load Level */
         this.levelLoader = new LevelLoader(this,{width:this.MasterScale,height:this.MasterScale});
-        this.levelLoader.loadLevel(Levels[levelNumber]);
+        this.levelLoader.load.level(Levels[levelNumber]);
 
         /*Load user */            
         this.user = new User(this,{width:this.MasterScale+(this.MasterScale /2),height:this.MasterScale*2,velosityRun:this.MasterScale / 2});
@@ -50,7 +51,8 @@ class main{
         this.levelLoader.remove();
         this.user.remove();
         this.MainMenu.deleteEscapeMenu();/*Delete escape menu */
-        
+        this.MainMenu.deleteGameContainer();/*Delete escape menu */
+
         /*desabilite keyboards */
         this.gameStart=false;
 

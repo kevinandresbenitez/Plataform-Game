@@ -10,30 +10,46 @@ module.exports = class LevelLoader{
     // Containers
     blocksContext;
     blocksCanvas;
-    container;
+    gameContainer;
+
+    /*Params screen */
+    levelWidth;
 
     constructor(MainThis,props){
         this.MainThis=MainThis;        
-
-        // Create canvas element in the dom
-        let canvas =document.createElement('canvas');
-        canvas.id = 'canvas-blocks';
-        canvas.height =window.screen.height;
-        canvas.width =window.screen.width;
-        document.querySelectorAll('.container')[0].appendChild(canvas);
-
-        /*Define containers */
-        this.container =document.querySelectorAll('.container')[0];
-        this.blocksCanvas=document.getElementById('canvas-blocks');
-        this.blocksContext =this.blocksCanvas.getContext('2d');
-                
+    
         /*Grid dimentions for matriz blocks*/
         this.MatrizBlockWidth=props.width ? props.width : 40;
         this.MatrizBlockHeight =props.height ? props.height : 40;
     }
 
-    /*make blocks based in matriz and push in arrays for category */
-    makeBlocks(LevelMap){
+
+    // create container canvas
+    makeContainerBlocks(width,height){
+        // remove prev canvas 
+        let Canvastodelete=document.getElementById('canvas-blocks');
+        if(Canvastodelete){
+            document.querySelectorAll('.game-container')[0].removeChild(Canvastodelete);
+        }
+        
+
+        // Create canvas element in the dom
+        let canvas =document.createElement('canvas');
+        canvas.id = 'canvas-blocks';
+        canvas.height =height ? height:window.screen.height;
+        canvas.width =width ? width:window.screen.width;    
+        document.querySelectorAll('.game-container')[0].appendChild(canvas);
+
+        // Define container game
+        this.gameContainer =document.querySelectorAll('.game-container')[0];
+        this.blocksCanvas=document.getElementById('canvas-blocks');
+        this.blocksContext =this.blocksCanvas.getContext('2d');
+
+    }
+    /*make,draw,remove blocks */
+    blocks={
+        /*make blocks based in matriz and push in arrays for category */
+        make:(LevelMap)=>{
         /*Restore level load*/
         this.Blocks=[];
         this.BlocksNulls=[]
@@ -51,7 +67,6 @@ module.exports = class LevelLoader{
             BlockEndLevel = 3 = // Block end level
         
         */
-
 
         let aumentoY= window.innerHeight - this.MatrizBlockHeight;
         LevelMap.reverse().forEach((obj,key)=>{
@@ -71,75 +86,82 @@ module.exports = class LevelLoader{
                     this.BlocksNulls.push(new Blocks.BlockFalse(aumentoX,aumentoY,this.MatrizBlockWidth,this.MatrizBlockHeight));
                 }
                 aumentoX +=this.MatrizBlockWidth;
-            });
-           
+            });            
             aumentoY-=this.MatrizBlockHeight;
+
+            /*Define width canvas */
+            this.levelWidth=aumentoX;
         });
 
         // restore order
         LevelMap.reverse();
+
+        },
+
+        /*Create new blocks in canvas*/
+        draw:(NewBlocksItems)=>{
+                /*Make new blocks */
+            NewBlocksItems.forEach((obj,key)=>{
+                let img =new Image();            
+                img.src =obj.color;
+                img.onload =()=>{
+                    this.blocksContext.drawImage(img,obj.topLeft[0],obj.topLeft[1],obj.width,obj.height);  
+                }
+            })
+        },
+
+        /*delete hold blocks in canvas*/
+        remove:()=>{
+            this.blocksContext.clearRect(0, 0, window.screen.width,window.screen.height);
+        }
     }
-    /*Create new blocks in canvas*/
-    drawBlocks(NewBlocksItems){        
-        /*Make new blocks */
-        NewBlocksItems.forEach((obj,key)=>{
-            let img =new Image();            
-            img.src =obj.color;
-            img.onload =()=>{
-                this.blocksContext.drawImage(img,obj.topLeft[0],obj.topLeft[1],obj.width,obj.height);  
+    /*Load nextlevel prevlevel ,level(number)*/    
+    load={
+        level:(level)=>{
+            this.nameLevel=level.nameLevel;
+            this.levelNum =level.levelNum;
+            this.userPositionDefault=level.userPositionDefault;
+            this.prevLevel=level.prevLevel;
+            this.nextLevel=level.nextLevel;
+    
+            /*Restore screen for change level*/
+            if(this.MainThis.MovimentScreen){
+                this.MainThis.MovimentScreen.restore()
             }
-        }
-    )}
-    /*delete hold blocks in canvas*/
-    removeBlocks(){
-        this.blocksContext.clearRect(0, 0, window.screen.width,window.screen.height);
-    }
-
-    /*Function to load a level change level , but not change position user*/
-    loadLevel(level){       
-        this.nameLevel=level.nameLevel;
-        this.levelNum =level.levelNum;
-        this.userPositionDefault=level.userPositionDefault;
-        this.prevLevel=level.prevLevel;
-        this.nextLevel=level.nextLevel;
-
-        /*Restore screen for change level*/
-        if(this.MainThis.MovimentScreen){
-            this.MainThis.MovimentScreen.restore()
-        }
-
-            /*Remove hold blocks and make news */
-        this.removeBlocks();
-        this.makeBlocks(level.level);
-        this.drawBlocks(this.Blocks);
-        this.drawBlocks(this.BlocksInitLevel);
-        this.drawBlocks(this.BlocksEndLevel);
-        this.drawBlocks(this.BlocksNulls);
-    }    
-    loadNextLevel(){        
-        if(this.nextLevel){                  
-            /*The name of the next level , convert to level var and change position user and load next level*/
-            this.loadLevel(Levels[this.levelNum]);
-            this.MainThis.user.position = this.userPositionDefault;
-            this.MainThis.user.draw();
-            return true
-        }
-        return false
-    }
-    loadPrevLevel(){
-        if(this.prevLevel){
+    
+                /*Remove hold blocks and make news */
+            this.blocks.make(level.level);
+            this.makeContainerBlocks(this.levelWidth);
+            this.blocks.remove();
+            this.blocks.draw(this.Blocks);
+            this.blocks.draw(this.BlocksInitLevel);
+            this.blocks.draw(this.BlocksEndLevel);
+            this.blocks.draw(this.BlocksNulls);
+        },
+        nextLevel:()=>{
+            if(this.nextLevel){                  
+                /*The name of the next level , convert to level var and change position user and load next level*/
+                this.load.level(Levels[this.levelNum]);
+                this.MainThis.user.position = this.userPositionDefault;
+                this.MainThis.user.draw();
+                return true
+            }
+            return false
+        },
+        prevLevel:()=>{
+            if(this.prevLevel){
             /*The name of the next level , convert to level var and change position user and load prev level*/
-            this.loadLevel(Levels[this.levelNum -2]);
+            this.load.level(Levels[this.levelNum -2]);
             this.MainThis.user.position = this.userPositionDefault;
             this.MainThis.user.draw();
             return true
+            }
+
+            return false
         }
-
-        return false
     }
-
     // remove all for the dom
     remove(){
-        this.container.removeChild(this.blocksCanvas);
+        this.gameContainer.removeChild(this.blocksCanvas);
     }
 }
