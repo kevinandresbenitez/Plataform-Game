@@ -1,4 +1,4 @@
-let MainMenu =require('./MainMenu/index');
+let Menu =require('./Menu/index');
 let LevelLoader = require('./Levels/LevelLoader.js');
 let User = require('./User/index.js');
 let MovimentScreen = require('./MovimentScreen/index.js');
@@ -15,14 +15,14 @@ class main{
     MasterScale =  40; /*window.innerHeight > 800 ? 40:30; Scale Blocks User,moviment,speed,gravity ...*/
     
     static showMenu(){       
-        this.MainMenu =new MainMenu(this);
-        this.MainMenu.createMenu();
+        this.Menu =new Menu(this);
+        this.Menu.homeMenu.create();
     }
     
     static initGame(levelNumber){
         /*Delete Menu and create gameContainer*/
-        this.MainMenu.deleteMenu();
-        this.MainMenu.createGameContainer();
+        this.Menu.homeMenu.delete();
+        this.Menu.gameContainer.create();
         
         /*Load Level */
         this.levelLoader = new LevelLoader(this,{width:this.MasterScale,height:this.MasterScale});
@@ -39,7 +39,7 @@ class main{
         this.MovimentScreen.initMoviment();
         
         /*Make escape menu */
-        this.MainMenu.createEscapeMenu();
+        this.Menu.escapeMenu.create();
 
         /*avilite keyboards */
         this.gameStart=true;
@@ -50,8 +50,8 @@ class main{
         /*Remove Blocks , remove user , and show menu */
         this.levelLoader.remove();
         this.user.remove();
-        this.MainMenu.deleteEscapeMenu();/*Delete escape menu */
-        this.MainMenu.deleteGameContainer();/*Delete escape menu */
+        this.Menu.escapeMenu.delete();/*Delete escape menu */
+        this.Menu.gameContainer.delete();/*Delete escape menu */
 
         /*desabilite keyboards */
         this.gameStart=false;
@@ -77,10 +77,10 @@ class main{
                     break
                     case 'Escape':
                         if(this.scapeMenu){
-                            this.MainMenu.hiddeEscapeMenu();
+                            this.Menu.escapeMenu.hide();
                             this.scapeMenu =false
                         }else{
-                            this.MainMenu.showEscapeMenu();
+                            this.Menu.escapeMenu.show();
                             this.scapeMenu =true
                         }
                     break

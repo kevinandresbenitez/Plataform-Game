@@ -68,14 +68,14 @@ module.exports = class User{
     /*Remove user and kill instervals */
     remove(){
         this.parentContainer.removeChild(this.user);
-        this.user=undefined;
-        this.movimentClearInterval();        
+        this.movimentClearInterval();
         this.gravity.destroy();
+        this.user=undefined;
     }
 
 
     /*Change parameters in the dom */
-    draw(){                
+    draw(){
         this.user.style.width=this.width + "px";
         this.user.style.height= this.height + "px";
         this.user.style.left= this.position[0] + 'px';
