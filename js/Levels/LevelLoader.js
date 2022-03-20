@@ -123,12 +123,7 @@ module.exports = class LevelLoader{
             this.userPositionDefault=level.userPositionDefault;
             this.prevLevel=level.prevLevel;
             this.nextLevel=level.nextLevel;
-    
-            /*Restore screen for change level*/
-            if(this.MainThis.MovimentScreen){
-                this.MainThis.MovimentScreen.restore()
-            }
-    
+            
                 /*Remove hold blocks and make news */
             this.blocks.make(level.level);
             this.makeContainerBlocks(this.levelWidth);
@@ -137,6 +132,11 @@ module.exports = class LevelLoader{
             this.blocks.draw(this.BlocksInitLevel);
             this.blocks.draw(this.BlocksEndLevel);
             this.blocks.draw(this.BlocksNulls);
+
+            /*adjust screen for level*/
+            if(this.MainThis.MovimentScreen){
+                this.MainThis.MovimentScreen.adjust()
+            }
         },
         nextLevel:()=>{
             if(this.nextLevel){                  

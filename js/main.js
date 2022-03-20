@@ -24,6 +24,10 @@ class main{
         this.Menu.homeMenu.delete();
         this.Menu.gameContainer.create();
         
+        /*Load screen moviment */
+        this.MovimentScreen= new MovimentScreen(this);
+        this.MovimentScreen.initMoviment();
+
         /*Load Level */
         this.levelLoader = new LevelLoader(this,{width:this.MasterScale,height:this.MasterScale});
         this.levelLoader.load.level(Levels[levelNumber]);
@@ -34,9 +38,6 @@ class main{
         this.user.gravity.main();
         this.user.startMoviment();
 
-        /*Load screen moviment */
-        this.MovimentScreen= new MovimentScreen(this);
-        this.MovimentScreen.initMoviment();
         
         /*Make escape menu */
         this.Menu.escapeMenu.create();

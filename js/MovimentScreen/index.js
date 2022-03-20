@@ -53,8 +53,24 @@ module.exports = class MovimentScreen{
         },this.IntervalMoviment)
     }
      /*change position to default*/
-    restore(){
-        this.gameContainer.style.left ="0px";
+     adjust(){
+        
+        //variable to know if it advances or goes back in level
+        if(!this.levelActualy){
+            this.levelActualy=this.MainThis.levelLoader.levelNum;
+        }
+
+        // if it advances it puts the screen at the beginning, if not at the end
+        if(this.MainThis.levelLoader.levelNum >= this.levelActualy){
+            this.gameContainer.style.left ="0px";
+        }else{
+            let screenMoviment  =document.body.offsetWidth - (((this.gameContainer.style.left).split('px')[0]));
+            let levelWidth=this.MainThis.levelLoader.levelWidth;            
+            this.gameContainer.style.left = -(levelWidth - screenMoviment) + "px";
+        }
+
+        // set level actualy and change breakpoints
+        this.levelActualy=this.MainThis.levelLoader.levelNum;
         this.breakpoints.status=true;
     }
      /*move screen position x */
