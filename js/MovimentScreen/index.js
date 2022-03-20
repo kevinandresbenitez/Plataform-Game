@@ -64,26 +64,46 @@ module.exports = class MovimentScreen{
             if(!this.verifyCanMove.left()){
                 return false
             }
-
-            if(this.gameContainer.style.left){
-                let left = (this.gameContainer.style.left).split('px')[0];
-                this.gameContainer.style.left = (parseInt(left) + this.moveScreenWidth)  + "px";
-            }else{
+            // enable positions in container
+            if(!this.gameContainer.style.left){
                 this.gameContainer.style.left ="0px";
             }
+        
+
+                // Define params for the screen actualy
+            let left = parseInt((this.gameContainer.style.left).split('px')[0]);
+            let positionRightScreen=-1*(left + this.moveScreenWidth);
+
+                // if the movement of the camera exceeds the limit of the level, move the necessary so that the screen does not protrude from the level
+            if(this.moveScreenWidth > positionRightScreen){
+                this.gameContainer.style.left = (left + (this.moveScreenWidth +positionRightScreen) )+ "px";
+            }else{
+                this.gameContainer.style.left = (left + this.moveScreenWidth)  + "px";
+            }
+
         },
         right:()=>{            
                 // if the screen can move
             if(!this.verifyCanMove.right()){
                 return false
             }
-
-            if(this.gameContainer.style.left){
-                let left = (this.gameContainer.style.left).split('px')[0];
-                this.gameContainer.style.left = (parseInt(left) - this.moveScreenWidth)  + "px";
-            }else{
+                // enable positions in container
+            if(!this.gameContainer.style.left){
                 this.gameContainer.style.left ="0px";
             }
+
+
+                // Define params for the screen actualy
+            let left = parseInt((this.gameContainer.style.left).split('px')[0]);
+            let positionRightScreen =(-1*(left - this.moveScreenWidth) + document.body.offsetWidth)
+
+                // if the movement of the camera exceeds the limit of the level, move the necessary so that the screen does not protrude from the level
+            if(this.moveScreenWidth > (this.MainThis.levelLoader.levelWidth - positionRightScreen)){                    
+                this.gameContainer.style.left = (left -1*(this.moveScreenWidth +(this.MainThis.levelLoader.levelWidth - positionRightScreen)) )  + "px";
+            }else{
+                this.gameContainer.style.left = (left - this.moveScreenWidth)  + "px";
+            }
+
         },
     }
     /*if the screen can move */
@@ -93,7 +113,7 @@ module.exports = class MovimentScreen{
         },
 
         right:()=>{
-            let screenMoviment  =window.screen.width - (((this.gameContainer.style.left).split('px')[0]));
+            let screenMoviment  =document.body.offsetWidth - (((this.gameContainer.style.left).split('px')[0]));
             let levelWidth=this.MainThis.levelLoader.levelWidth;            
             return (screenMoviment < levelWidth);            
         }
