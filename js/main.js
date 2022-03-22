@@ -34,7 +34,7 @@ class main{
 
         /*Load user */            
         this.user = new User(this,{width:this.MasterScale+(this.MasterScale /2),height:this.MasterScale*2,velosityRun:this.MasterScale / 2});
-        this.user.create();
+        this.user.create(this.levelLoader.userPositionInitial[0],this.levelLoader.userPositionInitial[1]);
         this.user.gravity.main();
         this.user.startMoviment();
 

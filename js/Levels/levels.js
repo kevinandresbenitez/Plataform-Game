@@ -3,8 +3,9 @@ module.exports = Levels=[
     nameLevel:'Level 1',
     levelNum:1,
     nextLevel:true,
-    prevLevel:false,
-    userPositionDefault:[120,window.innerHeight - (30 * 30)],
+    prevLevel:false,    
+    userPositionInitial:[120,window.innerHeight - (40 * 20)],
+    userPositionEnd:[1500,window.innerHeight - (40 * 15)],
     background:'#da5555',
     imgPreview:require('../../assets/img/Menu/LevelsPreview/Level1.png'),
     level :[    
@@ -42,7 +43,8 @@ module.exports = Levels=[
     levelNum:2,
     nextLevel:true,
     prevLevel:true,
-    userPositionDefault:[120,window.innerHeight - (30 * 22)],
+    userPositionInitial:[40,window.innerHeight - (40 * 15)],
+    userPositionEnd:[2100,window.innerHeight - (40 * 12)],
     prevLevel:'Level1',
     imgPreview:require('../../assets/img/Menu/LevelsPreview/Level2.png'),    
     level :[
@@ -80,7 +82,8 @@ module.exports = Levels=[
     levelNum:3,
     nextLevel:false,
     prevLevel:true,
-    userPositionDefault:[120,window.innerHeight - (30 * 22)],
+    userPositionInitial:[40,window.innerHeight - (40 * 12)],
+    userPositionEnd:[0,0],
     prevLevel:'Level1',
     imgPreview:require('../../assets/img/Menu/LevelsPreview/Level2.png'),    
     level :[

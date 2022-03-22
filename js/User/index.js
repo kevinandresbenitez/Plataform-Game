@@ -20,7 +20,7 @@ module.exports = class User{
     jumpStatus;/*Boolean for jump inteval */
     firstJump;/*User can jump if not used first jump ,else need run in floor */
         /*Gravity user */
-    gravityStatus=true;/*Boolean for enable and disable grbvity  */
+    gravityStatus=true;/*Boolean for enable and disable grbvity  */    
 
     constructor(MainThis,params = false){
         this.MainThis=MainThis;
@@ -31,7 +31,6 @@ module.exports = class User{
         this.height=params.height ? params.height : 80;
         this.zIndex=8;
         this.frequencyMoviment =params.frequencyMoviment ? params.frequencyMoviment : 40;
-        this.position= params.position ? params.position : this.MainThis.levelLoader.userPositionDefault;
         this.frequencyGravity = params.frequencyGravity ? params.frequencyGravity : 40;
         this.velosityRun= params.velosityRun ? params.velosityRun : 20 ;        
         this.jumpHeight = params.jumpHeight || 6;
@@ -41,7 +40,7 @@ module.exports = class User{
         this.img=`url(${UserWaitRight})`;
     }
     /*Create user and set int the dom */
-    create(x = this.position[0],y = this.position[1]){
+    create(x,y){
         /*If the user exists */
         if(this.user){
             return false;
@@ -59,8 +58,7 @@ module.exports = class User{
         user.style.top =y+'px';
 
         /*For delete and create again user , and change position */
-        this.position[0]=x;
-        this.position[1]=y;
+        this.position=[x,y];
 
         this.parentContainer.appendChild(user);
         this.user=document.getElementById(this.id);
@@ -72,7 +70,10 @@ module.exports = class User{
         this.gravity.destroy();
         this.user=undefined;
     }
-
+    /*Change position user */
+    changePosition(position){
+        this.position=position;
+    }
 
     /*Change parameters in the dom */
     draw(){

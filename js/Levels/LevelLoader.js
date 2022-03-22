@@ -23,7 +23,6 @@ module.exports = class LevelLoader{
         this.MatrizBlockHeight =props.height ? props.height : 40;
     }
 
-
     // create container canvas
     makeContainerBlocks(width,height){
         // remove prev canvas 
@@ -91,6 +90,7 @@ module.exports = class LevelLoader{
 
             /*Define width canvas */
             this.levelWidth=aumentoX;
+            this.levelHeight=window.innerHeight - aumentoY;
         });
 
         // restore order
@@ -120,7 +120,8 @@ module.exports = class LevelLoader{
         level:(level)=>{
             this.nameLevel=level.nameLevel;
             this.levelNum =level.levelNum;
-            this.userPositionDefault=level.userPositionDefault;
+            this.userPositionEnd= Object.values(level.userPositionEnd);
+            this.userPositionInitial=Object.values(level.userPositionInitial);
             this.prevLevel=level.prevLevel;
             this.nextLevel=level.nextLevel;
             
@@ -142,7 +143,7 @@ module.exports = class LevelLoader{
             if(this.nextLevel){                  
                 /*The name of the next level , convert to level var and change position user and load next level*/
                 this.load.level(Levels[this.levelNum]);
-                this.MainThis.user.position = this.userPositionDefault;
+                this.MainThis.user.changePosition(this.userPositionInitial);
                 this.MainThis.user.draw();
                 return true
             }
@@ -152,7 +153,7 @@ module.exports = class LevelLoader{
             if(this.prevLevel){
             /*The name of the next level , convert to level var and change position user and load prev level*/
             this.load.level(Levels[this.levelNum -2]);
-            this.MainThis.user.position = this.userPositionDefault;
+            this.MainThis.user.changePosition(this.userPositionEnd);
             this.MainThis.user.draw();
             return true
             }
