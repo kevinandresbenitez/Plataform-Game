@@ -53,7 +53,7 @@ module.exports = class MovimentScreen{
         },this.IntervalMoviment)
     }
      /*change position to default*/
-     adjust(){
+    adjust(){
         
         //variable to know if it advances or goes back in level
         if(!this.levelActualy){

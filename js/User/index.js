@@ -20,7 +20,9 @@ module.exports = class User{
     jumpStatus;/*Boolean for jump inteval */
     firstJump;/*User can jump if not used first jump ,else need run in floor */
         /*Gravity user */
-    gravityStatus=true;/*Boolean for enable and disable grbvity  */    
+    gravityInitialized=false;/*if gravity is enabled dont create again */
+    destroyGravity=false;/*Boolean for enable and disable grbvity  */
+    gravityOn=true /*If gavity is on , move user */
 
     constructor(MainThis,params = false){
         this.MainThis=MainThis;
@@ -121,13 +123,12 @@ module.exports = class User{
     
         let interval=setInterval(()=>{
             /*Move user to Right */        
-            if(this.moveRight && !this.verify.collisionBlockRight() && !this.verify.collisionWindowRight()){
+            if(this.moveRight && !this.verify.collisionBlockRight()){
                 this.setImg.RunRight();
                 this.move.right();
             }
-            
             /*Move user to Left */
-            if(this.moveLeft && !this.verify.collisionBlockLeft() && !this.verify.collisionWindowLeft()){
+            if(this.moveLeft && !this.verify.collisionBlockLeft()){
                 this.setImg.RunLeft();
                 this.move.left();                
             }
@@ -135,17 +136,16 @@ module.exports = class User{
             if(this.moveDown && !this.verify.collisionBlockTop()){
                 this.move.bottom();
             }
-
             /*Move user to Up*/
             if(this.moveJump && !this.verify.collisionBlockBottom()){
                 this.actions.jump();
             }
 
+
             /*user level start,load prev level */
             if(this.moveLeft && this.verify.collisionBlockInitLevel() ){
                 this.MainThis.levelLoader.load.prevLevel();
             }
-
             /*user level end,load next level */
             if(this.moveRight && this.verify.collisionBlockNextLevel() ){
                 this.MainThis.levelLoader.load.nextLevel();
@@ -165,7 +165,6 @@ module.exports = class User{
     /*Verifications - conditions for user */
     verify = {
         
-
         collisionBlockTop:()=>{
             for(let i =0 ;this.MainThis.levelLoader.Blocks.length > i;i++){                
                 let top = (this.position[1] + this.height == this.MainThis.levelLoader.Blocks[i].topLeft[1] ) && (this.position[0] + this.width > this.MainThis.levelLoader.Blocks[i].topLeft[0] && this.position[0] < this.MainThis.levelLoader.Blocks[i].topRight[0]  );
@@ -201,17 +200,7 @@ module.exports = class User{
                 }
             }
         },
-
-        collisionWindowRight:()=>{
-            let windowRight=(this.position[0]+this.width) >= this.MainThis.WindowWidth;
-            return windowRight;
-        },
-
-        collisionWindowLeft:()=>{
-            let windowLeft=(this.position[0] == 0);            
-            return windowLeft;
-        },
-
+        
         collisionBlockInitLevel:()=>{
             /*This block in the left screen */
             for(let i =0 ;this.MainThis.levelLoader.BlocksInitLevel.length > i;i++){
@@ -231,7 +220,6 @@ module.exports = class User{
                 }
             }            
         }
-
 
     }
     /*Function to move user in x-y */
@@ -262,7 +250,7 @@ module.exports = class User{
             if((this.verify.collisionBlockTop() || this.firstJump )&& !this.verify.collisionBlockBottom() && !this.jumpStatus){
                 this.jumpStatus=true;
                 this.firstJump=false;
-                this.gravity.end();
+                this.gravity.stop();
                 
                 let sec=0;
                 let interval=setInterval(()=>{                    
@@ -270,10 +258,11 @@ module.exports = class User{
                     if(!this.verify.collisionBlockBottom()){
                         this.move.top()
                     }
-                                    
+
+                    /*If sec == this.jumpHeight enable gravity*/
                     if(sec == this.jumpHeight){
                         clearInterval(interval);
-                        this.gravity.start();
+                        this.gravity.renew();
                         this.jumpStatus=false;
                         this.firstJump=false;
                     }
@@ -285,38 +274,42 @@ module.exports = class User{
     }
     /*This function move user to floor in intervals, and is paused in user jump */
     gravity={
-        main:()=>{
-            if(this.gravityStatus){            
-                let interval =setInterval(()=>{        
-                    if(!this.verify.collisionBlockTop() && this.gravityStatus){
-                        this.move.bottom();
-                    }
+        start:()=>{
+            /*If gravity is enabled dont create interval again */
+            if(this.gravityInitialized){
+                return false
+            }            
+            this.gravityInitialized=true;
+            
+            let interval =setInterval(()=>{        
+                if(!this.verify.collisionBlockTop() && this.gravityOn){
+                    this.move.bottom();
+                }
 
-                    /*Avalible first jump if the user run in the floor*/
-                    if(this.verify.collisionBlockTop()){
-                        this.firstJump=true;
-                    }
-                    
-                    /*If the variable stop gravity */
-                    if(this.destroyGravity){
-                        clearInterval(interval);
-                        this.destroyGravity=false;
-                    }
+                /*Avalible first jump if the user run in the floor*/
+                if(this.verify.collisionBlockTop()){
+                    this.firstJump=true;
+                }
+                
+                /*If the variable stop gravity */
+                if(this.destroyGravity){
+                    clearInterval(interval);
+                    this.destroyGravity=false;
+                }
 
-                },this.frequencyGravity);
-            }
+            },this.frequencyGravity);
+            
         },
 
         destroy:()=>{
             this.destroyGravity=true;
         },
 
-        start:()=>{
-            this.gravityStatus=true;
+        stop:()=>{            
+            this.gravityOn=false;
         },
-
-        end:()=>{            
-            this.gravityStatus=false;
-        },
+        renew:()=>{
+            this.gravityOn=true;
+        }
     }
 }

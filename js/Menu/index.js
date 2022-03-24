@@ -21,7 +21,7 @@ module.exports = class Menu{
   
     //home page menu ,functions
     homeMenu={       
-        delete:()=>{
+        remove:()=>{
             this.container.innerHTML='';
         },        
         create:()=>{
@@ -247,7 +247,7 @@ module.exports = class Menu{
             gameContainer.classList.add('game-container');
             this.container.appendChild(gameContainer);
         },
-        delete:()=>{
+        remove:()=>{
             this.container.removeChild(document.querySelectorAll('.game-container')[0]);
         }
     }    
@@ -268,7 +268,7 @@ module.exports = class Menu{
             /*Add menu in the dom */
             this.container.appendChild(config)
         },
-        delete:()=>{
+        remove:()=>{
             this.container.removeChild(
             document.querySelectorAll('.escape-menu')[0]);
         },

@@ -118,6 +118,7 @@ module.exports = class LevelLoader{
     /*Load nextlevel prevlevel ,level(number)*/    
     load={
         level:(level)=>{
+            /*Update level info*/
             this.nameLevel=level.nameLevel;
             this.levelNum =level.levelNum;
             this.userPositionEnd= Object.values(level.userPositionEnd);

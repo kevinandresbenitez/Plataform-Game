@@ -20,10 +20,11 @@ class main{
     }
     
     static initGame(levelNumber){
-        /*Delete Menu and create gameContainer*/
-        this.Menu.homeMenu.delete();
+        /*Delete Menu and create gameContainer escape menu*/
+        this.Menu.homeMenu.remove();
         this.Menu.gameContainer.create();
-        
+        this.Menu.escapeMenu.create();
+
         /*Load screen moviment */
         this.MovimentScreen= new MovimentScreen(this);
         this.MovimentScreen.initMoviment();
@@ -35,29 +36,24 @@ class main{
         /*Load user */            
         this.user = new User(this,{width:this.MasterScale+(this.MasterScale /2),height:this.MasterScale*2,velosityRun:this.MasterScale / 2});
         this.user.create(this.levelLoader.userPositionInitial[0],this.levelLoader.userPositionInitial[1]);
-        this.user.gravity.main();
+        this.user.gravity.start();
         this.user.startMoviment();
-
-        
-        /*Make escape menu */
-        this.Menu.escapeMenu.create();
 
         /*avilite keyboards */
         this.gameStart=true;
-
     }
 
     static endGame(){
         /*Remove Blocks , remove user , and show menu */
         this.levelLoader.remove();
         this.user.remove();
-        this.Menu.escapeMenu.delete();/*Delete escape menu */
-        this.Menu.gameContainer.delete();/*Delete escape menu */
+        this.Menu.escapeMenu.remove();/*Delete escape menu */
+        this.Menu.gameContainer.remove();/*Delete escape menu */
 
         /*desabilite keyboards */
         this.gameStart=false;
 
-        this.showMenu();
+        this.Menu.homeMenu.create();
     }
 
     static keyBoard = {
