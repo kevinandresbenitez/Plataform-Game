@@ -69,6 +69,13 @@ module.exports = class MovimentScreen{
             this.gameContainer.style.left = -(levelWidth - screenMoviment) + "px";
         }
 
+        /*If level width < screen , ajust level */
+        if(this.MainThis.levelLoader.levelWidth < window.screen.width){
+            let sum= (window.screen.width - this.MainThis.levelLoader.levelWidth) / 2;
+            this.gameContainer.style.left = sum +"px";
+            // new set backgorund to container '#303843'
+        }
+
         // set level actualy and change breakpoints
         this.levelActualy=this.MainThis.levelLoader.levelNum;
         this.breakpoints.status=true;
