@@ -12,7 +12,7 @@ class main{
     gameStart;
     scapeMenu;
     MovimentScreen;
-    MasterScale =  40; /*window.innerHeight > 800 ? 40:30; Scale Blocks User,moviment,speed,gravity ...*/
+    static MasterScale =40;
     
     static showMenu(){       
         this.Menu =new Menu(this);
@@ -36,9 +36,16 @@ class main{
         /*Load backgorunds*/
         Backgorund.levelLimitBackground.create();
 
+        // params for the user using defaul scale
+        let paramsUser={
+            width:this.MasterScale+(this.MasterScale /2),
+            height:this.MasterScale*2,velosityRun:this.MasterScale / 2,
+            velosityRun:this.MasterScale/2,
+        }
+
         /*Load user */            
-        this.user = new User(this,{width:this.MasterScale+(this.MasterScale /2),height:this.MasterScale*2,velosityRun:this.MasterScale / 2});
-        this.user.create(this.levelLoader.userPositionInitial[0],this.levelLoader.userPositionInitial[1]);
+        this.user = new User(this,paramsUser);
+        this.user.create(this.levelLoader.userPositionInitial[0]*this.MasterScale,window.innerHeight-(this.MasterScale *this.levelLoader.userPositionInitial[1]));
         this.user.gravity.start();
         this.user.startMoviment();
 

@@ -1,9 +1,9 @@
 module.exports = class MovimentScreen{
     MovimentInitialized = false;
     MovimentClearInterval =false;
-    IntervalMoviment=200;
-    breakpointWidth = 200;
-    moveScreenWidth =200;
+    IntervalMoviment=150;
+    breakpointWidth = window.screen.width /10;
+    moveScreenWidth =window.screen.width /8;
 
     /*Poisitions to move screen , when the user is in breackpoints*/
     breakpoints={

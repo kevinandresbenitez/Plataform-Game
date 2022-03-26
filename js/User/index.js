@@ -28,19 +28,19 @@ module.exports = class User{
         //Define containers
         this.MainThis=MainThis;
         this.parentContainer=document.querySelectorAll('.game-container')[0];
-
+        
         // Define properties user
         this.id=params.id ? params.id : 'user';
         this.width=params.width ? params.width:60;
         this.height=params.height ? params.height : 80;
+        this.velosityRun= params.velosityRun ? params.velosityRun : 20 ;
         this.zIndex=8;
-        this.frequencyMoviment =params.frequencyMoviment ? params.frequencyMoviment : 40;
-        this.frequencyGravity = params.frequencyGravity ? params.frequencyGravity : 40;
-        this.velosityRun= params.velosityRun ? params.velosityRun : 20 ;        
-        this.jumpHeight = params.jumpHeight || 6;
-        this.frequencyJump=params.frequencyJump ? params.frequencyJump : 50;
 
-            /*User Img */        
+        /*Const User Default */
+        this.frequencyMoviment =40;
+        this.frequencyGravity =40;
+        this.jumpHeight =6;
+        this.frequencyJump=50;
         this.img=`url(${UserWaitRight})`;
     }
     /*Create user and set int the dom */
