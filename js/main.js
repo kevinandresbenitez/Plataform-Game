@@ -2,7 +2,7 @@ let Menu =require('./Menu/index');
 let LevelLoader = require('./Levels/LevelLoader.js');
 let User = require('./User/index.js');
 let MovimentScreen = require('./MovimentScreen/index.js');
-
+let Backgorund=require('./Background/index.js');
     // Import Styles
 require('../less/main.less');
 
@@ -33,6 +33,9 @@ class main{
         this.levelLoader = new LevelLoader(this,{width:this.MasterScale,height:this.MasterScale});
         this.levelLoader.load.level(Levels[levelNumber]);
 
+        /*Load backgorunds*/
+        Backgorund.levelLimitBackground.create();
+
         /*Load user */            
         this.user = new User(this,{width:this.MasterScale+(this.MasterScale /2),height:this.MasterScale*2,velosityRun:this.MasterScale / 2});
         this.user.create(this.levelLoader.userPositionInitial[0],this.levelLoader.userPositionInitial[1]);
@@ -49,6 +52,7 @@ class main{
         this.user.remove();
         this.Menu.escapeMenu.remove();/*Delete escape menu */
         this.Menu.gameContainer.remove();/*Delete escape menu */
+        Backgorund.levelLimitBackground.delete();/*delete backgorunds*/
 
         /*desabilite keyboards */
         this.gameStart=false;

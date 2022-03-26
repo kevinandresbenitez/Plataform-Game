@@ -25,9 +25,11 @@ module.exports = class User{
     gravityOn=true /*If gavity is on , move user */
 
     constructor(MainThis,params = false){
+        //Define containers
         this.MainThis=MainThis;
-
         this.parentContainer=document.querySelectorAll('.game-container')[0];
+
+        // Define properties user
         this.id=params.id ? params.id : 'user';
         this.width=params.width ? params.width:60;
         this.height=params.height ? params.height : 80;
