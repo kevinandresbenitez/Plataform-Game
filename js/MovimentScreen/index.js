@@ -34,6 +34,11 @@ module.exports = class MovimentScreen{
                 this.breakpoints.status = false;
             }
 
+            // if screen > level width dont move camera
+            if(this.verify.ajust()){
+                return false
+            }
+            
             /*if user pass breakpoint move screen and update breakpoints again*/
             if(this.MainThis.user.position[0] >= this.breakpoints.right){
                 this.move.right();
@@ -70,10 +75,9 @@ module.exports = class MovimentScreen{
         }
 
         /*If level width < screen , ajust level */
-        if(this.MainThis.levelLoader.levelWidth < window.screen.width){
+        if(this.verify.ajust()){
             let sum= (window.screen.width - this.MainThis.levelLoader.levelWidth) / 2;
             this.gameContainer.style.left = sum +"px";
-            // new set backgorund to container '#303843'
         }
 
         // set level actualy and change breakpoints
@@ -84,7 +88,7 @@ module.exports = class MovimentScreen{
     move={
         left:()=>{
             // if the screen can move
-            if(!this.verifyCanMove.left()){
+            if(!this.verify.moveLeft()){
                 return false
             }
             // enable positions in container
@@ -107,7 +111,7 @@ module.exports = class MovimentScreen{
         },
         right:()=>{            
                 // if the screen can move
-            if(!this.verifyCanMove.right()){
+            if(!this.verify.moveRight()){
                 return false
             }
                 // enable positions in container
@@ -130,15 +134,17 @@ module.exports = class MovimentScreen{
         },
     }
     /*if the screen can move */
-    verifyCanMove={
-        left:()=>{
+    verify={
+        moveLeft:()=>{
             return this.gameContainer.style.left.split('px')[0] < 0;
         },
-
-        right:()=>{
+        moveRight:()=>{
             let screenMoviment  =document.body.offsetWidth - (((this.gameContainer.style.left).split('px')[0]));
             let levelWidth=this.MainThis.levelLoader.levelWidth;            
             return (screenMoviment < levelWidth);            
+        },
+        ajust:()=>{
+            return this.MainThis.levelLoader.levelWidth < window.screen.width
         }
     }
 
