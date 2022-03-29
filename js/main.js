@@ -7,12 +7,14 @@ let Backgorund=require('./Background/index.js');
 require('../less/main.less');
 
 class main{
-    // Define
+    // Define instances
     levelLoader;
     user;
     gameStart;
     MovimentScreen;
-    //Boolean,modal menu escape is active
+    Menu;
+
+    //boolean to know if the exit menu is active in the game
     scapeMenu;
 
     //Define master Scale , all params in the game derive from this scale
@@ -24,37 +26,30 @@ class main{
     }
     
     static initGame(levelNumber){
-        /*Delete Menu and create gameContainer escape menu*/
+        // Delete Menu
         this.Menu.homeMenu.remove();
+        // create gameContainer and escape menu . Are required for create instances
         this.Menu.gameContainer.create();
         this.Menu.escapeMenu.create();
 
-        /*Load screen moviment */
+
+        // Define instances
         this.MovimentScreen= new MovimentScreen(this);
-        this.MovimentScreen.initMoviment();
-
-        /*Load Level */
         this.levelLoader = new LevelLoader(this,{width:this.MasterScale,height:this.MasterScale});
-        this.levelLoader.load.level(Levels[levelNumber]);
+        this.user = new User(this,{width:this.MasterScale+(this.MasterScale /2),height:this.MasterScale*2,velosityRun:this.MasterScale / 2,velosityRun:this.MasterScale/2,});
 
-        /*Load backgorunds*/
-        Backgorund.levelLimitBackground.create();
 
-        // params for the user using defaul scale
-        let paramsUser={
-            width:this.MasterScale+(this.MasterScale /2),
-            height:this.MasterScale*2,velosityRun:this.MasterScale / 2,
-            velosityRun:this.MasterScale/2,
-        }
+        // init Game XD
+        this.levelLoader.load.level(Levels[levelNumber]);/*Load Level */
+        this.MovimentScreen.initMoviment();/*Load screen moviment */
+        Backgorund.levelLimitBackground.create();/*Load backgorunds*/
+        this.gameStart=true;/*avilite keyboards */
 
-        /*Load user */            
-        this.user = new User(this,paramsUser);
+        /*Load user */
         this.user.create(this.levelLoader.userPositionInitial[0]*this.MasterScale,window.innerHeight-(this.MasterScale *this.levelLoader.userPositionInitial[1]));
         this.user.gravity.start();
         this.user.startMoviment();
 
-        /*avilite keyboards */
-        this.gameStart=true;
     }
 
     static endGame(){
@@ -64,11 +59,9 @@ class main{
         this.Menu.escapeMenu.remove();/*Delete escape menu */
         this.Menu.gameContainer.remove();/*Delete escape menu */
         Backgorund.levelLimitBackground.delete();/*delete backgorunds*/
+        this.gameStart=false;/*desabilite keyboards */
 
-        /*desabilite keyboards */
-        this.gameStart=false;
-
-        this.Menu.homeMenu.create();
+        this.Menu.homeMenu.create();// Show menu
     }
 
     static keyBoard = {
