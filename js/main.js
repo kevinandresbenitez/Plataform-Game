@@ -7,11 +7,15 @@ let Backgorund=require('./Background/index.js');
 require('../less/main.less');
 
 class main{
+    // Define
     levelLoader;
     user;
     gameStart;
-    scapeMenu;
     MovimentScreen;
+    //Boolean,modal menu escape is active
+    scapeMenu;
+
+    //Define master Scale , all params in the game derive from this scale
     static MasterScale =40;
     
     static showMenu(){       
