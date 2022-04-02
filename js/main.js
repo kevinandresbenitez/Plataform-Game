@@ -22,12 +22,12 @@ class main{
     
     static showMenu(){       
         this.Menu =new Menu(this);
-        this.Menu.homeMenu.create();
+        this.Menu.homepage.create.ALLMENU();
     }
     
     static initGame(levelNumber){
         // Delete Menu
-        this.Menu.homeMenu.remove();
+        this.Menu.homepage.remove.ALLMENU();
         // create gameContainer and escape menu . Are required for create instances
         this.Menu.gameContainer.create();
         this.Menu.escapeMenu.create();
@@ -61,7 +61,7 @@ class main{
         Backgorund.levelLimitBackground.delete();/*delete backgorunds*/
         this.gameStart=false;/*desabilite keyboards */
 
-        this.Menu.homeMenu.create();// Show menu
+        this.Menu.homepage.create.ALLMENU();// Show menu
     }
 
     static keyBoard = {

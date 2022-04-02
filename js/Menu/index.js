@@ -19,189 +19,217 @@ module.exports = class Menu{
         this.MainThis=MainThis;     
     }
   
-    //home page menu ,functions
-    homeMenu={       
-        remove:()=>{
-            this.container.innerHTML='';
-        },        
-        create:()=>{
-                    /*      home Menu         */
-            let MainMenu = document.createElement('div');
-            MainMenu.classList.add('Main-menu');
+    
+    //create homepage and levels sections 
+    homepage={       
+        create:{
+            homeMenu:()=>{
+                // Create Main menu container
+                let MainMenu =document.createElement('div');
+                MainMenu.classList.add('Main-menu');
 
-                /*home Menu left bar*/
-            let leftBar =document.createElement('div');
-            leftBar.classList.add('left-Bar');
-                /*Left bar buttons */
-            let buttonStart =document.createElement('button');
-            let buttonConfig =document.createElement('button');
-            buttonStart.classList.add('button-start');
-            buttonConfig.classList.add('button-config');
-            buttonStart.style.background =`url(${comenzarImg})`;
-            buttonConfig.style.background =`url(${configuracionImg})`;
-            buttonStart.onclick=()=>{this.homeLevels.show()};
-            buttonConfig.onclick=()=>{this.homeMenu.showConfig()};
-            leftBar.appendChild(buttonStart);
-            leftBar.appendChild(buttonConfig);
-            
-                /*home Menu right bar*/
-            let rightBar =document.createElement('div');
-            rightBar.classList.add('right-Bar');
+                // Create Left bar in menu 
+                let leftBar =document.createElement('div');
+                leftBar.classList.add('left-Bar');
+                    // Buttons Left bar
+                    let buttonStart =document.createElement('button');
+                    let buttonConfig =document.createElement('button');
+                    buttonStart.classList.add('button-start');
+                    buttonConfig.classList.add('button-config');
+                    buttonStart.style.background =`url(${comenzarImg})`;
+                    buttonConfig.style.background =`url(${configuracionImg})`;
+                    buttonStart.onclick=()=>{this.levelSection.show()};
+                    buttonConfig.onclick=()=>{this.homepage.show.modalConfig()};
+                    leftBar.appendChild(buttonStart);
+                    leftBar.appendChild(buttonConfig);
 
-            let bottomBar =document.createElement('div');
-            bottomBar.classList.add('bottom-Bar');
-            rightBar.appendChild(bottomBar);
+                // Create Right bar in menu
+                let rightBar =document.createElement('div');
+                rightBar.classList.add('right-Bar');
+                    // Buttons Right Bar
+                    let bottomBar =document.createElement('div');
+                    bottomBar.classList.add('bottom-Bar');
+                    rightBar.appendChild(bottomBar);
+
                 
-            MainMenu.appendChild(leftBar);
-            MainMenu.appendChild(rightBar);
+                // Add left bar and right bar to MainMenu
+                MainMenu.appendChild(leftBar);
+                MainMenu.appendChild(rightBar);
+
+                return MainMenu
+            },
+
+            levelsMenu:()=>{
+                // Create levels container
+                let loadLevelsMenu = document.createElement('div');
+                loadLevelsMenu.classList.add('load-Levels-menu');
+
+                // create subsContainers
+                let topBarLoadLevel =document.createElement('div');
+                let levelsBar = document.createElement('div');
+                let levelsInfo =document.createElement('div');        
+                topBarLoadLevel.classList.add('top-Bar-loadLevel');
+                levelsBar.classList.add('levels-bar');
+                levelsInfo.classList.add('levels-info');
+
+                    // create button prevPage
+                let prevPage = document.createElement('button');
+                prevPage.classList.add('button-prev');
+                prevPage.style.background=`url(${prevImg})`;
+                prevPage.onclick =()=>{this.homepage.show.homepage()};
+                topBarLoadLevel.appendChild(prevPage);
+
+                    // create levels carrusel and buttons prev and next
+                let levelsItems=document.createElement('div');
+                let buttonPrev=document.createElement('button');
+                let buttonNext=document.createElement('button');
+                levelsItems.classList.add('levels-items');
+                buttonPrev.classList.add('button-prev');
+                buttonNext.classList.add('button-next');
+                buttonPrev.onclick=()=>{this.levelSection.selectPrevLevel();this.levelSection.drawInfo()}
+                buttonNext.onclick =()=>{this.levelSection.selectNextLevel();this.levelSection.drawInfo()}
+                levelsBar.appendChild(levelsItems)
+                levelsBar.appendChild(buttonPrev)
+                levelsBar.appendChild(buttonNext)
 
 
-                /*      Menu levels         */
-            let loadLevelsMenu = document.createElement('div');
-            loadLevelsMenu.classList.add('load-Levels-menu');
+                    // create levels info section , button start game and info level
+                let buttonStartGame = document.createElement('button');
+                buttonStartGame.classList.add('button-start');
+                buttonStartGame.onclick=()=>{this.MainThis.initGame(this.levelSelected)}
+                let TitleGame=document.createElement('p');
+                TitleGame.innerText=Levels[this.levelSelected].nameLevel;
+                TitleGame.classList.add('title-game');
+                levelsInfo.appendChild(buttonStartGame);
+                levelsInfo.appendChild(TitleGame)
 
+                // add items to the container
+                loadLevelsMenu.appendChild(topBarLoadLevel);
+                loadLevelsMenu.appendChild(levelsBar);
+                loadLevelsMenu.appendChild(levelsInfo);
 
-            let topBarLoadLevel =document.createElement('div');
-            let levelsBar = document.createElement('div');
-            let levelsInfo =document.createElement('div');        
-            topBarLoadLevel.classList.add('top-Bar-loadLevel');
-            levelsBar.classList.add('levels-bar');
-            levelsInfo.classList.add('levels-info');
+                return loadLevelsMenu;
+            },
 
-            let prevPage = document.createElement('button');
-            prevPage.classList.add('button-prev');
-            prevPage.style.background=`url(${prevImg})`;
-            prevPage.onclick =()=>{this.homeMenu.show()};
-            topBarLoadLevel.appendChild(prevPage);
+            modalConfig:()=>{
+                // Create modal config container
+                let config = document.createElement('div');
+                config.classList.add('config');
 
+                    // Create Blur
+                let blur = document.createElement('div');
+                blur.classList.add('blur');
+                    // Create container solid in screen
+                let modalConfig = document.createElement('div');
+                modalConfig.classList.add('modal-config');
+                    // Add button close modal
+                        let buttonClose = document.createElement('button');
+                        buttonClose.classList.add('close')
+                        buttonClose.onclick=()=>{this.homepage.hide.modalConfig()}
 
-            let levelsItems=document.createElement('div');
-            let buttonPrev=document.createElement('button');
-            let buttonNext=document.createElement('button');
-            levelsItems.classList.add('levels-items');
-            buttonPrev.classList.add('button-prev');
-            buttonNext.classList.add('button-next');
-            buttonPrev.onclick=()=>{this.homeLevels.selectPrevLevel();this.homeLevels.drawInfo()}
-            buttonNext.onclick =()=>{this.homeLevels.selectNextLevel();this.homeLevels.drawInfo()}
-            levelsBar.appendChild(levelsItems)
-            levelsBar.appendChild(buttonPrev)
-            levelsBar.appendChild(buttonNext)
+                    // Add Master Scale selector
+                            //Create button increment MasterScale
+                        let MasterScaleContainer=document.createElement('div');
+                        let MasterScaleNext =document.createElement('button');
+                        MasterScaleNext.innerText='Next'
+                        MasterScaleNext.addEventListener('click',()=>{
+                            let info =document.getElementById('MasterScaleInfo').innerText;
+                            let newInfo = document.getElementById('MasterScaleInfo').innerText =parseInt(info) +10;
+                            this.MainThis.MasterScale=parseInt(newInfo);
+                        })
+                            //Create button decrement MasterScale
+                        let MasterScalePrev =document.createElement('button');
+                        MasterScalePrev.innerText='prev'
+                        MasterScalePrev.addEventListener('click',()=>{
+                            let info =document.getElementById('MasterScaleInfo').innerText;
+                            let newInfo =document.getElementById('MasterScaleInfo').innerText =parseInt(info) -10;
+                            this.MainThis.MasterScale=parseInt(newInfo);
+                        })
+                            // create info masterscale
+                        let MasterScaleInfo=document.createElement('p');
+                        MasterScaleInfo.id='MasterScaleInfo';
+                        MasterScaleInfo.innerText= this.MainThis.MasterScale
+                        
+                            // Add in masterscale container items
+                        MasterScaleContainer.appendChild(MasterScalePrev)
+                        MasterScaleContainer.appendChild(MasterScaleInfo)
+                        MasterScaleContainer.appendChild(MasterScaleNext)
+                    
+                    // ADD items in container modal solid
+                    modalConfig.appendChild(buttonClose);
+                    modalConfig.appendChild(MasterScaleContainer)
 
+                // Add items in the container config
+                config.appendChild(blur);
+                config.appendChild(modalConfig);
+                
+                return config;
+            },
 
-
-            let buttonStartGame = document.createElement('button');
-            buttonStartGame.classList.add('button-start');
-            buttonStartGame.onclick=()=>{this.MainThis.initGame(this.levelSelected)}
-            let TitleGame=document.createElement('p');
-            TitleGame.innerText=Levels[this.levelSelected].nameLevel;
-            TitleGame.classList.add('title-game');
-
-            levelsInfo.appendChild(buttonStartGame);
-            levelsInfo.appendChild(TitleGame)
-
-            loadLevelsMenu.appendChild(topBarLoadLevel);
-            loadLevelsMenu.appendChild(levelsBar);
-            loadLevelsMenu.appendChild(levelsInfo);
-
-
-                /*      Modal menu          */
-            let config = document.createElement('div');
-            config.classList.add('config');
-            let blur = document.createElement('div');
-            let modalConfig = document.createElement('div');
-            let buttonClose = document.createElement('button');
-            blur.classList.add('blur');
-            modalConfig.classList.add('modal-config');
-            buttonClose.classList.add('close')
-            buttonClose.onclick=()=>{this.homeMenu.hideConfig()}
-            modalConfig.appendChild(buttonClose);
-            config.appendChild(blur);
-            config.appendChild(modalConfig);
-            
-            modalConfig.appendChild(this.homeMenu.createConfig());
-
-            /*Add in the dom */
-            this.container.appendChild(MainMenu);
-            this.container.appendChild(config)
-            this.container.appendChild(loadLevelsMenu);
+            ALLMENU:()=>{
+                /*Add in the dom */
+                this.container.appendChild(this.homepage.create.homeMenu());
+                this.container.appendChild(this.homepage.create.levelsMenu())
+                this.container.appendChild(this.homepage.create.modalConfig());
+            }
         },
-        show:()=>{
-            this.homeLevels.hide();
-        
-            let leftBar =document.querySelectorAll('.left-Bar')[0];
-            let topBar =document.querySelectorAll('.top-Bar')[0];
-            let bottomBar =document.querySelectorAll('.bottom-Bar')[0];
-    
-            leftBar.style.display='inline-flex';
-            topBar.style.display='block';
-            bottomBar.style.display='block';
-    
-            leftBar.style.animation='showleftBar 1s';
-            topBar.style.animation='showtopBar 1s';
-            bottomBar.style.animation='showbottomBar 1s';
-        },
-        hide:()=>{
-            let leftBar =document.querySelectorAll('.left-Bar')[0];
-            let bottomBar =document.querySelectorAll('.bottom-Bar')[0];
-    
-            leftBar.style.animation='hideleftBar 1s';
-            bottomBar.style.animation='hidebottomBar 1s';
-    
-            setTimeout(()=>{
-                leftBar.style.display='none';
-                bottomBar.style.display='none';
-            },1000)
+
+        remove:{
+            ALLMENU:()=>{
+                this.container.innerHTML='';
+            }
         },
 
-        // in home page , config modal
-        showConfig:()=>{
-            document.querySelectorAll('.config')[0].style.display='block';
-            document.querySelectorAll('.modal-config')[0].style.animation ='showModal 0.5s';
+        show:{
+            homepage:()=>{
+                this.levelSection.hide();
+                let leftBar =document.querySelectorAll('.left-Bar')[0];
+                let bottomBar =document.querySelectorAll('.bottom-Bar')[0];
+
+                leftBar.style.display='inline-flex';
+                bottomBar.style.display='block';
+
+                leftBar.style.animation='showleftBar 1s';
+                bottomBar.style.animation='showbottomBar 1s';
+            },
+
+            modalConfig:()=>{
+                document.querySelectorAll('.config')[0].style.display='block';
+                document.querySelectorAll('.modal-config')[0].style.animation ='showModal 0.5s';
+            }
         },
-        hideConfig:()=>{
-            let modal = document.querySelectorAll('.modal-config')[0];
-            modal.style.animation ='hideModal 0.5s';        
-            modal.addEventListener('animationend', (e) => {
-                if(e.animationName == 'hideModal'){
-                    document.querySelectorAll('.config')[0].style.display='none';
-                    modal.style.animation ='showModal 0.5s';
-                }                                
-            })
-        },
-        createConfig:()=>{
-            let MasterScaleContainer=document.createElement('div');
-            let MasterScaleNext =document.createElement('button');
-            MasterScaleNext.innerText='Next'
-            MasterScaleNext.addEventListener('click',()=>{
-                let info =document.getElementById('MasterScaleInfo').innerText;
-                let newInfo = document.getElementById('MasterScaleInfo').innerText =parseInt(info) +10;
-                this.MainThis.MasterScale=parseInt(newInfo);
-            })
 
-            let MasterScaleInfo=document.createElement('p');
-            MasterScaleInfo.id='MasterScaleInfo';
-            MasterScaleInfo.innerText= this.MainThis.MasterScale
+        hide:{
+            homepage:()=>{
+                let leftBar =document.querySelectorAll('.left-Bar')[0];
+                let bottomBar =document.querySelectorAll('.bottom-Bar')[0];
 
-            let MasterScalePrev =document.createElement('button');
-            MasterScalePrev.innerText='prev'
-            MasterScalePrev.addEventListener('click',()=>{
-                let info =document.getElementById('MasterScaleInfo').innerText;
-                let newInfo =document.getElementById('MasterScaleInfo').innerText =parseInt(info) -10;
-                this.MainThis.MasterScale=parseInt(newInfo);
-            })
+                leftBar.style.animation='hideleftBar 1s';
+                bottomBar.style.animation='hidebottomBar 1s';
 
-            MasterScaleContainer.appendChild(MasterScalePrev)
-            MasterScaleContainer.appendChild(MasterScaleInfo)
-            MasterScaleContainer.appendChild(MasterScaleNext)
+                setTimeout(()=>{
+                    leftBar.style.display='none';
+                    bottomBar.style.display='none';
+                },1000)
+            },
 
-            return MasterScaleContainer;
+            modalConfig:()=>{
+                let modal = document.querySelectorAll('.modal-config')[0];
+                modal.style.animation ='hideModal 0.5s';        
+                modal.addEventListener('animationend', (e) => {
+                    if(e.animationName == 'hideModal'){
+                        document.querySelectorAll('.config')[0].style.display='none';
+                        modal.style.animation ='showModal 0.5s';
+                    }                                
+                })
+            }
         }
 
     }
-    // home page levels ,functions
-    homeLevels={
+    // levels sections actions
+    levelSection={
         show:()=>{
-            this.homeMenu.hide();
+            this.homepage.hide.homepage();
             let loadLevelsMenu =document.querySelectorAll('.load-Levels-menu')[0];
             let topBar = document.querySelectorAll('.top-Bar-loadLevel')[0];   
             let levelsItems=document.querySelectorAll('.levels-items')[0];          
@@ -275,6 +303,7 @@ module.exports = class Menu{
             this.container.removeChild(document.querySelectorAll('.game-container')[0]);
         }
     }    
+
     // in game , menu escape
     escapeMenu={
         create:()=>{
@@ -308,7 +337,6 @@ module.exports = class Menu{
         }
     }
 
-
-
-
 }
+
+
