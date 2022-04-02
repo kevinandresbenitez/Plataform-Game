@@ -48,11 +48,8 @@ module.exports = class Menu{
             let rightBar =document.createElement('div');
             rightBar.classList.add('right-Bar');
 
-            let topBar =document.createElement('div');
             let bottomBar =document.createElement('div');
-            topBar.classList.add('top-Bar');
             bottomBar.classList.add('bottom-Bar');
-            rightBar.appendChild(topBar);
             rightBar.appendChild(bottomBar);
                 
             MainMenu.appendChild(leftBar);
@@ -120,7 +117,8 @@ module.exports = class Menu{
             modalConfig.appendChild(buttonClose);
             config.appendChild(blur);
             config.appendChild(modalConfig);
-
+            
+            modalConfig.appendChild(this.homeMenu.createConfig());
 
             /*Add in the dom */
             this.container.appendChild(MainMenu);
@@ -144,16 +142,13 @@ module.exports = class Menu{
         },
         hide:()=>{
             let leftBar =document.querySelectorAll('.left-Bar')[0];
-            let topBar =document.querySelectorAll('.top-Bar')[0];
             let bottomBar =document.querySelectorAll('.bottom-Bar')[0];
     
             leftBar.style.animation='hideleftBar 1s';
-            topBar.style.animation='hidetopBar 1s';
             bottomBar.style.animation='hidebottomBar 1s';
     
             setTimeout(()=>{
                 leftBar.style.display='none';
-                topBar.style.display='none';
                 bottomBar.style.display='none';
             },1000)
         },
@@ -172,7 +167,36 @@ module.exports = class Menu{
                     modal.style.animation ='showModal 0.5s';
                 }                                
             })
+        },
+        createConfig:()=>{
+            let MasterScaleContainer=document.createElement('div');
+            let MasterScaleNext =document.createElement('button');
+            MasterScaleNext.innerText='Next'
+            MasterScaleNext.addEventListener('click',()=>{
+                let info =document.getElementById('MasterScaleInfo').innerText;
+                let newInfo = document.getElementById('MasterScaleInfo').innerText =parseInt(info) +10;
+                this.MainThis.MasterScale=parseInt(newInfo);
+            })
+
+            let MasterScaleInfo=document.createElement('p');
+            MasterScaleInfo.id='MasterScaleInfo';
+            MasterScaleInfo.innerText= this.MainThis.MasterScale
+
+            let MasterScalePrev =document.createElement('button');
+            MasterScalePrev.innerText='prev'
+            MasterScalePrev.addEventListener('click',()=>{
+                let info =document.getElementById('MasterScaleInfo').innerText;
+                let newInfo =document.getElementById('MasterScaleInfo').innerText =parseInt(info) -10;
+                this.MainThis.MasterScale=parseInt(newInfo);
+            })
+
+            MasterScaleContainer.appendChild(MasterScalePrev)
+            MasterScaleContainer.appendChild(MasterScaleInfo)
+            MasterScaleContainer.appendChild(MasterScaleNext)
+
+            return MasterScaleContainer;
         }
+
     }
     // home page levels ,functions
     homeLevels={

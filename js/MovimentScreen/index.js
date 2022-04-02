@@ -1,7 +1,7 @@
 module.exports = class MovimentScreen{
     MovimentInitialized = false;
     MovimentClearInterval =false;
-    IntervalMoviment=150;
+    IntervalMoviment=40;
     breakpointWidth = window.screen.width /10;
     moveScreenWidth =window.screen.width /8;
 
