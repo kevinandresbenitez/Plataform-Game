@@ -20,14 +20,17 @@ class main{
     //Define master Scale , all params in the game derive from this scale
     static MasterScale =40;
     
-    static showMenu(){       
+    static createMenu(){       
         this.Menu =new Menu(this);
         this.Menu.homepage.create.ALLMENU();
+    }
+    static deleteMenu(){
+        this.Menu.homepage.remove.ALLMENU();
     }
     
     static initGame(levelNumber){
         // Delete Menu
-        this.Menu.homepage.remove.ALLMENU();
+        this.deleteMenu();
         // create gameContainer and escape menu . Are required for create instances
         this.Menu.gameContainer.create();
         this.Menu.escapeMenu.create();
@@ -51,7 +54,6 @@ class main{
         this.user.startMoviment();
 
     }
-
     static endGame(){
         /*Remove Blocks , remove user , and show menu */
         this.levelLoader.remove();
@@ -61,7 +63,7 @@ class main{
         Backgorund.levelLimitBackground.delete();/*delete backgorunds*/
         this.gameStart=false;/*desabilite keyboards */
 
-        this.Menu.homepage.create.ALLMENU();// Show menu
+        this.createMenu();// Show menu
     }
 
     static keyBoard = {
@@ -122,7 +124,7 @@ class main{
 }
 
 
-main.showMenu();
+main.createMenu();
 
 /*Add event */
 document.addEventListener('keydown',main.keyBoard.keyDown);
