@@ -143,7 +143,7 @@ module.exports = class LevelLoader{
             if(this.nextLevel){                  
                 /*The name of the next level , convert to level var and change position user and load next level*/
                 this.load.level(Levels[this.levelNum]);
-                this.MainThis.user.changePosition([this.userPositionInitial[0] * this.MainThis.MasterScale , window.innerHeight -(this.userPositionInitial[1]* this.MainThis.MasterScale)]);
+                this.MainThis.user.changePosition([this.userPositionInitial[0] * this.MainThis.gameConfigurations.MasterScale , window.innerHeight -(this.userPositionInitial[1]* this.MainThis.gameConfigurations.MasterScale)]);
                 this.MainThis.user.draw();
                 return true
             }
@@ -153,7 +153,7 @@ module.exports = class LevelLoader{
             if(this.prevLevel){
             /*The name of the next level , convert to level var and change position user and load prev level*/
             this.load.level(Levels[this.levelNum -2]);
-            this.MainThis.user.changePosition([this.userPositionEnd[0] * this.MainThis.MasterScale , window.innerHeight -(this.userPositionEnd[1]* this.MainThis.MasterScale)]);
+            this.MainThis.user.changePosition([this.userPositionEnd[0] * this.MainThis.gameConfigurations.MasterScale , window.innerHeight -(this.userPositionEnd[1]* this.MainThis.gameConfigurations.MasterScale)]);
             this.MainThis.user.draw();
             return true
             }

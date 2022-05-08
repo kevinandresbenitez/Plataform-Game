@@ -1,33 +1,28 @@
 /* config menu modals */
 .config{
-    display: none;
     position: absolute;
     top: 0;
     width: 100vw;
     height: 100vh;    
-    background-color: rgba(61, 21, 21, 0.26);    
+    background-color: rgba(56, 51, 51, 0.26);    
+
+    display: none;
+    justify-content: center;
+    align-items: center;
 
     .modal-config{        
         position: absolute;
-        top: 5%;
-        left: 25%;
-        width: 800px;
-        height: 800px;
+        width: 1055px;
+        height: 665px;
         background: url('../../assets/img/Menu/modalBackground.png');
 
-        .close{
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            width: 60px;
-            height: 60px;
-            background: url('../../assets/img/Menu/CloseModal.png');    
-            border: none;
-            transition: all 0.3s;
-            &:hover{
-                transform:scale(1.1);
-            }
+        .title-config{
+            width: 290px;
+            height: 30px;
+            margin: 56px auto;
+            background: url('../../assets/img/Menu/TitleConfig.png');
         }
+
     }
 }
 

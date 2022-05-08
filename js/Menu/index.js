@@ -35,11 +35,19 @@ module.exports = class Menu{
                     let buttonStart =document.createElement('button');
                     let buttonConfig =document.createElement('button');
                     buttonStart.classList.add('button-start');
+                    buttonStart.classList.add('selected');
                     buttonConfig.classList.add('button-config');
                     buttonStart.style.background =`url(${comenzarImg})`;
                     buttonConfig.style.background =`url(${configuracionImg})`;
-                    buttonStart.onclick=()=>{this.levelSection.show()};
-                    buttonConfig.onclick=()=>{this.homepage.show.modalConfig()};
+                    buttonStart.onclick=()=>{
+                        this.levelSection.show();
+                        this.MainThis.homeMenuSections.homeLevel =true;
+                    };
+                        buttonConfig.onclick=()=>{
+                        this.homepage.show.modalConfig();
+                        this.MainThis.homeMenuSections.homeConfig = true;
+                    };
+
                     leftBar.appendChild(buttonStart);
                     leftBar.appendChild(buttonConfig);
 
@@ -72,12 +80,6 @@ module.exports = class Menu{
                 levelsBar.classList.add('levels-bar');
                 levelsInfo.classList.add('levels-info');
 
-                    // create button prevPage
-                let prevPage = document.createElement('button');
-                prevPage.classList.add('button-prev');
-                prevPage.style.background=`url(${prevImg})`;
-                prevPage.onclick =()=>{this.homepage.show.homepage()};
-                topBarLoadLevel.appendChild(prevPage);
 
                     // create levels carrusel and buttons prev and next
                 let levelsItems=document.createElement('div');
@@ -122,10 +124,12 @@ module.exports = class Menu{
                     // Create container solid in screen
                 let modalConfig = document.createElement('div');
                 modalConfig.classList.add('modal-config');
-                    // Add button close modal
-                        let buttonClose = document.createElement('button');
-                        buttonClose.classList.add('close')
-                        buttonClose.onclick=()=>{this.homepage.hide.modalConfig()}
+                    
+                    // Add text
+                    let configTitle =document.createElement('div');
+                    configTitle.classList.add('title-config');
+
+
 
                     // Add Master Scale selector
                             //Create button increment MasterScale
@@ -135,7 +139,7 @@ module.exports = class Menu{
                         MasterScaleNext.addEventListener('click',()=>{
                             let info =document.getElementById('MasterScaleInfo').innerText;
                             let newInfo = document.getElementById('MasterScaleInfo').innerText =parseInt(info) +10;
-                            this.MainThis.MasterScale=parseInt(newInfo);
+                            this.MainThis.gameConfigurations.MasterScale=parseInt(newInfo);
                         })
                             //Create button decrement MasterScale
                         let MasterScalePrev =document.createElement('button');
@@ -143,12 +147,12 @@ module.exports = class Menu{
                         MasterScalePrev.addEventListener('click',()=>{
                             let info =document.getElementById('MasterScaleInfo').innerText;
                             let newInfo =document.getElementById('MasterScaleInfo').innerText =parseInt(info) -10;
-                            this.MainThis.MasterScale=parseInt(newInfo);
+                            this.MainThis.gameConfigurations.MasterScale=parseInt(newInfo);
                         })
                             // create info masterscale
                         let MasterScaleInfo=document.createElement('p');
                         MasterScaleInfo.id='MasterScaleInfo';
-                        MasterScaleInfo.innerText= this.MainThis.MasterScale
+                        MasterScaleInfo.innerText= this.MainThis.gameConfigurations.MasterScale
                         
                             // Add in masterscale container items
                         MasterScaleContainer.appendChild(MasterScalePrev)
@@ -156,9 +160,8 @@ module.exports = class Menu{
                         MasterScaleContainer.appendChild(MasterScaleNext)
                     
                     // ADD items in container modal solid
-                    modalConfig.appendChild(buttonClose);
+                    modalConfig.appendChild(configTitle);
                     modalConfig.appendChild(MasterScaleContainer)
-
                 // Add items in the container config
                 config.appendChild(blur);
                 config.appendChild(modalConfig);
@@ -194,7 +197,7 @@ module.exports = class Menu{
             },
 
             modalConfig:()=>{
-                document.querySelectorAll('.config')[0].style.display='block';
+                document.querySelectorAll('.config')[0].style.display='flex';
                 document.querySelectorAll('.modal-config')[0].style.animation ='showModal 0.5s';
             }
         },
@@ -311,11 +314,14 @@ module.exports = class Menu{
             let config = document.createElement('div');
             config.classList.add('escape-menu');        
             let modalConfig = document.createElement('div');
-            let buttonClose = document.createElement('button');      
-            modalConfig.classList.add('modal-config');        
-            buttonClose.classList.add('close')        
-            buttonClose.onclick=()=>{this.MainThis.endGame()};
-            modalConfig.appendChild(buttonClose);        
+            let buttonExit = document.createElement('button');      
+            modalConfig.classList.add('modal-config');
+            buttonExit.classList.add('exit');
+            buttonExit.classList.add('selected');
+            buttonExit.onclick=()=>{
+                this.MainThis.endGame();
+            };
+            modalConfig.appendChild(buttonExit);        
             config.appendChild(modalConfig);
 
             /*Add menu in the dom */
@@ -327,7 +333,7 @@ module.exports = class Menu{
         },
         show:()=>{
             document.querySelectorAll('.modal-config')[0].style.animation ='showModal 0.5s';
-            document.querySelectorAll('.escape-menu')[0].style.display = 'block';
+            document.querySelectorAll('.escape-menu')[0].style.display = 'flex';
         },
         hide:()=>{
             document.querySelectorAll('.modal-config')[0].style.animation ='hideModal 0.5s';

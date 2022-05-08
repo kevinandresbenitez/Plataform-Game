@@ -10,19 +10,34 @@ class main{
     // Define instances
     levelLoader;
     user;
-    gameStart;
     MovimentScreen;
     Menu;
-
-    //boolean to know if the exit menu is active in the game
-    scapeMenu;
-
-    //Define master Scale , all params in the game derive from this scale
-    static MasterScale =40;
     
+    static homeMenuSections = {
+        homeMenu:true,
+        homeConfig:false,
+        homeLevel:false
+    }
+    static gameSections ={
+        gameStart:false,
+        gameSections:false
+    }
+    static gameConfigurations ={
+        MasterScale:40,
+    }
+
+
+
     static createMenu(){       
         this.Menu =new Menu(this);
         this.Menu.homepage.create.ALLMENU();
+
+        /*Set default values*/
+        this.homeMenuSections.homeMenu=true;
+        this.homeMenuSections.homeLevel=false;
+        this.homeMenuSections.homeConfig=false;
+        this.gameSections.scapeMenu = false;
+
     }
     static deleteMenu(){
         this.Menu.homepage.remove.ALLMENU();
@@ -38,18 +53,18 @@ class main{
 
         // Define instances
         this.MovimentScreen= new MovimentScreen(this);
-        this.levelLoader = new LevelLoader(this,{width:this.MasterScale,height:this.MasterScale});
-        this.user = new User(this,{width:this.MasterScale+(this.MasterScale /2),height:this.MasterScale*2,velosityRun:this.MasterScale / 2,velosityRun:this.MasterScale/2,});
+        this.levelLoader = new LevelLoader(this,{width:this.gameConfigurations.MasterScale,height:this.gameConfigurations.MasterScale});
+        this.user = new User(this,{width:this.gameConfigurations.MasterScale+(this.gameConfigurations.MasterScale /2),height:this.gameConfigurations.MasterScale*2,velosityRun:this.gameConfigurations.MasterScale / 2,velosityRun:this.gameConfigurations.MasterScale/2,});
 
 
         // init Game XD
         this.levelLoader.load.level(Levels[levelNumber]);/*Load Level */
         this.MovimentScreen.initMoviment();/*Load screen moviment */
         Backgorund.levelLimitBackground.create();/*Load backgorunds*/
-        this.gameStart=true;/*avilite keyboards */
+        this.gameSections.gameStart=true;/*avilite keyboards */
 
         /*Load user */
-        this.user.create(this.levelLoader.userPositionInitial[0]*this.MasterScale,window.innerHeight-(this.MasterScale *this.levelLoader.userPositionInitial[1]));
+        this.user.create(this.levelLoader.userPositionInitial[0]*this.gameConfigurations.MasterScale,window.innerHeight-(this.gameConfigurations.MasterScale *this.levelLoader.userPositionInitial[1]));
         this.user.gravity.start();
         this.user.startMoviment();
 
@@ -61,14 +76,40 @@ class main{
         this.Menu.escapeMenu.remove();/*Delete escape menu */
         this.Menu.gameContainer.remove();/*Delete escape menu */
         Backgorund.levelLimitBackground.delete();/*delete backgorunds*/
-        this.gameStart=false;/*desabilite keyboards */
+        this.gameSections.gameStart=false;/*desabilite keyboards */
 
         this.createMenu();// Show menu
     }
 
     static keyBoard = {
-        keyDown:(e)=>{   
-            if(this.gameStart){
+        keyDown:(e)=>{ 
+
+            if(this.gameSections.scapeMenu){
+                let modalConfig =document.querySelector('.modal-config').querySelector('.selected');
+                switch(e.key){
+                    case 'Enter':
+                        modalConfig.click();
+                        return false
+                    break
+                }
+            }
+
+            if(this.gameSections.gameStart){
+                switch(e.key){
+                    case 'Escape':
+                        if(this.gameSections.scapeMenu){
+                            this.Menu.escapeMenu.hide();
+                            this.gameSections.scapeMenu =false
+                        }else{
+                            this.Menu.escapeMenu.show();
+                            this.gameSections.scapeMenu =true
+                        }
+                    break
+                }
+            }
+
+
+            if(this.gameSections.gameStart && !this.gameSections.scapeMenu){
                 switch(e.key){
                     case 'ArrowRight':
                         this.user.moveRight=true;                                    
@@ -82,21 +123,57 @@ class main{
                     case 'ArrowUp':            
                         this.user.moveJump=true;            
                     break
+                }
+            }else if(this.homeMenuSections.homeMenu){
+                let leftBar = document.querySelector('.left-Bar');
+                switch(e.key){
+                    case 'ArrowUp':            
+                        leftBar.children[0].classList.add('selected');
+                        leftBar.children[1].classList.remove('selected');
+                    break
+                    case 'ArrowDown':
+                        leftBar.children[1].classList.add('selected');
+                        leftBar.children[0].classList.remove('selected');
+                    break
+                    case 'Enter':
+                        leftBar.querySelector('.selected').click()
+                        this.homeMenuSections.homeMenu = false;
+                    break
+
+                }
+            }else if(this.homeMenuSections.homeConfig){
+                switch(e.key){
                     case 'Escape':
-                        if(this.scapeMenu){
-                            this.Menu.escapeMenu.hide();
-                            this.scapeMenu =false
-                        }else{
-                            this.Menu.escapeMenu.show();
-                            this.scapeMenu =true
-                        }
+                        this.homeMenuSections.homeMenu = true;
+                        this.homeMenuSections.homeConfig = false;
+                        this.Menu.homepage.hide.modalConfig()
+                    break
+                }
+            }else if(this.homeMenuSections.homeLevel){
+                switch(e.key){
+                    case 'ArrowRight':
+                        this.Menu.levelSection.selectNextLevel();
+                        this.Menu.levelSection.drawInfo()
+                    break
+                    case 'ArrowLeft':
+                        this.Menu.levelSection.selectPrevLevel();
+                        this.Menu.levelSection.drawInfo()
+                    break
+                    case 'Enter':
+                        this.homeMenuSections.homeLevel = false;
+                        this.initGame(this.Menu.levelSelected);
+                    break
+                    case 'Escape':
+                        this.homeMenuSections.homeMenu = true;
+                        this.homeMenuSections.homeLevel = false;
+                        this.Menu.homepage.show.homepage()
                     break
                 }
             }
         },
         
         keyUp:(e)=>{
-            if(this.gameStart){
+            if(this.gameSections.gameStart){
                 switch(e.key){
                     case 'ArrowRight':
                         this.user.moveRight=false;

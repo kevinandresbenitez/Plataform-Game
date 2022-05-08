@@ -14,18 +14,44 @@
     
         display: flex;
         flex-flow: column wrap;
-        justify-content:space-evenly;
-        align-items: center;
+        justify-content:center;
+        align-items: flex-start;
 
-        .button-start,.button-config{
-            height: 80px;
-            width: 280px;
-            border: none;                                
+        .button-start{
+            margin-left: 60px;
+            margin-bottom: 100px;
+            height: 50px;
+            width: 250px;
+            border: none;
+            position: relative;
             transition: all 0.3s;
-            &:hover{
-                transform:scale(1.1);
-            }
         }
+        .button-config{
+            margin-left: 60px;
+            width: 580px;
+            height: 50px;
+            border: none;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .button-config,.button-start{
+            transform: translate(70px);
+            border: none;
+            outline: none;
+        }
+
+        .selected::after{
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -70px;
+            background: url('../../assets/img/Menu/Arrow.png');
+            width: 50px;
+            height: 50px;
+            
+        }
+
     }
     /*Menu home right*/
     .right-Bar{
