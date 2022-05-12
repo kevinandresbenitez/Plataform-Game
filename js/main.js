@@ -13,6 +13,7 @@ class main{
     MovimentScreen;
     Menu;
     
+    // Sections vars,configs
     static homeMenuSections = {
         homeMenu:true,
         homeConfig:false,
@@ -20,7 +21,7 @@ class main{
     }
     static gameSections ={
         gameStart:false,
-        gameSections:false
+        scapeMenu:false
     }
     static gameConfigurations ={
         MasterScale:40,
@@ -81,123 +82,198 @@ class main{
         this.createMenu();// Show menu
     }
 
+    
     static keyBoard = {
         keyDown:(e)=>{ 
-
-            if(this.gameSections.scapeMenu){
-                let modalConfig =document.querySelector('.modal-config').querySelector('.selected');
-                switch(e.key){
-                    case 'Enter':
-                        modalConfig.click();
-                        return false
-                    break
-                }
-            }
-
-            if(this.gameSections.gameStart){
-                switch(e.key){
-                    case 'Escape':
-                        if(this.gameSections.scapeMenu){
-                            this.Menu.escapeMenu.hide();
-                            this.gameSections.scapeMenu =false
-                        }else{
-                            this.Menu.escapeMenu.show();
-                            this.gameSections.scapeMenu =true
-                        }
-                    break
-                }
-            }
-
-
+            /*If game initialized */
             if(this.gameSections.gameStart && !this.gameSections.scapeMenu){
-                switch(e.key){
-                    case 'ArrowRight':
-                        this.user.moveRight=true;                                    
-                    break
-                    case 'ArrowLeft':
-                        this.user.moveLeft=true;            
-                    break
-                    case 'ArrowDown':
-                        this.user.moveDown=true;           
-                    break
-                    case 'ArrowUp':            
-                        this.user.moveJump=true;            
-                    break
+
+                const moveRight=()=>{
+                    this.user.moveRight=true;
+                };
+                const moveLeft=()=>{
+                    this.user.moveLeft=true;
+                };
+                const moveDown=()=>{
+                    this.user.moveDown=true;  
+                };
+                const jump=()=>{
+                    this.user.moveJump=true;   
+                };
+                const showEscapeMenu=()=>{
+                    /* Enable Menu exit */
+                    this.Menu.escapeMenu.show();
+                    this.gameSections.scapeMenu =true
                 }
+                const handlers={
+                    ArrowRight:moveRight,
+                    ArrowLeft:moveLeft,
+                    ArrowDown:moveDown,
+                    ArrowUp:jump,
+                    Escape:showEscapeMenu
+                }
+                
+                if(handlers.hasOwnProperty(e.key)){
+                    handlers[e.key]()
+                }
+                
+                return true
+                
+            }else if(this.gameSections.scapeMenu){
+                let modalConfig =document.querySelector('.modal-config');
+
+                let configOptions = modalConfig.children;
+                let configLenghts = configOptions.length;
+                let activeItem =modalConfig.querySelector('.selected');
+                
+                    // Parse htmlCollection to array for get index .selecteed
+                var configArray = Array.prototype.slice.call(configOptions);
+                let activeItemPosition =configArray.indexOf(activeItem) + 1;
+                
+
+                const selectPrevOption=()=>{
+                    if(configLenghts > 1 && (activeItemPosition - 1 > 0)){
+                        configOptions[activeItemPosition - 1].classList.remove('selected');
+                        configOptions[activeItemPosition - 2].classList.add('selected');
+                    }
+                }
+                const selectNextOption=()=>{
+                    if(configLenghts > 1 && (activeItemPosition < configLenghts)){
+                        configOptions[activeItemPosition - 1].classList.remove('selected');
+                        configOptions[activeItemPosition].classList.add('selected');
+                    }
+                }
+                const hideEscapeMenu=()=>{
+                    //Disable Menu exit
+                    this.Menu.escapeMenu.hide();
+                    this.gameSections.scapeMenu =false
+                }
+                const activeOption=()=>{
+                    activeItem.click();
+                }
+
+                const handlers={
+                    ArrowDown:selectNextOption,
+                    ArrowUp:selectPrevOption,
+                    Escape:hideEscapeMenu,
+                    Enter:activeOption
+                }
+                if(handlers.hasOwnProperty(e.key)){
+                    handlers[e.key]()
+                }
+
+                return true;
             }else if(this.homeMenuSections.homeMenu){
                 let leftBar = document.querySelector('.left-Bar');
-                switch(e.key){
-                    case 'ArrowUp':            
-                        leftBar.children[0].classList.add('selected');
-                        leftBar.children[1].classList.remove('selected');
-                    break
-                    case 'ArrowDown':
-                        leftBar.children[1].classList.add('selected');
-                        leftBar.children[0].classList.remove('selected');
-                    break
-                    case 'Enter':
-                        leftBar.querySelector('.selected').click()
-                        this.homeMenuSections.homeMenu = false;
-                    break
 
+                const selectNextOption=()=>{
+                    leftBar.children[1].classList.add('selected');
+                    leftBar.children[0].classList.remove('selected');
                 }
+                const selectPrevOption=()=>{
+                    leftBar.children[0].classList.add('selected');
+                    leftBar.children[1].classList.remove('selected');
+                }
+                const activeOption=()=>{
+                    leftBar.querySelector('.selected').click()
+                    this.homeMenuSections.homeMenu = false;
+                }
+
+                const handlers={
+                    ArrowDown:selectNextOption,
+                    ArrowUp:selectPrevOption,
+                    Enter:activeOption,
+                }
+                if(handlers.hasOwnProperty(e.key)){
+                    handlers[e.key]()
+                }
+
+                return true
             }else if(this.homeMenuSections.homeConfig){
-                switch(e.key){
-                    case 'Escape':
-                        this.homeMenuSections.homeMenu = true;
-                        this.homeMenuSections.homeConfig = false;
-                        this.Menu.homepage.hide.modalConfig()
-                    break
+                const goHomeMenu=()=>{
+                    this.homeMenuSections.homeMenu = true;
+                    this.homeMenuSections.homeConfig = false;
+                    this.Menu.homepage.hide.modalConfig()
                 }
+
+                const handlers ={
+                    Escape:goHomeMenu
+                }
+                if(handlers.hasOwnProperty(e.key)){
+                    handlers[e.key]()
+                }
+
+                return true
             }else if(this.homeMenuSections.homeLevel){
-                switch(e.key){
-                    case 'ArrowRight':
-                        this.Menu.levelSection.selectNextLevel();
-                        this.Menu.levelSection.drawInfo()
-                    break
-                    case 'ArrowLeft':
-                        this.Menu.levelSection.selectPrevLevel();
-                        this.Menu.levelSection.drawInfo()
-                    break
-                    case 'Enter':
-                        this.homeMenuSections.homeLevel = false;
-                        this.initGame(this.Menu.levelSelected);
-                    break
-                    case 'Escape':
-                        this.homeMenuSections.homeMenu = true;
-                        this.homeMenuSections.homeLevel = false;
-                        this.Menu.homepage.show.homepage()
-                    break
+
+                const selectNextLevel=()=>{
+                    this.Menu.levelSection.selectNextLevel();
+                    this.Menu.levelSection.drawInfo()
                 }
+                const selectPrevLevel=()=>{
+                    this.Menu.levelSection.selectPrevLevel();
+                    this.Menu.levelSection.drawInfo()   
+                }
+                const startGame=()=>{
+                    this.homeMenuSections.homeLevel = false;
+                    this.initGame(this.Menu.levelSelected);
+                }
+                const goHomepage=()=>{
+                    this.homeMenuSections.homeMenu = true;
+                    this.homeMenuSections.homeLevel = false;
+                    this.Menu.homepage.show.homepage()
+                }
+
+                const handlers ={
+                    ArrowRight:selectNextLevel,
+                    ArrowLeft:selectPrevLevel,
+                    Enter:startGame,
+                    Escape:goHomepage
+                }
+
+                if(handlers.hasOwnProperty(e.key)){
+                    handlers[e.key]()
+                }
+
+                return true
             }
         },
         
         keyUp:(e)=>{
-            if(this.gameSections.gameStart){
-                switch(e.key){
-                    case 'ArrowRight':
-                        this.user.moveRight=false;
-                        this.user.setImg.WaitRight();
-                        this.user.draw();           
-        
-                    break
-                    case 'ArrowLeft':
-                        this.user.moveLeft=false;
-                        this.user.setImg.WaitLeft();
-                        this.user.draw();          
-                    break
-                    case 'ArrowDown':
-                        this.user.moveDown=false;           
-                    break
-                    case 'ArrowUp':
-                        this.user.moveJump=false;            
-                    break
+            if(this.gameSections.gameStart && !this.gameSections.scapeMenu){
+                const stopMoveRight =()=>{
+                    this.user.moveRight=false;
+                    this.user.setImg.WaitRight();
+                    this.user.draw();     
+                };
+                const stopMoveLeft =()=>{
+                    this.user.moveLeft=false;
+                    this.user.setImg.WaitLeft();
+                    this.user.draw();          
+                };
+                const stopMoveDown =()=>{
+                    this.user.moveDown=false;           
+                };
+                const stopJump =()=>{
+                    this.user.moveJump=false;            
+                };
+
+                const handlers={
+                    ArrowRight:stopMoveRight,
+                    ArrowLeft:stopMoveLeft,
+                    ArrowDown:stopMoveDown,
+                    ArrowUp:stopJump,
                 }
+                
+                if(handlers.hasOwnProperty(e.key)){
+                    handlers[e.key]()
+                }
+                return true
+
             }
         }
 
     }
-
 }
 
 
