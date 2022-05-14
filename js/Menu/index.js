@@ -38,7 +38,13 @@ module.exports = class Menu{
                     buttonStart.classList.add('selected');
                     buttonConfig.classList.add('button-config');
                     buttonStart.style.background =`url(${comenzarImg})`;
-                    buttonConfig.style.background =`url(${configuracionImg})`;
+                    buttonStart.style.backgroundRepeat ='no-repeat';
+                    buttonStart.style.backgroundSize ='contain';
+
+                    buttonConfig.style.backgroundImage =`url(${configuracionImg})`;
+                    buttonConfig.style.backgroundRepeat ='no-repeat';
+                    buttonConfig.style.backgroundSize ='contain';
+
                     buttonStart.onclick=()=>{
                         this.levelSection.show();
                         this.MainThis.homeMenuSections.homeLevel =true;
