@@ -3,7 +3,7 @@ let Levels =require('../Levels/levels.js');
 // Import imgs
 let comenzarImg=require('../../assets/img/Menu/Comenzar.png');
 let configuracionImg=require('../../assets/img/Menu/Configuracion.png');
-let prevImg=require('../../assets/img/Menu/Atras.png');
+
 
 module.exports = class Menu{
     /*Params levels */     
