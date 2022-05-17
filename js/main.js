@@ -62,6 +62,7 @@ class main{
         this.levelLoader.load.level(Levels[levelNumber]);/*Load Level */
         this.MovimentScreen.initMoviment();/*Load screen moviment */
         Backgorund.levelLimitBackground.create();/*Load backgorunds*/
+        Backgorund.backgroundLevel.create(Levels[levelNumber].background);/*delete backgorunds*/
         this.gameSections.gameStart=true;/*avilite keyboards */
 
         /*Load user */
@@ -76,7 +77,10 @@ class main{
         this.user.remove();
         this.Menu.escapeMenu.remove();/*Delete escape menu */
         this.Menu.gameContainer.remove();/*Delete escape menu */
+        
         Backgorund.levelLimitBackground.delete();/*delete backgorunds*/
+        Backgorund.backgroundLevel.delete();/*delete backgorunds*/
+
         this.gameSections.gameStart=false;/*desabilite keyboards */
 
         this.createMenu();// Show menu

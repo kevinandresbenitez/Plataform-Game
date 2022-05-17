@@ -1,4 +1,5 @@
 let Blocks=require('../Blocks/index.js');
+let Backgorund =require('../Background/index');
 
 module.exports = class LevelLoader{
     /*Matriz  container , all blocks container array */
@@ -120,6 +121,7 @@ module.exports = class LevelLoader{
             /*Update level info*/
             this.nameLevel=level.nameLevel;
             this.levelNum =level.levelNum;
+            this.background =level.background;
             this.userPositionEnd= Object.values(level.userPositionEnd);
             this.userPositionInitial=Object.values(level.userPositionInitial);
             this.prevLevel=level.prevLevel;
@@ -145,6 +147,10 @@ module.exports = class LevelLoader{
                 this.load.level(Levels[this.levelNum]);
                 this.MainThis.user.changePosition([this.userPositionInitial[0] * this.MainThis.gameConfigurations.MasterScale , window.innerHeight -(this.userPositionInitial[1]* this.MainThis.gameConfigurations.MasterScale)]);
                 this.MainThis.user.draw();
+                
+                // change backgorund
+                Backgorund.backgroundLevel.change(this.background);
+
                 return true
             }
             return false
@@ -155,6 +161,10 @@ module.exports = class LevelLoader{
             this.load.level(Levels[this.levelNum -2]);
             this.MainThis.user.changePosition([this.userPositionEnd[0] * this.MainThis.gameConfigurations.MasterScale , window.innerHeight -(this.userPositionEnd[1]* this.MainThis.gameConfigurations.MasterScale)]);
             this.MainThis.user.draw();
+
+                // change backgorund
+            Backgorund.backgroundLevel.change(this.background);
+
             return true
             }
 

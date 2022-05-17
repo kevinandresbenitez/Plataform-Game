@@ -1,3 +1,7 @@
+let level1Backgorund = require('../../assets/img/Backgrounds/Levels/Level-1.png');
+let level2Backgorund = require('../../assets/img/Backgrounds/Levels/Level-2.png');
+let level3Backgorund = require('../../assets/img/Backgrounds/Levels/Level-3.png');
+
 module.exports = Levels=[
 {
     nameLevel:'Level 1',
@@ -6,7 +10,7 @@ module.exports = Levels=[
     prevLevel:false,    
     userPositionInitial:[3,20],
     userPositionEnd:[37.5,15],
-    background:'#da5555',
+    background:level1Backgorund,
     imgPreview:require('../../assets/img/Menu/LevelsPreview/Level1.png'),
     level :[    
     [4,4,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5],
@@ -45,6 +49,7 @@ module.exports = Levels=[
     prevLevel:true,
     userPositionInitial:[1,15],
     userPositionEnd:[52.5,12],
+    background:level2Backgorund,
     prevLevel:'Level1',
     imgPreview:require('../../assets/img/Menu/LevelsPreview/Level2.png'),    
     level :[
@@ -84,6 +89,7 @@ module.exports = Levels=[
     prevLevel:true,
     userPositionInitial:[1,12],
     userPositionEnd:[0,0],
+    background:level3Backgorund,
     prevLevel:'Level1',
     imgPreview:require('../../assets/img/Menu/LevelsPreview/Level2.png'),    
     level :[

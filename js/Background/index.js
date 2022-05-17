@@ -12,11 +12,38 @@ module.exports = class Background{
             levelLimitBackground.style.left='0';
             levelLimitBackground.style.background='#303843';
             levelLimitBackground.style.zIndex='1';
-            document.querySelectorAll('.container')[0].appendChild(levelLimitBackground);
+            document.querySelector('.container').appendChild(levelLimitBackground);
         },
         
         delete:()=>{
             document.querySelectorAll('.container')[0].removeChild(document.getElementById('levelLimitBackground'));
         }
     }
+
+    static backgroundLevel={
+        create:(background)=>{
+            let backgroundLevel = document.createElement('div');
+            backgroundLevel.classList.add('backgorund-level');
+            backgroundLevel.style.background ='url('+ background +')';
+            backgroundLevel.style.backgroundRepeat='no-repeat';
+            backgroundLevel.style.backgroundSize='cover';
+            backgroundLevel.style.position ='fixed';
+            backgroundLevel.style.width ='100vw';
+            backgroundLevel.style.height ='100vh';
+            backgroundLevel.style.zIndex ='2';
+            document.querySelector('.container').appendChild(backgroundLevel);
+        },
+
+        delete:()=>{
+            let container =document.querySelector('.container');
+            let backgroundLevel =container.querySelector('.backgorund-level');
+            container.removeChild(backgroundLevel)
+        },
+
+        change:(background)=>{
+            let container =document.querySelector('.container');
+            container.querySelector('.backgorund-level').style.background ='url('+ background +')';
+        }
+    }
+
 }
