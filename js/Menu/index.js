@@ -1,4 +1,5 @@
 let Levels =require('../Levels/levels.js');
+let Utils =require('../Utils/index.js')
 
 // Import imgs
 let comenzarImg=require('../../assets/img/Menu/Comenzar.png');
@@ -6,7 +7,7 @@ let configuracionImg=require('../../assets/img/Menu/Configuracion.png');
 
 
 module.exports = class Menu{
-    /*Params levels */     
+    /*Params levels */
      container = document.querySelectorAll('.container')[0];
 
     /*Levelsparams */
@@ -14,37 +15,26 @@ module.exports = class Menu{
      levelSelectedRightPosition= ((Levels.length * 800)-800)*-1;
      levels=Levels.length;
      levelsLeftLimit = Levels.length * 800;
-    
+
     constructor(MainThis){
-        this.MainThis=MainThis;     
+        this.MainThis=MainThis;
     }
-  
-    
-    //create homepage and levels sections 
-    homepage={       
+
+
+    //create homepage and levels sections
+    homepage={
         create:{
             homeMenu:()=>{
+
                 // Create Main menu container
-                let MainMenu =document.createElement('div');
-                MainMenu.classList.add('Main-menu');
-
-                // Create Left bar in menu 
-                let leftBar =document.createElement('div');
-                leftBar.classList.add('left-Bar');
+                let MainMenu =Utils.createElementDom({element:"div",className:"Main-menu"});
+                // Create Left bar in menu
+                let leftBar =Utils.createElementDom({element:"div",className:"left-Bar"})
                     // Buttons Left bar
-                    let buttonStart =document.createElement('button');
-                    let buttonConfig =document.createElement('button');
-                    buttonStart.classList.add('button-start');
-                    buttonStart.classList.add('selected');
-                    buttonConfig.classList.add('button-config');
-                    buttonStart.style.background =`url(${comenzarImg})`;
-                    buttonStart.style.backgroundRepeat ='no-repeat';
-                    buttonStart.style.backgroundSize ='contain';
-
-                    buttonConfig.style.backgroundImage =`url(${configuracionImg})`;
-                    buttonConfig.style.backgroundRepeat ='no-repeat';
-                    buttonConfig.style.backgroundSize ='contain';
-
+                    let buttonStartStyle={background:`url(${comenzarImg})`,backgroundRepeat:"no-repeat",backgroundSize:"contain"}
+                    let buttonStart =Utils.createElementDom({element:"button",className:"button-start selected",style:buttonStartStyle});
+                    let buttonConfigStyle = {backgroundImage:`url(${configuracionImg})`,backgroundRepeat:"no-repeat",backgroundSize:"contain"}
+                    let buttonConfig =Utils.createElementDom({element:"button",className:"button-config",style:buttonConfigStyle});
                     buttonStart.onclick=()=>{
                         this.levelSection.show();
                         this.MainThis.homeMenuSections.homeLevel =true;
@@ -58,14 +48,12 @@ module.exports = class Menu{
                     leftBar.appendChild(buttonConfig);
 
                 // Create Right bar in menu
-                let rightBar =document.createElement('div');
-                rightBar.classList.add('right-Bar');
+                let rightBar =Utils.createElementDom({element:"div",className:"right-Bar"});
                     // Buttons Right Bar
-                    let bottomBar =document.createElement('div');
-                    bottomBar.classList.add('bottom-Bar');
+                    let bottomBar =Utils.createElementDom({element:"div",className:"bottom-Bar"});
                     rightBar.appendChild(bottomBar);
 
-                
+
                 // Add left bar and right bar to MainMenu
                 MainMenu.appendChild(leftBar);
                 MainMenu.appendChild(rightBar);
@@ -75,25 +63,19 @@ module.exports = class Menu{
 
             levelsMenu:()=>{
                 // Create levels container
-                let loadLevelsMenu = document.createElement('div');
-                loadLevelsMenu.classList.add('load-Levels-menu');
+                let loadLevelsMenu =Utils.createElementDom({element:"div",className:"load-Levels-menu"});
 
                 // create subsContainers
-                let topBarLoadLevel =document.createElement('div');
-                let levelsBar = document.createElement('div');
-                let levelsInfo =document.createElement('div');        
-                topBarLoadLevel.classList.add('top-Bar-loadLevel');
-                levelsBar.classList.add('levels-bar');
-                levelsInfo.classList.add('levels-info');
+                let topBarLoadLevel =Utils.createElementDom({element:"div",className:"top-Bar-loadLevel"});
+                let levelsBar =Utils.createElementDom({element:"div",className:"levels-bar"});
+                let levelsInfo =Utils.createElementDom({element:"div",className:"levels-info"});
 
 
                     // create levels carrusel and buttons prev and next
-                let levelsItems=document.createElement('div');
-                let buttonPrev=document.createElement('button');
-                let buttonNext=document.createElement('button');
-                levelsItems.classList.add('levels-items');
-                buttonPrev.classList.add('button-prev');
-                buttonNext.classList.add('button-next');
+                let levelsItems=Utils.createElementDom({element:"div",className:"levels-items"});
+                let buttonPrev=Utils.createElementDom({element:"button",className:"button-prev"});
+                let buttonNext=Utils.createElementDom({element:"button",className:"button-next"});
+
                 buttonPrev.onclick=()=>{this.levelSection.selectPrevLevel();this.levelSection.drawInfo()}
                 buttonNext.onclick =()=>{this.levelSection.selectNextLevel();this.levelSection.drawInfo()}
                 levelsBar.appendChild(levelsItems)
@@ -102,14 +84,14 @@ module.exports = class Menu{
 
 
                     // create levels info section , button start game and info level
-                let buttonStartGame = document.createElement('button');
-                buttonStartGame.classList.add('button-start');
+                let buttonStartGame =Utils.createElementDom({element:"button",className:"button-start"});
                 buttonStartGame.onclick=()=>{this.MainThis.initGame(this.levelSelected)}
-                let TitleGame=document.createElement('p');
-                TitleGame.innerText=Levels[this.levelSelected].nameLevel;
-                TitleGame.classList.add('title-game');
+
+                let titleGame=Utils.createElementDom({element:"p",className:"title-game"});
+                titleGame.innerText=Levels[this.levelSelected].nameLevel;
+
                 levelsInfo.appendChild(buttonStartGame);
-                levelsInfo.appendChild(TitleGame)
+                levelsInfo.appendChild(titleGame)
 
                 // add items to the container
                 loadLevelsMenu.appendChild(topBarLoadLevel);
@@ -121,20 +103,15 @@ module.exports = class Menu{
 
             modalConfig:()=>{
                 // Create modal config container
-                let config = document.createElement('div');
-                config.classList.add('config');
+                let config = Utils.createElementDom({element:"div",className:"config"});
 
                     // Create Blur
-                let blur = document.createElement('div');
-                blur.classList.add('blur');
+                let blur = Utils.createElementDom({element:"div",className:"blur"});
                     // Create container solid in screen
-                let modalConfig = document.createElement('div');
-                modalConfig.classList.add('modal-config');
-                    
-                    // Add text
-                    let configTitle =document.createElement('div');
-                    configTitle.classList.add('title-config');
+                let modalConfig = Utils.createElementDom({element:"div",className:"modal-config"});
 
+                    // Add text
+                    let configTitle =Utils.createElementDom({element:"div",className:"title-config"});
 
 
                     // Add Master Scale selector
@@ -156,22 +133,21 @@ module.exports = class Menu{
                             this.MainThis.gameConfigurations.MasterScale=parseInt(newInfo);
                         })
                             // create info masterscale
-                        let MasterScaleInfo=document.createElement('p');
-                        MasterScaleInfo.id='MasterScaleInfo';
+                        let MasterScaleInfo=Utils.createElementDom({element:"p",id:"MasterScaleInfo"});
                         MasterScaleInfo.innerText= this.MainThis.gameConfigurations.MasterScale
-                        
+
                             // Add in masterscale container items
                         MasterScaleContainer.appendChild(MasterScalePrev)
                         MasterScaleContainer.appendChild(MasterScaleInfo)
                         MasterScaleContainer.appendChild(MasterScaleNext)
-                    
+
                     // ADD items in container modal solid
                     modalConfig.appendChild(configTitle);
                     modalConfig.appendChild(MasterScaleContainer)
                 // Add items in the container config
                 config.appendChild(blur);
                 config.appendChild(modalConfig);
-                
+
                 return config;
             },
 
@@ -224,12 +200,12 @@ module.exports = class Menu{
 
             modalConfig:()=>{
                 let modal = document.querySelectorAll('.modal-config')[0];
-                modal.style.animation ='hideModal 0.5s';        
+                modal.style.animation ='hideModal 0.5s';
                 modal.addEventListener('animationend', (e) => {
                     if(e.animationName == 'hideModal'){
                         document.querySelectorAll('.config')[0].style.display='none';
                         modal.style.animation ='showModal 0.5s';
-                    }                                
+                    }
                 })
             }
         }
@@ -240,15 +216,15 @@ module.exports = class Menu{
         show:()=>{
             this.homepage.hide.homepage();
             let loadLevelsMenu =document.querySelectorAll('.load-Levels-menu')[0];
-            let topBar = document.querySelectorAll('.top-Bar-loadLevel')[0];   
-            let levelsItems=document.querySelectorAll('.levels-items')[0];          
-    
+            let topBar = document.querySelectorAll('.top-Bar-loadLevel')[0];
+            let levelsItems=document.querySelectorAll('.levels-items')[0];
+
                 // if not have items
             if(levelsItems.querySelectorAll('.items').length == 0){
                 /*Create items levels */
-                Levels.forEach((obj)=>{            
+                Levels.forEach((obj)=>{
                     let item=document.createElement('img');
-                    item.src= obj.imgPreview;            
+                    item.src= obj.imgPreview;
                     item.classList.add('items');
                     item.innerText = obj.nameLevel;
                     levelsItems.appendChild(item);
@@ -256,8 +232,8 @@ module.exports = class Menu{
                     levelsItems.style.right = this.levelSelectedRightPosition + "px";
                 })
             }
-    
-            loadLevelsMenu.style.display="block"                
+
+            loadLevelsMenu.style.display="block"
             topBar.style.display='block';
             topBar.style.animation="showloadLevels  1s";
             loadLevelsMenu.style.animation ="showloadLevels  1s";
@@ -265,7 +241,7 @@ module.exports = class Menu{
 
         hide:()=>{
             let loadLevelsMenu =document.querySelectorAll('.load-Levels-menu')[0];
-            let topBar = document.querySelectorAll('.top-Bar-loadLevel')[0];                            
+            let topBar = document.querySelectorAll('.top-Bar-loadLevel')[0];
             topBar.style.animation='hideloadLevels 1s';
             loadLevelsMenu.style.animation ='hideloadLevels 1s';
             setTimeout(()=>{
@@ -277,13 +253,13 @@ module.exports = class Menu{
         drawInfo:()=>{
             let InfoLevelContainer = document.querySelectorAll('.levels-info')[0];
             let button =InfoLevelContainer.querySelectorAll('.button-start')[0];
-            let TitleGame=document.querySelectorAll('.title-game')[0];        
+            let TitleGame=document.querySelectorAll('.title-game')[0];
             button.onclick = ()=>{this.MainThis.initGame(this.levelSelected)}
             TitleGame.innerText=Levels[this.levelSelected].nameLevel;
         },
-        
+
         selectPrevLevel:()=>{
-            if((this.levelSelectedRightPosition * -1) != this.levelsLeftLimit - 800){            
+            if((this.levelSelectedRightPosition * -1) != this.levelsLeftLimit - 800){
                 this.levelSelectedRightPosition -= 800;
                 this.levelSelected -=1;
                 let containerLevelItems=document.querySelectorAll('.levels-items')[0];
@@ -292,11 +268,11 @@ module.exports = class Menu{
         },
 
         selectNextLevel:()=>{
-            if(this.levelSelectedRightPosition != 0){     
-                this.levelSelectedRightPosition += 800;        
+            if(this.levelSelectedRightPosition != 0){
+                this.levelSelectedRightPosition += 800;
                 this.levelSelected+=1;
-                let containerLevelItems=document.querySelectorAll('.levels-items')[0];       
-                containerLevelItems.style.right = this.levelSelectedRightPosition + "px";            
+                let containerLevelItems=document.querySelectorAll('.levels-items')[0];
+                containerLevelItems.style.right = this.levelSelectedRightPosition + "px";
             }
         }
     }
@@ -304,30 +280,25 @@ module.exports = class Menu{
     // Game container primary ,user,blocks, insert here
     gameContainer={
         create:()=>{
-            let gameContainer=document.createElement('div');
-            gameContainer.classList.add('game-container');
+            let gameContainer=Utils.createElementDom({element:"div",className:"game-container"});
             this.container.appendChild(gameContainer);
         },
         remove:()=>{
             this.container.removeChild(document.querySelectorAll('.game-container')[0]);
         }
-    }    
+    }
 
     // in game , menu escape
     escapeMenu={
         create:()=>{
                     /*      Modal menu          */
-            let config = document.createElement('div');
-            config.classList.add('escape-menu');        
-            let modalConfig = document.createElement('div');
-            let buttonExit = document.createElement('button');      
-            modalConfig.classList.add('modal-config');
-            buttonExit.classList.add('exit');
-            buttonExit.classList.add('selected');
+            let config =Utils.createElementDom({element:"div",className:"escape-menu"});
+            let modalConfig = Utils.createElementDom({element:"div",className:"modal-config"});
+            let buttonExit =Utils.createElementDom({element:"button",className:"exit selected"});
             buttonExit.onclick=()=>{
                 this.MainThis.endGame();
             };
-            modalConfig.appendChild(buttonExit);        
+            modalConfig.appendChild(buttonExit);
             config.appendChild(modalConfig);
 
             /*Add menu in the dom */
@@ -350,5 +321,3 @@ module.exports = class Menu{
     }
 
 }
-
-
